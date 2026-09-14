@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
+<title>NutriTrack V15</title>
+<style>
+:root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
+*{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
+.app{max-width:500px;margin:auto;min-height:100vh;background:#fff;padding-bottom:92px}
+header{padding:24px 20px 20px;background:linear-gradient(145deg,#126b47,#30a873);color:#fff;border-radius:0 0 30px 30px}
+.top{display:flex;justify-content:space-between;align-items:center}.top button{border:0;background:#ffffff22;color:#fff;border-radius:12px;padding:9px 12px;font-size:18px}
+h1{font-size:24px;margin:0}.date{margin:5px 0 0;opacity:.82;text-transform:capitalize;font-size:14px}
+.ringwrap{display:flex;align-items:center;justify-content:center;padding:18px 0 6px}.ring{width:150px;height:150px;border-radius:50%;background:conic-gradient(#fff calc(var(--p)*1%),#ffffff35 0);display:grid;place-items:center}.ring:after{content:"";width:122px;height:122px;background:#197b55;border-radius:50%;position:absolute}.ringtext{z-index:1;text-align:center}.ringtext b{display:block;font-size:31px}.ringtext small{opacity:.8}
+.card{margin:16px;padding:16px;border:1px solid #edf0ee;border-radius:20px;background:#fff}.macrogrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.macro{background:#fafcfb;padding:13px;border-radius:15px}.macro strong{display:block;font-size:13px}.macro span{font-size:12px;color:var(--muted)}.bar{height:7px;background:#e7ece9;border-radius:9px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--green);border-radius:9px}
+.section{display:flex;justify-content:space-between;align-items:center;margin:22px 18px 10px}.section h2{font-size:16px;margin:0}.section button{border:0;background:none;color:var(--green);font-weight:bold}
+.meal{margin:9px 16px;padding:14px 15px;border:1px solid #edf0ee;border-radius:17px;display:flex;justify-content:space-between;align-items:center}.meal .left{display:flex;gap:12px;align-items:center}.emoji{font-size:25px;background:var(--light);padding:9px;border-radius:13px}.meal b{font-size:14px}.meal small{display:block;color:var(--muted);max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:3px}.delete{border:0;background:none;color:#c5ccc8;font-size:18px}
+.tip{background:var(--light);border:0}.tip h3{margin:0 0 6px;font-size:15px}.tip p{margin:0;color:#536158;font-size:13px;line-height:1.45}
+.fab{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);border:0;background:var(--green);color:#fff;padding:15px 25px;border-radius:28px;font-size:15px;font-weight:bold;box-shadow:0 8px 25px #167a5250}
+nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(500px,100%);height:66px;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;align-items:center;color:var(--muted);font-size:11px}nav div{text-align:center}.active{color:var(--green);font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:#0005;z-index:5;align-items:flex-end;justify-content:center}.sheet{background:#fff;width:min(500px,100%);border-radius:25px 25px 0 0;padding:22px;max-height:88vh;overflow:auto}.sheet h2{margin:0 0 15px}.choice{width:100%;padding:16px;margin:7px 0;border:1px solid #e7ebe8;border-radius:15px;background:#fff;text-align:left;font-size:15px}.choice small{display:block;color:var(--muted);margin-top:3px}
+input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px;margin:5px 0 10px;font-size:14px}.primary{width:100%;padding:14px;border:0;border-radius:12px;background:var(--green);color:#fff;font-weight:bold;font-size:15px}.food{padding:12px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between}.food button{background:var(--light);color:var(--green);border:0;border-radius:10px;padding:7px 11px;font-weight:bold}.chips{display:flex;gap:8px;overflow:auto;margin-bottom:10px}.chip{white-space:nowrap;border:1px solid #dce5df;background:#fff;border-radius:20px;padding:8px 12px;font-size:12px}.hidden{display:none}
+
+.score{display:flex;align-items:center;gap:14px}.scoreCircle{width:76px;height:76px;border-radius:50%;background:conic-gradient(#1f9b68 calc(var(--s)*1%),#e7ece9 0);display:grid;place-items:center;flex:none}.scoreCircle:after{content:"";position:absolute;width:60px;height:60px;background:#fff;border-radius:50%}.scoreCircle b{z-index:1;font-size:19px}.water{display:flex;align-items:center;justify-content:space-between;background:#f2f8ff}.waterAmount{font-size:24px;font-weight:800}.water button{border:0;border-radius:12px;padding:10px 13px;background:#dff0ff;color:#1976a8;font-weight:bold}.fav{display:flex;gap:9px;overflow:auto;padding:0 16px}.fav button{white-space:nowrap;border:1px solid #e4e9e6;background:#fff;border-radius:16px;padding:11px 13px;font-size:13px}.weekrow{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;align-items:center;margin:10px 0;font-size:12px}.weekbar{height:10px;border-radius:8px;background:#e8eeea;overflow:hidden}.weekbar i{display:block;height:100%;background:#2e9b68;border-radius:8px}.tabpage{display:none}.tabpage.show{display:block}.navbtn{cursor:pointer}.weightStats{display:flex;gap:10px}.weightStats>div{flex:1;background:#fafcfb;padding:12px;border-radius:12px;font-size:12px}.weightStats b{font-size:18px;display:block;margin-top:4px}
+
+.quick{display:flex;gap:8px;overflow:auto;margin:0 16px 12px}.quick button{white-space:nowrap;padding:10px 12px;border-radius:14px;border:1px solid #e1e8e4;background:#fff;font-size:12px}
+.insight{padding:14px;border-radius:16px;margin:10px 16px;background:#fff8e8;border:1px solid #f3e5b8}.insight p{margin:5px 0 0;font-size:13px;color:#665d43}.streak{display:flex;gap:6px;margin-top:9px}.daydot{width:25px;height:25px;border-radius:50%;background:#e9eeeb;display:grid;place-items:center;font-size:10px}.daydot.done{background:#2e9b68;color:#fff}.remaining{font-size:13px;color:#e7f8ef;background:#ffffff18;padding:8px 12px;border-radius:12px;margin-top:10px;text-align:center}
+
+.chat{display:flex;flex-direction:column;gap:9px}.bubble{padding:12px 14px;border-radius:16px;max-width:90%;font-size:13px;line-height:1.45}.bot{background:#eef8f3;align-self:flex-start}.user{background:#167a52;color:#fff;align-self:flex-end}.chatInput{display:flex;gap:8px;margin-top:12px}.chatInput input{margin:0}.chatInput button{border:0;background:#167a52;color:#fff;border-radius:12px;padding:0 14px;font-weight:bold}.forecast{background:linear-gradient(135deg,#126b47,#30a873);color:#fff}.forecast .date{color:#fff;opacity:.8}.reminder{display:flex;justify-content:space-between;align-items:center;padding:12px;border:1px solid #e7ece9;border-radius:14px;margin:8px 0}.switch{width:44px;height:25px;border-radius:20px;background:#dce5df;position:relative;cursor:pointer}.switch.on{background:#2e9b68}.switch:after{content:"";width:19px;height:19px;border-radius:50%;background:#fff;position:absolute;top:3px;left:3px;transition:.2s}.switch.on:after{left:22px}.photozone{border:2px dashed #b9d5c7;border-radius:18px;padding:25px;text-align:center;background:#f7fcf9}.photozone button{margin-top:10px;border:0;background:#167a52;color:#fff;border-radius:12px;padding:11px 16px}.pattern{padding:13px;background:#fafcfb;border-radius:14px;margin:9px 0;font-size:13px}.timechip{font-size:11px;padding:5px 9px;background:#fff2cf;border-radius:12px;color:#765e18}
+
+.onboard{position:fixed;inset:0;background:linear-gradient(145deg,#126b47,#30a873);z-index:20;color:#fff;display:none;padding:30px}.onboard.show{display:flex;flex-direction:column;justify-content:center}.onboard .step{display:none}.onboard .step.show{display:block}.onboard h1{font-size:34px}.onboard p{line-height:1.6;opacity:.9}.onboard input,.onboard select{background:#fff;color:#17221d}.dots{display:flex;gap:7px;margin:20px 0}.dots i{width:9px;height:9px;border-radius:50%;background:#ffffff55}.dots i.on{background:#fff}.outline{border:1px solid #ffffff77;background:transparent;color:#fff;border-radius:12px;padding:13px;width:100%;margin-top:8px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.calday{padding:9px 3px;border-radius:10px;font-size:12px;background:#f7faf8}.calday.today{background:#167a52;color:#fff}.calday.done{outline:2px solid #74c69d}.recipe{padding:15px;border-radius:16px;background:#fafcfb;margin:10px 0}.recipe button{margin-top:8px;border:0;background:#167a52;color:#fff;border-radius:10px;padding:8px 12px}.install{background:#fff;color:#167a52;border:0;border-radius:12px;padding:10px 14px;font-weight:bold}.dark{background:#101713!important;color:#eaf2ed!important}.dark .app,.dark .card,.dark nav,.dark .meal,.dark .macro,.dark .sheet{background:#17221d!important;color:#eaf2ed!important;border-color:#2b3a32!important}.dark .macro{background:#1d2a23!important}.dark .meal small,.dark .muted{color:#a9b7af!important}.dark input,.dark select{background:#101713!important;color:#fff!important;border-color:#405046!important}.themeRow{display:flex;justify-content:space-between;align-items:center}
+
+.targetHero{background:linear-gradient(135deg,#126b47,#36ad78);color:#fff}.targetHero .date{color:#fff;opacity:.82}.targetGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.targetGrid div{background:#ffffff18;border-radius:12px;padding:10px;font-size:11px}.targetGrid b{display:block;font-size:17px;margin-top:4px}.checkin{background:#f4faf6;border-left:4px solid #2e9b68}.checkin.warn{background:#fff8e8;border-left-color:#e6a817}.timeline{position:relative;margin:14px 0 4px}.timelineLine{height:8px;border-radius:8px;background:#e4ebe7;overflow:hidden}.timelineLine i{display:block;height:100%;background:#2e9b68;border-radius:8px}.timelineLabels{display:flex;justify-content:space-between;font-size:11px;color:#718078;margin-top:6px}.weighRow{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #edf0ee;font-size:13px}.badge{font-size:11px;padding:5px 8px;border-radius:10px;background:#e9f7ef;color:#167a52;font-weight:bold}.badge.warn{background:#fff0cc;color:#8a6512}.goalInputGroup{background:#f7faf8;padding:12px;border-radius:14px;margin:10px 0}.goalInputGroup label{font-size:12px;font-weight:bold;color:#526158}.goalInputGroup input,.goalInputGroup select{margin-top:5px}
+
+.chartWrap{height:210px;margin-top:14px;position:relative}.chartSvg{width:100%;height:100%;overflow:visible}.chartLabel{font-size:10px;fill:#718078}.trendCard{background:linear-gradient(135deg,#f2faf5,#e4f4ea)}.trendValue{font-size:30px;font-weight:800;color:#167a52;margin:6px 0}.goalPace{display:flex;align-items:center;gap:12px;margin:12px 0;padding:11px;border-radius:13px;background:#fff}.paceIcon{font-size:24px}.weighDay{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.weighDay button{border:1px solid #e1e8e4;background:#fff;border-radius:10px;padding:8px 10px;font-size:11px}.weighDay button.selected{background:#167a52;color:#fff;border-color:#167a52}.recalc{background:#fff8e8;border-left:4px solid #e6a817}.trendMini{font-size:12px;color:#617168;margin-top:5px}.axisNote{font-size:11px;color:#718078;margin-top:8px}
+
+.scanHero{background:linear-gradient(135deg,#111c16,#167a52);color:#fff;text-align:center;padding:22px}.scanCircle{width:92px;height:92px;border:2px solid #fff;border-radius:22px;margin:14px auto;display:flex;align-items:center;justify-content:center;font-size:42px;box-shadow:0 0 0 7px #ffffff22}.scanOptions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.scanOption{border:1px solid #dfe8e2;border-radius:16px;padding:15px;text-align:center;background:#fff;cursor:pointer}.scanOption b{display:block;margin-top:6px}.scanResult{background:#f5faf7;border-radius:16px;padding:14px;margin-top:12px}.confidence{height:7px;background:#e0e8e3;border-radius:8px;overflow:hidden;margin:8px 0}.confidence i{display:block;height:100%;background:#2e9b68;border-radius:8px}.searchResult{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #edf0ee}.dbTag{font-size:10px;background:#e9f7ef;color:#167a52;padding:4px 7px;border-radius:8px}.recentItem{display:flex;justify-content:space-between;padding:9px 0;font-size:13px;border-bottom:1px solid #edf0ee}.dark .scanOption,.dark .scanResult{background:#1d2a23!important;border-color:#2b3a32!important}
+
+.dayNav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 14px}.dayNav button{border:1px solid #dfe8e2;background:#fff;border-radius:11px;padding:8px 12px}.dayPicker{font-weight:700;text-align:center}.favorite{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #edf0ee}.portionRow{display:flex;gap:8px;align-items:center;margin:10px 0}.portionRow button{border:1px solid #dfe8e2;background:#fff;border-radius:9px;padding:7px 11px}.portionRow input{margin:0;text-align:center;width:75px}.apiStatus{font-size:11px;padding:6px 9px;border-radius:10px;background:#e9f7ef;color:#167a52;display:inline-block}.apiError{background:#fff0cc;color:#8a6512}.dark .dayNav button,.dark .portionRow button{background:#1d2a23!important;color:#fff;border-color:#405046}
+
+.mobileShell{max-width:520px;margin:auto}.heroPWA{background:linear-gradient(135deg,#126b47,#1c9a68);color:white}.cameraFrame{border:2px dashed #8db9a3;border-radius:20px;padding:18px;text-align:center;background:#f5faf7}.cameraVideo{width:100%;border-radius:16px;background:#111;max-height:280px;object-fit:cover}.scanLine{height:3px;background:#35b979;width:70%;margin:12px auto;border-radius:4px;animation:scanmove 2s infinite alternate}@keyframes scanmove{to{transform:translateY(80px)}}.bottomSheet{max-height:80vh;overflow:auto}.mealSave{background:#f6faf7;border-radius:15px;padding:12px;margin:8px 0}.groceryItem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9eeeb}.groceryItem input{width:auto}.progressRing{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2e9b68 var(--p),#e7eeea 0);margin:12px auto}.progressRing:before{content:'';width:78px;height:78px;background:white;border-radius:50%;position:absolute}.progressRing b{z-index:1;font-size:18px}.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat3 div{background:#f6faf7;padding:10px;border-radius:12px;text-align:center;font-size:11px}.stat3 b{display:block;font-size:17px;margin-top:4px}.installBanner{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:min(460px,92%);z-index:50;padding:14px;border-radius:18px;box-shadow:0 10px 30px #0003}.dark .cameraFrame,.dark .mealSave,.dark .stat3 div{background:#1d2a23!important}.dark .progressRing:before{background:#17221c}
+
+.voiceBtn{border-radius:50%!important;width:44px;height:44px;padding:0!important;font-size:20px;background:#167a52!important;color:#fff!important;border:none!important;box-shadow:0 4px 12px #167a5244}.voiceRow{display:flex;gap:8px;align-items:center;margin:10px 0}.voiceStatus{font-size:12px;color:#718078;flex:1}.voiceStatus.listening{color:#167a52;font-weight:bold}.voicePanel{background:#f2faf5;border:1px solid #dcece2;border-radius:16px;padding:14px;margin:10px 0}.voiceTranscript{font-size:14px;font-style:italic;margin:8px 0;color:#35443b}.dark .voicePanel{background:#1d2a23!important;border-color:#385044!important}
+
+.pwaCard{background:linear-gradient(135deg,#0e5137,#1b9b69);color:#fff}.pwaSteps{display:flex;gap:8px;margin-top:12px}.pwaStep{flex:1;background:#ffffff18;border-radius:12px;padding:9px;font-size:11px}.syncDot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#55d990;margin-right:5px}.offlineDot{background:#f5c451}.installGuide{padding:12px;background:#f6faf7;border-radius:14px;margin-top:10px}.appPreview{border-radius:26px;overflow:hidden;border:5px solid #17221c;box-shadow:0 15px 35px #0003;margin:10px auto;max-width:250px}.dark .installGuide{background:#1d2a23!important}
+</style>
+</head>
+<body><div class="app">
+<header><div class="top"><div><h1>NutriTrack</h1><p class="date" id="date"></p></div><div style="display:flex;gap:7px"><button onclick="openScanner()" title="Barcode of foto scannen">⌁</button><button onclick="installApp()" title="Installeer app">⇩</button><button onclick="openGoals()">⚙</button></div></div>
+<div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
+
+<div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
+<div class="section"><h2>📲 NutriTrack V15</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
+<div class="section"><h2>📱 NutriTrack V15 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
+<div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
+<div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
+<div class="section"><h2>⚡ Snel toevoegen</h2><button onclick="smartInput()">AI invoer</button></div>
+<div class="quick"><button onclick="quickAdd('Skyr 200g')">🥛 Skyr</button><button onclick="quickAdd('Banaan')">🍌 Banaan</button><button onclick="quickAdd('Ei gekookt')">🥚 Ei</button><button onclick="quickAdd('2 volkoren boterhammen')">🍞 Brood</button><button onclick="quickAdd('Kipfilet 150g')">🍗 Kip</button></div>
+
+<div class="card"><div class="macrogrid">
+<div class="macro">💪 <strong>Eiwit</strong><span id="protein">0 / 140 g</span><div class="bar"><i id="proteinBar"></i></div></div>
+<div class="macro">🍞 <strong>Koolhydraten</strong><span id="carbs">0 / 250 g</span><div class="bar"><i id="carbsBar"></i></div></div>
+<div class="macro">🥑 <strong>Vetten</strong><span id="fat">0 / 75 g</span><div class="bar"><i id="fatBar"></i></div></div>
+<div class="macro">🌾 <strong>Vezels</strong><span id="fiber">0 / 30 g</span><div class="bar"><i id="fiberBar"></i></div></div>
+</div></div>
+
+<div class="insight" id="smartInsight"><b>🧠 Slimme analyse</b><p>Ik analyseer je voedingspatroon.</p></div>
+<div class="section"><h2>🍽️ Maaltijden</h2><button onclick="openAdd()">+ Toevoegen</button></div><div id="meals"></div>
+<div class="card score"><div class="scoreCircle" id="scoreCircle" style="--s:0"><b id="score">0</b></div><div><b>🎯 NutriScore</b><p class="date" id="scoreText" style="color:#718078;margin:5px 0">Jouw dagelijkse balans</p></div></div>
+<div class="card forecast"><b>🔮 Jouw dagvoorspelling</b><p class="date" id="forecastText">Analyse wordt geladen...</p><div class="progress" style="background:#ffffff30"><div id="forecastBar" style="background:#fff"></div></div></div>
+<div class="card water"><div><b>💧 Water</b><div class="waterAmount"><span id="waterMl">0</span> <small style="font-size:12px">/ 2000 ml</small></div></div><button onclick="addWater(250)">+ 250 ml</button></div>
+<div class="section"><h2>⭐ Favorieten</h2></div><div class="fav" id="favorites"></div>
+<div class="section"><h2>⭐ Favorieten</h2><button onclick="showFavorites()">Bekijk</button></div><div class="card" id="favoriteFoods"><span class="date">Nog geen favorieten.</span></div>
+<div class="section"><h2>🕘 Recent toegevoegd</h2><button onclick="showRecentFoods()">Bekijk</button></div><div class="card" id="recentFoods"><span class="date">Nog geen producten toegevoegd.</span></div>
+<div class="section"><h2>🍽️ Mijn opgeslagen maaltijden</h2><button onclick="showSavedMeals()">Bekijk</button></div><div class="card" id="savedMeals"><span class="date">Nog geen maaltijden opgeslagen.</span></div>
+<div class="section"><h2>🛒 Boodschappenlijst</h2><button onclick="generateGroceries()">Maak lijst</button></div><div class="card" id="groceryPreview"><span class="date">Maak een lijst vanuit je opgeslagen maaltijden.</span></div>
+<div class="section"><h2>🍳 Slimme recepten</h2><button onclick="showRecipes()">Bekijk alles</button></div><div class="fav" id="recipeQuick"></div>
+<div class="card tip"><h3>🤖 Jouw dagelijkse coach</h3><p id="tip"></p></div>
+</div>
+
+<div class="tabpage" id="weekPage"><header><h1>Weekoverzicht</h1><p class="date">Jouw voortgang van deze week</p></header><div class="card"><b>📅 Kalender</b><div class="calendar" id="calendar" style="margin-top:12px"></div></div>
+<div class="card recalc" id="adaptiveAdvice"><b>🔄 Adaptief kcal-advies</b><p class="date" style="color:#665d43">Ik pas mijn advies aan zodra er voldoende weeggegevens zijn.</p></div>
+<div class="card checkin" id="weeklyCheckin"><b>📊 Wekelijkse check-in</b><p class="date" style="color:#526158">Nog geen voldoende gegevens voor een voorspelling.</p></div>
+<div class="card"><b>📈 Dagelijkse kcal</b><div id="weekChart"></div></div><div class="card"><b>Gemiddelden deze week</b><div class="macrogrid" style="margin-top:12px"><div class="macro">🔥 <strong id="avgKcal">0 kcal</strong><span>Gemiddeld energie</span></div><div class="macro">💪 <strong id="avgProtein">0 g</strong><span>Gemiddeld eiwit</span></div><div class="macro">🌾 <strong id="avgFiber">0 g</strong><span>Gemiddeld vezels</span></div><div class="macro">🎯 <strong id="avgScore">0</strong><span>Gemiddelde score</span></div></div></div></div>
+
+<div class="tabpage" id="coachPage"><header><h1>Jouw AI Coach 🤖</h1><p class="date">Vraag alles over je voeding en dagplanning</p></header><div class="card"><div class="chat" id="chat"><div class="bubble bot">Hoi! 👋 Ik ben jouw NutriTrack coach. Vraag bijvoorbeeld: <b>“Wat kan ik vanavond eten?”</b> of <b>“Hoe haal ik mijn eiwitdoel?”</b></div></div><div class="chatInput"><input id="coachInput" placeholder="Stel je coach een vraag..." onkeydown="if(event.key==='Enter')askCoach()"><button onclick="askCoach()">➤</button></div></div><div id="coachCards"></div></div>
+
+<div class="tabpage" id="profilePage"><header><h1>Mijn profiel</h1><p class="date">Doelen en voortgang</p></header>
+<div class="card targetHero"><b>🎯 Mijn gewichtsdoel</b><div class="targetGrid"><div>Start<b id="profileStartWeight">—</b></div><div>Streefgewicht<b id="profileTargetWeight">—</b></div><div>Termijn<b id="profileDeadline">—</b></div></div><p class="date" id="profilePace" style="margin:12px 0 0">Stel je doel in voor een persoonlijk plan.</p></div>
+<div class="card trendCard"><b>📈 Gewichtstrend</b><div class="trendValue" id="trendWeight">—</div><div class="trendMini" id="trendExplanation">Nog onvoldoende metingen voor een betrouwbare trend.</div><div class="chartWrap"><svg class="chartSvg" id="weightChart" viewBox="0 0 320 190" preserveAspectRatio="none"></svg></div><div class="axisNote">De trend gebruikt meerdere weegmomenten om dagelijkse schommelingen minder zwaar te laten meetellen.</div></div>
+<div class="card"><b>🍽️ Maaltijden bewaren</b><p class="date">Sla je huidige ontbijt, lunch of diner op voor snel hergebruik.</p><div style="display:flex;gap:6px"><button onclick="saveCurrentMeal('Ontbijt')">Ontbijt</button><button onclick="saveCurrentMeal('Lunch')">Lunch</button><button onclick="saveCurrentMeal('Diner')">Diner</button></div></div>
+<div class="card"><b>⚖️ Gewicht bijhouden</b><div class="weightStats" style="margin-top:12px"><div>Huidig gewicht<b id="currentWeight">—</b></div><div>Verschil<b id="weightChange">—</b></div></div><p class="date" style="color:#718078;margin-bottom:6px">Vast weegmoment</p><div class="weighDay" id="weighDays"></div>
+<input id="weightInput" type="number" placeholder="Nieuw gewicht in kg" style="margin-top:14px"><button class="primary" onclick="addWeight()">Wekelijks weegmoment toevoegen</button><div id="weightHistory" style="margin-top:12px"></div></div><div class="card"><b>🎯 Voedingsdoelen</b><p class="date" style="color:#718078">Pas je persoonlijke gegevens en doelen aan.</p><button class="primary" onclick="openGoals()">Doelen aanpassen</button></div><div class="card"><b>🌙 Weergave</b><div class="themeRow" style="margin-top:10px"><span>Donkere modus</span><div class="switch" id="themeSwitch" onclick="toggleTheme()"></div></div></div>
+<div class="card"><b>🔔 Slimme herinneringen</b><div class="reminder"><span>💧 Water herinnering</span><div class="switch" id="waterSwitch" onclick="toggleReminder('water')"></div></div><div class="reminder"><span>🍽️ Maaltijd herinnering</span><div class="switch" id="mealSwitch" onclick="toggleReminder('meal')"></div></div>
+<div class="reminder"><span>⚖️ Wekelijkse weegreminder</span><div class="switch" id="weighSwitch" onclick="toggleReminder('weigh')"></div></div></div><div class="card"><button class="primary" style="background:#65736b" onclick="resetApp()">Alle gegevens wissen</button></div></div>
+
+<button class="fab" id="fab" onclick="openAdd()">＋ Eten toevoegen</button>
+<nav><div class="active navbtn" onclick="showTab('today',this)">⌂<br>Vandaag</div><div class="navbtn" onclick="showTab('week',this)">▥<br>Week</div><div class="navbtn" onclick="showTab('coach',this)">✦<br>Coach</div><div class="navbtn" onclick="showTab('profile',this)">⚙<br>Profiel</div></nav>
+
+<div class="onboard" id="onboarding">
+ <div class="step show" id="ob1"><div style="font-size:60px">🥗</div><h1>Welkom bij NutriTrack</h1><p>Jouw persoonlijke voedingscoach. We helpen je met inzicht in kcal, macro's, vezels en gezonde keuzes.</p><div class="dots"><i class="on"></i><i></i><i></i><i></i></div><button class="primary" onclick="onboardNext(2)">Start</button></div>
+ <div class="step" id="ob2"><h1>Over jou 👋</h1><p>Deze gegevens helpen om een persoonlijk energieadvies te berekenen.</p><select id="obSex"><option value="male">Man</option><option value="female">Vrouw</option></select><input id="obAge" type="number" placeholder="Leeftijd"><input id="obWeight" type="number" placeholder="Gewicht (kg)"><input id="obHeight" type="number" placeholder="Lengte (cm)"><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i></div><button class="primary" onclick="onboardNext(3)">Volgende</button></div>
+ <div class="step" id="ob3"><h1>Jouw doel 🎯</h1><p>Waar wil je naartoe en binnen welke termijn?</p><div class="goalInputGroup"><label>Streefgewicht</label><input id="obTargetWeight" type="number" step="0.1" placeholder="Bijv. 80 kg"></div><div class="goalInputGroup"><label>Termijn</label><select id="obDeadlineWeeks"><option value="8">Binnen 8 weken</option><option value="12">Binnen 12 weken</option><option value="16" selected>Binnen 16 weken</option><option value="24">Binnen 24 weken</option><option value="36">Binnen 36 weken</option><option value="52">Binnen 1 jaar</option></select></div><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><button class="primary" onclick="onboardNext(4)">Volgende</button></div>
+ <div class="step" id="ob4"><h1>Jouw leefstijl ⚡</h1><select id="obActivity"><option value="1.2">Weinig actief</option><option value="1.375">Licht actief</option><option value="1.55" selected>Gemiddeld actief</option><option value="1.725">Zeer actief</option></select><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><button class="primary" onclick="finishOnboarding()">Bereken mijn plan</button></div>
+ <div class="step" id="ob5"><div style="font-size:55px">🎯</div><h1>Jouw plan is klaar!</h1><p id="obResult">We hebben jouw persoonlijke voedingsdoelen berekend.</p><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><button class="primary" onclick="closeOnboarding()">Naar mijn dashboard →</button></div>
+</div>
+<div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
+
+<script>
+const defaults={kcal:2200,protein:140,carbs:250,fat:75,fiber:30};
+let goals=JSON.parse(localStorage.getItem('ntGoals')||'null')||defaults;
+let items=JSON.parse(localStorage.getItem('ntItems')||'[]');
+const db=[
+['Havermout 50g',190,6.5,30,3.5,5],['Banaan',105,1.3,27,0.4,3.1],
+['Griekse yoghurt 0% 200g',118,20,7,0.4,0],['Skyr 200g',126,22,8,0.4,0],
+['2 volkoren boterhammen',160,7,28,2,5],['Kipfilet 150g',248,46,0,5,0],
+['Rijst gekookt 150g',195,4,43,0.5,1],['Broccoli 200g',68,5,10,1,6],
+['Avocado 100g',160,2,9,15,7],['Ei gekookt',78,6,0.6,5,0],
+['Appel',95,0.5,25,0.3,4.4],['Amandelen 30g',174,6,6,15,3.5]
+];
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function totals(){return items.reduce((a,x)=>{Object.keys(goals).forEach(k=>a[k]+=+x[k]||0);return a},{kcal:0,protein:0,carbs:0,fat:0,fiber:0})}
+function render(){
+const t=totals();document.getElementById('date').textContent=new Date().toLocaleDateString('nl-NL',{weekday:'long',day:'numeric',month:'long'});
+document.getElementById('kcal').textContent=Math.round(t.kcal);document.getElementById('goalKcal').textContent=goals.kcal;
+document.getElementById('ring').style.setProperty('--p',Math.min(100,t.kcal/goals.kcal*100));
+['protein','carbs','fat','fiber'].forEach(k=>{document.getElementById(k).textContent=`${Math.round(t[k])} / ${goals[k]} g`;document.getElementById(k+'Bar').style.width=Math.min(100,t[k]/goals[k]*100)+'%'});
+const types=[['Ontbijt','🍳'],['Lunch','🥪'],['Diner','🍽️'],['Tussendoor','🍎']];
+document.getElementById('meals').innerHTML=types.map(([type,e])=>{let a=items.filter(x=>x.meal===type),k=a.reduce((s,x)=>s+(+x.kcal||0),0);return `<div class="meal"><div class="left"><div class="emoji">${e}</div><div><b>${type}</b><small>${a.length?a.map(x=>esc(x.name)).join(', '):'Nog niets toegevoegd'}</small></div></div><div><b>${Math.round(k)} kcal</b></div></div>`}).join('');
+let msg=t.kcal===0?'Voeg je eerste maaltijd toe. Daarna geef ik tips op basis van jouw persoonlijke voedingsdoelen.':
+t.protein<goals.protein*.7?`💪 Je hebt nog ongeveer ${Math.max(0,goals.protein-t.protein).toFixed(0)} gram eiwit over voor vandaag. Kies bijvoorbeeld Skyr, kip, vis of peulvruchten.`:
+t.fiber<goals.fiber*.7?`🌾 Je vezels kunnen nog omhoog. Kies vandaag extra groente, fruit of volkoren producten.`:
+'🎯 Goed bezig! Je voedingswaarden liggen mooi op schema.';
+document.getElementById('tip').textContent=msg;
+}
+function modal(html){document.getElementById('sheet').innerHTML=html;document.getElementById('modal').style.display='flex'}
+function close(){document.getElementById('modal').style.display='none'}
+function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren met AI<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="barcode()">📊 Barcode invoeren<small>Prototype voor productherkenning</small></button><button class="choice" onclick="photo()">📷 Foto van maaltijd<small>AI-functie voorbereid voor versie 3</small></button>`)}
+function foodSearch(){modal(`<h2>Product zoeken</h2><input autofocus placeholder="Zoek bijvoorbeeld havermout..." oninput="searchFoods(this.value)" id="search"><div class="chips"><button class="chip" onclick="searchFoods('')">Populair</button><button class="chip" onclick="searchFoods('kip')">Eiwit</button><button class="chip" onclick="searchFoods('')">Alles</button></div><div id="foodList"></div>`);searchFoods('')}
+function searchFoods(q){q=q.toLowerCase();document.getElementById('foodList').innerHTML=db.filter(x=>x[0].toLowerCase().includes(q)).map((x,i)=>`<div class="food"><div><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g eiwit · ${x[3]}g kh</small></div><button onclick="pick(${db.indexOf(x)})">+ Voeg toe</button></div>`).join('')}
+function pick(i){let x=db[i];chooseMeal({name:x[0],kcal:x[1],protein:x[2],carbs:x[3],fat:x[4],fiber:x[5]})}
+function chooseMeal(x){modal(`<h2>Wanneer heb je dit gegeten?</h2>${['Ontbijt','Lunch','Diner','Tussendoor'].map(m=>`<button class="choice" onclick='addItem(${JSON.stringify(x)}, "${m}")'>${m}</button>`).join('')}`)}
+function addItem(x,meal){x.meal=meal;items.push(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
+function manual(){modal(`<h2>Handmatig invoeren</h2><select id="m"><option>Ontbijt</option><option>Lunch</option><option>Diner</option><option>Tussendoor</option></select><input id="n" placeholder="Naam maaltijd/product"><input id="aKcal" type="number" placeholder="Kcal"><input id="aProtein" type="number" placeholder="Eiwit (g)"><input id="aCarbs" type="number" placeholder="Koolhydraten (g)"><input id="aFat" type="number" placeholder="Vetten (g)"><input id="aFiber" type="number" placeholder="Vezels (g)"><button class="primary" onclick="saveManual()">Toevoegen</button>`)}
+function saveManual(){let n=document.getElementById('n').value.trim();if(!n)return alert('Vul een naam in.');let x={name:n,meal:m.value};['kcal','protein','carbs','fat','fiber'].forEach(k=>x[k]=+document.getElementById('a'+k[0].toUpperCase()+k.slice(1)).value||0);items.push(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
+function barcode(){modal(`<h2>Barcode scannen</h2><p class="date" style="color:#718078">In een native app opent hier de camera. Voor deze V2-demo kun je een barcode invoeren.</p><input id="code" placeholder="Bijv. 871..."><button class="primary" onclick="lookupBarcode()">Product opzoeken</button>`)}
+function lookupBarcode(){
+ let code=document.getElementById('barcodeInput').value.trim();
+ if(!code)return;
+ lookupOpenFoodFacts(code);
+}
+function calculateMacros(){
+ const kcal=+document.getElementById('g_kcal').value||0;
+ // Balanced default macro split: 25% protein, 45% carbs, 30% fat
+ // Protein/carbs = 4 kcal/g, fat = 9 kcal/g
+ document.getElementById('g_protein').value=Math.round((kcal*.25)/4);
+ document.getElementById('g_carbs').value=Math.round((kcal*.45)/4);
+ document.getElementById('g_fat').value=Math.round((kcal*.30)/9);
+ // Practical fiber guideline: approximately 14 g per 1000 kcal
+ document.getElementById('g_fiber').value=Math.round(kcal/1000*14);
+}
+function calcPersonalCalories(){
+ const sex=document.getElementById('p_sex').value;
+ const age=+document.getElementById('p_age').value;
+ const weight=+document.getElementById('p_weight').value;
+ const height=+document.getElementById('p_height').value;
+ const activity=+document.getElementById('p_activity').value;
+ const goal=document.getElementById('p_goal').value;
+ if(!age||!weight||!height){alert('Vul leeftijd, gewicht en lengte in.');return;}
+ // Mifflin-St Jeor BMR
+ let bmr=(10*weight)+(6.25*height)-(5*age)+(sex==='male'?5:-161);
+ let tdee=bmr*activity;
+ let kcal=Math.round(tdee);
+ if(goal==='lose') kcal=Math.round(tdee-400);
+ if(goal==='gain') kcal=Math.round(tdee+300);
+ kcal=Math.max(1200,kcal);
+ document.getElementById('g_kcal').value=kcal;
+ calculateMacros();
+ document.getElementById('personalResult').innerHTML=`<div style="background:#eef8f3;padding:12px;border-radius:12px;margin:8px 0 14px;font-size:13px;color:#23583f">✨ Geschat persoonlijk doel: <b>${kcal} kcal per dag</b><br><small>Geschat onderhoud: ${Math.round(tdee)} kcal</small></div>`;
+}
+function openGoals(){modal(`<h2>🎯 Jouw persoonlijke doelen</h2>
+<p class="date" style="color:#718078;line-height:1.5">Laat NutriTrack eerst een persoonlijk dagelijks energieverbruik schatten. Je kunt daarna het kcal-doel altijd aanpassen.</p>
+
+<div style="background:#fafcfb;padding:12px;border-radius:14px;margin-bottom:12px">
+<b style="font-size:13px">Persoonlijke gegevens</b>
+<select id="p_sex"><option value="male">Man</option><option value="female">Vrouw</option></select>
+<input id="p_age" type="number" placeholder="Leeftijd">
+<input id="p_weight" type="number" placeholder="Gewicht in kg">
+<input id="p_height" type="number" placeholder="Lengte in cm">
+<select id="p_activity">
+<option value="1.2">Weinig actief – voornamelijk zittend</option>
+<option value="1.375">Licht actief – 1-3x per week sporten</option>
+<option value="1.55" selected>Gemiddeld actief – 3-5x per week sporten</option>
+<option value="1.725">Zeer actief – 6-7x per week sporten</option>
+<option value="1.9">Extreem actief – zwaar fysiek werk / topsport</option>
+</select>
+<select id="p_goal">
+<option value="maintain">⚖️ Gewicht behouden</option>
+<option value="lose">📉 Gewicht verliezen</option>
+<option value="gain">💪 Spiermassa / gewicht aankomen</option>
+</select>
+<button class="primary" type="button" onclick="calcPersonalCalories()">✨ Bereken mijn kcal-doel</button>
+</div>
+<div id="personalResult"></div>
+
+<label>🔥 Dagelijks kcal-doel<input type="number" id="g_kcal" value="${goals.kcal}" oninput="calculateMacros()"></label>
+<div style="background:#eef8f3;padding:12px;border-radius:12px;margin:4px 0 14px;font-size:12px;color:#536158">⚖️ Automatische macroverdeling: 25% eiwit · 45% koolhydraten · 30% vetten · vezels volgens 14g per 1.000 kcal.</div>
+<label>💪 Eiwit (g)<input type="number" id="g_protein" value="${goals.protein}"></label>
+<label>🍞 Koolhydraten (g)<input type="number" id="g_carbs" value="${goals.carbs}"></label>
+<label>🥑 Vetten (g)<input type="number" id="g_fat" value="${goals.fat}"></label>
+<label>🌾 Vezels (g)<input type="number" id="g_fiber" value="${goals.fiber}"></label>
+<button class="primary" onclick="saveGoals()">Doelen opslaan</button>`);calculateMacros()}
+function saveGoals(){Object.keys(goals).forEach(k=>goals[k]=+document.getElementById('g_'+k).value||defaults[k]);localStorage.setItem('ntGoals',JSON.stringify(goals));close();render()}
+let water=+localStorage.getItem('ntWater')||0;
+let favorites=JSON.parse(localStorage.getItem('ntFav')||'[]');
+let weights=JSON.parse(localStorage.getItem('ntWeights')||'[]');
+let history=JSON.parse(localStorage.getItem('ntHistory')||'[]');
+
+function nutritionScore(t=totals()){
+ let parts=[
+  Math.max(0,100-Math.abs(t.kcal-goals.kcal)/goals.kcal*100),
+  Math.min(100,t.protein/goals.protein*100),
+  Math.min(100,t.fiber/goals.fiber*100),
+  Math.max(0,100-Math.max(0,t.fat-goals.fat)/goals.fat*100)
+ ];
+ return Math.round(parts.reduce((a,b)=>a+b,0)/parts.length);
+}
+function addWater(amount){water=Math.min(5000,water+amount);localStorage.setItem('ntWater',water);renderV4()}
+function addFavoriteFromItem(item){
+ if(!favorites.some(x=>x.name===item.name)){favorites.push({...item});localStorage.setItem('ntFav',JSON.stringify(favorites));renderV4()}
+}
+function renderV4(){
+ let t=totals(), s=nutritionScore(t);
+ document.getElementById('score').textContent=s;
+ document.getElementById('scoreCircle').style.setProperty('--s',s);
+ document.getElementById('scoreText').textContent=s>=85?'Uitstekende voedingsbalans!':s>=65?'Goed bezig, nog ruimte voor verbetering.':'Focus vandaag op je voedingsdoelen.';
+ document.getElementById('waterMl').textContent=water;
+ document.getElementById('favorites').innerHTML=favorites.length?favorites.map((x,i)=>`<button onclick='chooseMeal(${JSON.stringify(x)})'>⭐ ${esc(x.name)}</button>`).join(''):'<button onclick="foodSearch()">＋ Voeg favoriet toe</button>';
+ renderCoach(t,s); renderWeek(); renderWeight();
+}
+function renderCoach(t,s){
+ let cards=[];
+ cards.push(['🎯 Dagelijkse score',`Je huidige NutriScore is ${s}/100.`]);
+ if(t.kcal<goals.kcal) cards.push(['🔥 Energie',`Je hebt nog ongeveer ${Math.max(0,goals.kcal-t.kcal).toFixed(0)} kcal beschikbaar vandaag.`]);
+ if(t.protein<goals.protein) cards.push(['💪 Eiwit',`Je kunt nog ${Math.max(0,goals.protein-t.protein).toFixed(0)} gram eiwit gebruiken om je doel te halen.`]);
+ if(t.fiber<goals.fiber) cards.push(['🌾 Vezels',`Je hebt nog ${Math.max(0,goals.fiber-t.fiber).toFixed(0)} gram vezels te gaan. Kies bijvoorbeeld groente, fruit of volkoren producten.`]);
+ cards.push(['💧 Hydratatie',water>=2000?'Je waterdoel is vandaag gehaald!':'Je hebt nog '+Math.max(0,2000-water)+' ml water nodig voor je basisdoel.']);
+ document.getElementById('coachCards').innerHTML=cards.map(c=>`<div class="card tip"><h3>${c[0]}</h3><p>${c[1]}</p></div>`).join('');
+}
+function renderWeek(){
+ let today=totals(), days=['Ma','Di','Wo','Do','Vr','Za','Zo'];
+ let sample=history.slice(-6).map(x=>x.kcal); sample.push(today.kcal);
+ let max=Math.max(goals.kcal,...sample,1);
+ document.getElementById('weekChart').innerHTML=days.map((d,i)=>`<div class="weekrow"><b>${d}</b><div class="weekbar"><i style="width:${sample[i]/max*100}%"></i></div><span>${Math.round(sample[i])}</span></div>`).join('');
+ let vals=[...history.slice(-6),{...today,score:nutritionScore(today)}], n=vals.length||1;
+ document.getElementById('avgKcal').textContent=Math.round(vals.reduce((a,x)=>a+(+x.kcal||0),0)/n)+' kcal';
+ document.getElementById('avgProtein').textContent=Math.round(vals.reduce((a,x)=>a+(+x.protein||0),0)/n)+' g';
+ document.getElementById('avgFiber').textContent=Math.round(vals.reduce((a,x)=>a+(+x.fiber||0),0)/n)+' g';
+ document.getElementById('avgScore').textContent=Math.round(vals.reduce((a,x)=>a+(x.score||nutritionScore(x)),0)/n);
+}
+function addWeight(){
+ let w=+document.getElementById('weightInput').value;if(!w)return;
+ weights.push({date:new Date().toISOString(),weight:w});localStorage.setItem('ntWeights',JSON.stringify(weights));renderWeight();document.getElementById('weightInput').value='';
+}
+const oldAddWeight=addWeight;
+addWeight=function(){
+ let w=+document.getElementById('weightInput').value;if(!w)return;
+ weights.push({date:new Date().toISOString(),weight:w});localStorage.setItem('ntWeights',JSON.stringify(weights));
+ document.getElementById('weightInput').value='';renderWeight();renderWeightV8();weeklyProjection();
+}
+function renderWeight(){
+ if(!weights.length)return;
+ let first=weights[0].weight,last=weights[weights.length-1].weight;
+ document.getElementById('currentWeight').textContent=last.toFixed(1)+' kg';
+ document.getElementById('weightChange').textContent=(last-first>0?'+':'')+(last-first).toFixed(1)+' kg';
+}
+function showTab(tab,el){
+ document.querySelector('.app').style.display=tab==='today'?'block':'none';
+ ['week','coach','profile'].forEach(x=>document.getElementById(x+'Page').classList.toggle('show',x===tab));
+ document.getElementById('fab').style.display=tab==='today'?'block':'none';
+ document.querySelectorAll('.navbtn').forEach(x=>x.classList.remove('active'));el.classList.add('active');
+ if(tab==='week')renderWeek();
+}
+function resetApp(){if(confirm('Weet je zeker dat je alle gegevens wilt wissen?')){localStorage.clear();location.reload()}}
+
+function quickAdd(name){
+ let x=db.find(y=>y[0]===name);if(!x)return;
+ chooseMeal({name:x[0],kcal:x[1],protein:x[2],carbs:x[3],fat:x[4],fiber:x[5]});
+}
+function smartInput(){
+ modal(`<h2>🧠 Slimme invoer</h2><p class="date" style="color:#718078">Beschrijf wat je hebt gegeten of spreek het in.</p>
+ <div class="voicePanel"><b>🎙️ Vertel wat je hebt gegeten</b><p class="date">Bijvoorbeeld: "Ik heb twee boterhammen met kipfilet en een banaan gegeten."</p>${voiceButton('describeMeal','Tik op de microfoon en vertel wat je hebt gegeten.')}</div>
+ <textarea id="smartFoodText" placeholder="Of typ bijvoorbeeld: 2 boterhammen met kipfilet en een banaan"></textarea>
+ <button class="primary" onclick="analyzeSmartFood()">Analyseer maaltijd</button>`);
+}
+function parseSmartFood(){
+ let q=document.getElementById('smartText').value.toLowerCase();
+ if(!q)return;
+ let matches=[];
+ const aliases={
+  'havermout':'Havermout 50g','banaan':'Banaan','skyr':'Skyr 200g',
+  'yoghurt':'Griekse yoghurt 0% 200g','brood':'2 volkoren boterhammen',
+  'boterham':'2 volkoren boterhammen','kip':'Kipfilet 150g','rijst':'Rijst gekookt 150g',
+  'broccoli':'Broccoli 200g','avocado':'Avocado 100g','ei':'Ei gekookt',
+  'appel':'Appel','amandel':'Amandelen 30g'
+ };
+ Object.entries(aliases).forEach(([word,name])=>{
+   if(q.includes(word)){let x=db.find(z=>z[0]===name);if(x&&!matches.some(m=>m[0]===x[0]))matches.push(x)}
+ });
+ if(!matches.length){foodSearch();return alert('Ik kon nog geen product herkennen. Probeer een productnaam uit de database.');}
+ let multiplier=1;
+ let number=q.match(/\b([2-9])\b/);
+ if(number && (q.includes('banaan')||q.includes('ei'))) multiplier=+number[1];
+ let total={name:'Slimme invoer: '+q,kcal:0,protein:0,carbs:0,fat:0,fiber:0};
+ matches.forEach(x=>{total.kcal+=x[1]*multiplier;total.protein+=x[2]*multiplier;total.carbs+=x[3]*multiplier;total.fat+=x[4]*multiplier;total.fiber+=x[5]*multiplier});
+ modal(`<h2>✨ AI analyse</h2><div class="card" style="margin:0"><b>Herkenning</b><p class="date" style="color:#718078">${matches.map(x=>x[0]).join(' · ')}</p><hr style="border:0;border-top:1px solid #eee"><b>Geschatte voedingswaarde</b><p>${Math.round(total.kcal)} kcal · ${Math.round(total.protein)}g eiwit · ${Math.round(total.carbs)}g koolhydraten · ${Math.round(total.fat)}g vet · ${Math.round(total.fiber)}g vezels</p></div>
+ <button class="choice" onclick='chooseMeal(${JSON.stringify(total)})'>✓ Klopt, kies maaltijdmoment</button>
+ <button class="choice" onclick="smartInput()">← Opnieuw proberen</button>`);
+}
+function smartAnalysis(){
+ let t=totals(), msgs=[];
+ let remaining=goals.kcal-t.kcal;
+ document.getElementById('remaining').textContent=remaining>=0?`Nog ${Math.round(remaining)} kcal beschikbaar vandaag`:`${Math.round(Math.abs(remaining))} kcal boven je dagdoel`;
+ if(items.length>=2){
+   let meals={};items.forEach(x=>meals[x.meal]=(meals[x.meal]||0)+(+x.kcal||0));
+   let biggest=Object.entries(meals).sort((a,b)=>b[1]-a[1])[0];
+   if(biggest&&biggest[1]>goals.kcal*.55)msgs.push(`${biggest[0]} bevat een groot deel van je dagelijkse energie. Probeer je kcal iets gelijkmatiger over de dag te verdelen.`);
+ }
+ if(t.protein/goals.protein<.5 && t.kcal/goals.kcal>.6)msgs.push('Je hebt relatief veel energie gegeten, maar je eiwit loopt achter. Kies je volgende maaltijd eiwitrijk.');
+ if(t.fiber/goals.fiber<.5 && t.kcal/goals.kcal>.6)msgs.push('Je vezels lopen achter op je energie-inname. Extra groente, fruit of volkoren producten helpen.');
+ if(water<1000 && items.length>0)msgs.push('Je hebt voeding geregistreerd, maar nog weinig water. Drink een extra glas water.');
+ if(reminders.weigh && nextWeighReminder())msgs.push(nextWeighReminder());
+ if(!msgs.length)msgs.push('Je voedingspatroon ligt momenteel mooi in balans. Blijf verspreid over de dag eten en drinken.');
+ document.getElementById('smartInsight').innerHTML='<b>🧠 Slimme analyse</b><p>'+msgs[0]+'</p><p style="margin-top:6px;color:#167a52"><b>⏰ Nu:</b> '+smartTimeAdvice()+'</p>';
+}
+const oldSaveManual=saveManual;
+saveManual=function(){let n=document.getElementById('n').value.trim();if(!n)return alert('Vul een naam in.');let x={name:n,meal:m.value};['kcal','protein','carbs','fat','fiber'].forEach(k=>x[k]=+document.getElementById('a'+k[0].toUpperCase()+k.slice(1)).value||0);items.push(x);addFavoriteFromItem(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
+const oldAddItem=addItem;
+addItem=function(x,meal){x.meal=meal;items.push(x);addFavoriteFromItem(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
+
+let reminders=JSON.parse(localStorage.getItem('ntReminders')||'{"water":false,"meal":false}');
+function toggleReminder(type){reminders[type]=!reminders[type];localStorage.setItem('ntReminders',JSON.stringify(reminders));renderReminders()}
+function renderReminders(){['water','meal','weigh'].forEach(k=>{let e=document.getElementById(k+'Switch');if(e)e.classList.toggle('on',!!reminders[k])})}
+function forecast(){
+ let t=totals(), now=new Date(), hour=now.getHours();
+ let progress=t.kcal/goals.kcal;
+ let message='', chance=0;
+ if(progress===0){message='Registreer je eerste maaltijd en ik maak een persoonlijke voorspelling.';chance=0}
+ else if(progress<=.45 && hour>=12){message='Je ligt relatief laag in energie. Met een gebalanceerde lunch en diner kun je je doel goed halen.';chance=82}
+ else if(progress>=1){message='Je zit al boven je kcal-doel. Focus de rest van de dag op groente, eiwit en hydratatie.';chance=55}
+ else if(t.protein/goals.protein<progress*.75){message='Je energie ligt op schema, maar eiwit loopt achter. Kies je volgende maaltijd eiwitrijk.';chance=72}
+ else {message='Je ligt goed op schema. Als je dit patroon aanhoudt, is de kans groot dat je je dagdoelen haalt.';chance=91}
+ document.getElementById('forecastText').textContent=message;
+ document.getElementById('forecastBar').style.width=chance+'%';
+}
+function patternInsights(){
+ let out=[];
+ if(history.length>=3){
+   let avg=history.reduce((a,x)=>a+(+x.kcal||0),0)/history.length;
+   if(avg>goals.kcal*1.1)out.push('Je historische energie-inname ligt gemiddeld boven je huidige doel.');
+   if(avg<goals.kcal*.85)out.push('Je historische energie-inname ligt gemiddeld ruim onder je doel.');
+ }
+ let t=totals();
+ if(t.protein<goals.protein*.6 && t.kcal>goals.kcal*.6)out.push('Patroon vandaag: relatief weinig eiwit ten opzichte van je energie-inname.');
+ return out;
+}
+function askCoach(){
+ let input=document.getElementById('coachInput'), q=input.value.trim();if(!q)return;
+ let chat=document.getElementById('chat');chat.innerHTML+=`<div class="bubble user">${esc(q)}</div>`;input.value='';
+ let t=totals(), lowProtein=Math.max(0,goals.protein-t.protein).toFixed(0), remaining=Math.max(0,goals.kcal-t.kcal).toFixed(0);
+ let ql=q.toLowerCase(), answer='';
+ if(ql.includes('avond')||ql.includes('diner')||ql.includes('eten')) answer=`Voor vanavond heb je nog ongeveer ${remaining} kcal beschikbaar. ${t.protein<goals.protein?'Je hebt vooral nog '+lowProtein+'g eiwit nodig. ':''}Een goede optie is bijvoorbeeld kip of peulvruchten met veel groente en een passende portie rijst of aardappel.`;
+ else if(ql.includes('eiwit')) answer=`Je hebt vandaag nog ongeveer ${lowProtein}g eiwit nodig. Verdeel dit over je volgende eetmomenten. Denk aan Skyr, kwark, kip, vis, eieren, tofu of peulvruchten.`;
+ else if(ql.includes('vezel')) answer=`Je vezeldoel staat nog op ${Math.max(0,goals.fiber-t.fiber).toFixed(0)}g. Kies extra groente, fruit, volkoren producten, bonen of noten.`;
+ else if(ql.includes('kcal')||ql.includes('calorie')) answer=`Je hebt ${Math.round(t.kcal)} van ${goals.kcal} kcal geregistreerd. Dat betekent dat je nog ongeveer ${remaining} kcal beschikbaar hebt.`;
+ else if(ql.includes('water')) answer=`Je hebt ${water} ml water geregistreerd. Voor je ingestelde basisdoel ontbreekt nog ${Math.max(0,2000-water)} ml.`;
+ else answer=`Op basis van je huidige dag: ${Math.round(t.kcal)} kcal, ${Math.round(t.protein)}g eiwit en ${Math.round(t.fiber)}g vezels. Mijn advies is om je volgende keuze af te stemmen op de voedingswaarde die het meest achterloopt.`;
+ setTimeout(()=>{chat.innerHTML+=`<div class="bubble bot"><span class="timechip">AI Coach</span><br>${answer}</div>`;chat.scrollTop=chat.scrollHeight},250);
+}
+function smartTimeAdvice(){
+ let h=new Date().getHours(), t=totals();
+ if(h>=6&&h<10&&t.kcal===0)return 'Goedemorgen! Een eiwitrijk ontbijt helpt je sterk aan je dag te beginnen.';
+ if(h>=12&&h<15&&t.kcal<goals.kcal*.2)return 'Het is lunchtijd en je energie-inname is nog laag. Vergeet je lunch niet.';
+ if(h>=17&&h<21)return t.protein<goals.protein*.7?'Voor het diner: kies vandaag een goede eiwitbron om je dagdoel te ondersteunen.':'Je ligt goed op schema voor het diner.';
+ return 'Blijf je maaltijden registreren zodat ik steeds betere inzichten kan geven.';
+}
+
+
+
+
+
+
+
+// V15 – PWA foundation and mobile installation experience
+function showInstallGuide(){
+ let ios=/iphone|ipad|ipod/i.test(navigator.userAgent);
+ let android=/android/i.test(navigator.userAgent);
+ let guide=ios
+ ?`<ol><li>Open deze app in Safari.</li><li>Tik op de deelknop ⎋ onderaan.</li><li>Kies <b>'Zet op beginscherm'</b>.</li><li>Bevestig met <b>Voeg toe</b>.</li></ol>`
+ :android
+ ?`<ol><li>Open NutriTrack in Chrome.</li><li>Tik op het menu ⋮.</li><li>Kies <b>'Installeren'</b> of <b>'Toevoegen aan startscherm'</b>.</li><li>NutriTrack verschijnt als app op je telefoon.</li></ol>`
+ :`<ol><li>Open NutriTrack in een moderne browser.</li><li>Gebruik de installatieknop wanneer deze beschikbaar is.</li><li>Op mobiel kun je 'Toevoegen aan beginscherm' gebruiken.</li></ol>`;
+ modal(`<h2>📲 Installeer NutriTrack</h2><div class="installGuide"><b>Gebruik als echte app</b>${guide}</div><div class="scanResult"><b>💾 Jouw gegevens</b><p class="date">Voedingsgegevens, doelen en gewicht worden lokaal op dit apparaat opgeslagen. Voor synchronisatie tussen apparaten is later een backend/account nodig.</p></div><button class="primary" onclick="installApp()">Probeer installeren</button>`);
+}
+function updatePWAStatus(){
+ let e=document.getElementById('appConnection');if(!e)return;
+ e.textContent=navigator.onLine?'Lokaal opgeslagen':'Offline modus';
+ let dot=e.previousElementSibling;if(dot)dot.className=navigator.onLine?'syncDot':'syncDot offlineDot';
+}
+window.addEventListener('online',updatePWAStatus);window.addEventListener('offline',updatePWAStatus);
+
+// Register an in-page generated service worker when served from HTTP(S).
+async function registerNutriServiceWorker(){
+  if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
+  try{
+    await navigator.serviceWorker.register('./service-worker.js');
+    console.log('NutriTrack V15: offline service worker actief.');
+  }catch(e){
+    console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
+  }
+}
+// V13 voice input – speech recognition for food logging and custom products
+let voiceRecognition=null;
+function speechSupported(){return !!(window.SpeechRecognition||window.webkitSpeechRecognition)}
+function startVoice(mode){
+ if(!speechSupported()){alert('Spraakherkenning wordt niet ondersteund door deze browser. Probeer Chrome of een andere moderne mobiele browser.');return}
+ if(voiceRecognition){try{voiceRecognition.stop()}catch(e){}}
+ const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+ voiceRecognition=new SR();voiceRecognition.lang='nl-NL';voiceRecognition.interimResults=true;voiceRecognition.continuous=false;
+ const status=document.getElementById('voiceStatus');
+ if(status){status.textContent='🎙️ Luisteren... spreek nu';status.classList.add('listening')}
+ voiceRecognition.onresult=e=>{
+   let transcript=Array.from(e.results).map(r=>r[0].transcript).join(' ').trim();
+   if(status){status.textContent='Herkenning: '+transcript;status.classList.remove('listening')}
+   handleVoiceResult(mode,transcript);
+ };
+ voiceRecognition.onerror=e=>{if(status){status.textContent='Spraakherkenning mislukt: '+e.error;status.classList.remove('listening')}};
+ voiceRecognition.onend=()=>{if(status&&status.textContent.includes('Luisteren')){status.textContent='Tik op de microfoon om opnieuw te spreken.';status.classList.remove('listening')}};
+ voiceRecognition.start();
+}
+function parseVoiceNutrition(text){
+ const lower=text.toLowerCase().replace(/,/g,'.');
+ const num=(regex)=>{let m=lower.match(regex);return m?parseFloat(m[1]):0};
+ return {
+  kcal:num(/(\d+(?:\.\d+)?)\s*(?:kcal|calorie)/),
+  protein:num(/(\d+(?:\.\d+)?)\s*(?:gram\s*)?(?:eiwit|proteïne)/),
+  carbs:num(/(\d+(?:\.\d+)?)\s*(?:gram\s*)?(?:koolhydraat|koolhydraten)/),
+  fat:num(/(\d+(?:\.\d+)?)\s*(?:gram\s*)?(?:vet|vetten)/),
+  fiber:num(/(\d+(?:\.\d+)?)\s*(?:gram\s*)?(?:vezel|vezels)/),
+  grams:num(/(\d+(?:\.\d+)?)\s*(?:gram|g)\b/)
+ };
+}
+function handleVoiceResult(mode,text){
+ if(mode==='ownProduct'){
+   const v=parseVoiceNutrition(text);
+   // Allow "product naam 250 kcal, 10 gram eiwit"
+   let name=text.replace(/\d+(?:[.,]\d+)?\s*(?:kcal|calorie|gram|g|eiwit|proteïne|koolhydraten?|vetten?|vezels?)/gi,'').replace(/[,.]/g,' ').replace(/\s+/g,' ').trim();
+   if(name.length>2)document.getElementById('ownName').value=name;
+   if(v.kcal)document.getElementById('ownKcal').value=v.kcal;
+   if(v.protein)document.getElementById('ownProtein').value=v.protein;
+   if(v.carbs)document.getElementById('ownCarbs').value=v.carbs;
+   if(v.fat)document.getElementById('ownFat').value=v.fat;
+   if(v.fiber)document.getElementById('ownFiber').value=v.fiber;
+ }else if(mode==='describeMeal'){
+   document.getElementById('smartFoodText').value=text;
+   analyzeSmartFood();
+ }
+}
+function voiceButton(mode,label='Spreek in'){
+ return `<div class="voiceRow"><button class="voiceBtn" onclick="startVoice('${mode}')" title="Spraak invoeren">🎙️</button><span class="voiceStatus" id="voiceStatus">${label}</span></div>`;
+}
+// V12 – mobile-first features, real camera barcode flow, custom foods and meal planning
+let customFoods=JSON.parse(localStorage.getItem('ntCustomFoods')||'[]');
+let savedMeals=JSON.parse(localStorage.getItem('ntSavedMeals')||'[]');
+let deferredInstallPrompt=null;
+
+window.addEventListener('beforeinstallprompt',e=>{
+ e.preventDefault();deferredInstallPrompt=e;
+ const b=document.getElementById('installBanner');if(b)b.style.display='block';
+});
+function installApp(){
+ if(deferredInstallPrompt){deferredInstallPrompt.prompt();deferredInstallPrompt.userChoice.then(()=>{deferredInstallPrompt=null;let b=document.getElementById('installBanner');if(b)b.style.display='none'});return}
+ showInstallGuide();
+}
+
+async function realCameraBarcode(){
+ modal(`<div class="bottomSheet"><h2>📷 Barcode scannen</h2><div class="cameraFrame"><video id="barcodeVideo" class="cameraVideo" autoplay playsinline></video><div class="scanLine"></div><p class="date">Richt de camera op de barcode.</p></div><p id="cameraScanStatus" class="date">Camera wordt gestart...</p><button onclick="stopBarcodeCamera();barcodeScanner()">Handmatig invoeren</button></div>`);
+ try{
+   const video=document.getElementById('barcodeVideo');
+   const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+   video.srcObject=stream;window.ntCameraStream=stream;
+   if('BarcodeDetector' in window){
+     const detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']});
+     const scan=async()=>{
+       if(!window.ntCameraStream)return;
+       try{const codes=await detector.detect(video);if(codes.length){stopBarcodeCamera();lookupOpenFoodFacts(codes[0].rawValue);return}}catch(e){}
+       requestAnimationFrame(scan);
+     };scan();
+     document.getElementById('cameraScanStatus').textContent='Scanner actief – barcode wordt automatisch herkend.';
+   }else document.getElementById('cameraScanStatus').textContent='Deze browser ondersteunt automatische barcodeherkenning nog niet. Gebruik handmatige invoer.';
+ }catch(e){document.getElementById('cameraScanStatus').textContent='Camera niet beschikbaar. Controleer de camerarechten.'}
+}
+function stopBarcodeCamera(){if(window.ntCameraStream){window.ntCameraStream.getTracks().forEach(t=>t.stop());window.ntCameraStream=null}}
+function barcodeScanner(){
+ modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Scan met je camera</b><p class="date" style="color:#fff;opacity:.8">Of voer de barcode handmatig in.</p><button class="install" onclick="realCameraBarcode()">Open camera</button></div><input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in" onkeydown="if(event.key==='Enter')lookupBarcode()"><button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
+}
+function allFoods(){return [...foodDB,...customFoods]}
+
+function addOwnProduct(){
+ modal(`<h2>✚ Eigen product toevoegen</h2>
+ <div class="voicePanel"><b>🎙️ Voeg in met je stem</b><p class="date">Bijvoorbeeld: "Proteïne pudding, 150 kcal, 20 gram eiwit, 8 gram koolhydraten en 3 gram vet"</p>${voiceButton('ownProduct','Tik op de microfoon en spreek de voedingswaarden in.')}</div>
+ <input id="ownName" placeholder="Productnaam">
+ <div class="stat3"><div><input id="ownKcal" type="number" placeholder="kcal"><small>kcal/100g</small></div><div><input id="ownProtein" type="number" step=".1" placeholder="eiwit"><small>eiwit</small></div><div><input id="ownCarbs" type="number" step=".1" placeholder="koolh."><small>koolh.</small></div></div>
+ <div class="stat3" style="margin-top:8px"><div><input id="ownFat" type="number" step=".1" placeholder="vet"><small>vet</small></div><div><input id="ownFiber" type="number" step=".1" placeholder="vezels"><small>vezels</small></div><div><input id="ownBarcode" placeholder="barcode"><small>optioneel</small></div></div>
+ <button class="primary" onclick="saveOwnProduct()">Opslaan</button>`);
+}
+function saveOwnProduct(){
+ let name=document.getElementById('ownName').value.trim(),kcal=+document.getElementById('ownKcal').value;
+ if(!name||!kcal)return alert('Vul minimaal productnaam en kcal in.');
+ let p={name,kcal,protein:+document.getElementById('ownProtein').value||0,carbs:+document.getElementById('ownCarbs').value||0,fat:+document.getElementById('ownFat').value||0,fiber:+document.getElementById('ownFiber').value||0,barcode:document.getElementById('ownBarcode').value.trim(),portion:'100 g',source:'Eigen product'};
+ customFoods.unshift(p);localStorage.setItem('ntCustomFoods',JSON.stringify(customFoods));showProductResult(p,'Eigen product');
+}
+
+function saveCurrentMeal(mealName){
+ let mealFoods=foods.filter(f=>f.meal===mealName);
+ if(!mealFoods.length)return alert('Er zijn nog geen producten in deze maaltijd.');
+ let name=prompt('Naam voor deze opgeslagen maaltijd:',mealName+' favoriet');
+ if(!name)return;
+ savedMeals.unshift({name,items:mealFoods.map(x=>({...x})),created:new Date().toISOString()});
+ savedMeals=savedMeals.slice(0,30);localStorage.setItem('ntSavedMeals',JSON.stringify(savedMeals));renderSavedMeals();
+}
+function renderSavedMeals(){
+ let el=document.getElementById('savedMeals');if(!el)return;
+ el.innerHTML=savedMeals.length?savedMeals.slice(0,3).map((m,i)=>`<div class="mealSave"><b>🍽️ ${m.name}</b><br><small>${m.items.length} producten · ${Math.round(m.items.reduce((s,x)=>s+x.kcal,0))} kcal</small><button style="float:right" onclick="addSavedMeal(${i})">+</button></div>`).join(''):'<span class="date">Nog geen maaltijden opgeslagen.</span>';
+}
+function showSavedMeals(){
+ modal(`<h2>🍽️ Opgeslagen maaltijden</h2>${savedMeals.length?savedMeals.map((m,i)=>`<div class="mealSave"><b>${m.name}</b><p class="date">${m.items.map(x=>x.name).join(', ')}</p><button class="primary" onclick="addSavedMeal(${i})">Toevoegen aan vandaag</button></div>`).join(''):'<p>Nog geen opgeslagen maaltijden. Sla een bestaande maaltijd op vanuit het dagoverzicht.</p>'}`);
+}
+function addSavedMeal(i){
+ let m=savedMeals[i];if(!m)return;
+ foods.push(...m.items.map(x=>({...x})));persistSelectedDay();close();render();
+}
+function generateGroceries(){
+ let ingredients={};
+ savedMeals.forEach(m=>m.items.forEach(i=>{ingredients[i.name]=(ingredients[i.name]||0)+(i.grams||100)}));
+ let arr=Object.entries(ingredients);
+ let el=document.getElementById('groceryPreview');
+ if(!arr.length){if(el)el.innerHTML='<span class="date">Sla eerst een of meer maaltijden op.</span>';return}
+ let html=arr.slice(0,5).map(([n,g])=>`<div class="groceryItem"><input type="checkbox"><span>${n}</span><small style="margin-left:auto">± ${Math.round(g)} g</small></div>`).join('');
+ if(el)el.innerHTML=html+(arr.length>5?`<small>+ ${arr.length-5} andere producten</small>`:'');
+}
+function renderCoach(){
+ let c=document.getElementById('coachKcal'),p=document.getElementById('coachProtein'),s=document.getElementById('coachStreak'),tip=document.getElementById('coachTip');
+ if(!c)return;
+ let totals=foods.reduce((a,x)=>({k:a.k+(+x.kcal||0),p:a.p+(+x.protein||0)}),{k:0,p:0});
+ c.textContent=Math.max(0,Math.round(goals.kcal-totals.k));
+ p.textContent=Math.max(0,Math.round(goals.protein-totals.p))+'g';
+ let dates=Object.keys(foodDays).filter(d=>foodDays[d]?.length).sort().reverse(),streak=0,dt=new Date();
+ while(true){let key=dt.toISOString().slice(0,10);if(dates.includes(key)){streak++;dt.setDate(dt.getDate()-1)}else break}
+ s.textContent=streak;
+ tip.textContent=totals.k<goals.kcal*.5?'Tip: verdeel je voeding rustig over de rest van de dag.':totals.p<goals.protein*.6?'Tip: kies later vandaag een eiwitrijke optie.':'Goed bezig! Je dag ligt mooi in lijn met je persoonlijke doelen.';
+}
+// V11 – real daily storage, favorites, portions and external barcode database
+let selectedDate=localStorage.getItem('ntSelectedDate')||new Date().toISOString().slice(0,10);
+let foodDays=JSON.parse(localStorage.getItem('ntFoodDays')||'{}');
+let favorites=JSON.parse(localStorage.getItem('ntFavorites')||'[]');
+
+function saveFoodDays(){localStorage.setItem('ntFoodDays',JSON.stringify(foodDays))}
+function dateKey(d=new Date()){return new Date(d).toISOString().slice(0,10)}
+function loadSelectedDay(){
+ foods=(foodDays[selectedDate]||[]).map(x=>({...x}));
+ localStorage.setItem('ntFoods',JSON.stringify(foods));
+}
+function persistSelectedDay(){
+ foodDays[selectedDate]=foods.map(x=>({...x}));
+ saveFoodDays();
+}
+function changeDay(delta){
+ let d=new Date(selectedDate+'T12:00:00');d.setDate(d.getDate()+delta);selectedDate=d.toISOString().slice(0,10);
+ localStorage.setItem('ntSelectedDate',selectedDate);loadSelectedDay();render();
+}
+function renderSelectedDay(){
+ let el=document.getElementById('selectedDayLabel');if(!el)return;
+ let d=new Date(selectedDate+'T12:00:00'), today=dateKey();
+ el.innerHTML=(selectedDate===today?'Vandaag<br>':'')+d.toLocaleDateString('nl-NL',{weekday:'short',day:'numeric',month:'short'});
+}
+function toggleFavorite(name){
+ let p=foodDB.find(x=>x.name===name)||favorites.find(x=>x.name===name);
+ if(!p)return;
+ if(favorites.some(x=>x.name===name))favorites=favorites.filter(x=>x.name!==name);
+ else favorites=[{...p},...favorites].slice(0,20);
+ localStorage.setItem('ntFavorites',JSON.stringify(favorites));renderFavorites();
+}
+function renderFavorites(){
+ let el=document.getElementById('favoriteFoods');if(!el)return;
+ el.innerHTML=favorites.length?favorites.slice(0,4).map((x,i)=>`<div class="favorite"><span>⭐ ${x.name}<br><small>${x.kcal} kcal</small></span><span><button onclick="showProductResult(favorites[${i}],'Favoriet')">+</button></span></div>`).join(''):'<span class="date">Nog geen favorieten.</span>';
+}
+function showFavorites(){
+ modal(`<h2>⭐ Mijn favorieten</h2>${favorites.length?favorites.map((x,i)=>`<div class="favorite"><span><b>${x.name}</b><br><small>${x.kcal} kcal</small></span><button onclick="showProductResult(favorites[${i}],'Favoriet')">Toevoegen</button></div>`).join(''):'<p>Nog geen favorieten. Voeg producten toe vanuit de scanner.</p>'}`);
+}
+async function lookupOpenFoodFacts(code){
+ const status=document.getElementById('barcodeStatus');
+ if(status)status.innerHTML='<span class="apiStatus">🔄 Online productdatabase wordt geraadpleegd...</span>';
+ try{
+   const url='https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json';
+   const res=await fetch(url,{headers:{'User-Agent':'NutriTrack/1.0'}});
+   if(!res.ok)throw new Error('API niet bereikbaar');
+   const data=await res.json();
+   if(!data.product)throw new Error('Product niet gevonden');
+   const p=data.product, n=p.nutriments||{};
+   const per100={
+     name:p.product_name||p.product_name_nl||p.generic_name||'Onbekend product',
+     barcode:code,
+     kcal:Math.round(Number(n['energy-kcal_100g'] ?? (n.energy_100g?Number(n.energy_100g)/4.184:0))||0),
+     protein:Number(n.proteins_100g||0),
+     carbs:Number(n.carbohydrates_100g||0),
+     fat:Number(n.fat_100g||0),
+     fiber:Number(n.fiber_100g||0),
+     portion:p.serving_size||'100 g',
+     source:'Open Food Facts'
+   };
+   showProductResult(per100,'Online barcode database');
+ }catch(err){
+   let p=foodDB.find(x=>x.barcode===code);
+   if(p)showProductResult(p,'Lokale database');
+   else modal(`<h2>Product niet gevonden</h2><p class="date" style="color:#718078">De online barcode database gaf geen product terug voor deze barcode. Je kunt het product handmatig toevoegen of op naam zoeken.</p><button class="primary" onclick="databaseSearch()">Zoek op naam</button>`);
+ }
+}
+// V10 – product database, barcode flow and AI recognition preparation
+const foodDB=[
+ {name:'Banaan',barcode:'4011',kcal:105,protein:1.3,carbs:27,fat:.4,fiber:3.1,portion:'1 stuk'},
+ {name:'Skyr naturel',barcode:'871000000001',kcal:63,protein:11,carbs:4,fat:.2,fiber:0,portion:'100 g'},
+ {name:'Kipfilet',barcode:'871000000002',kcal:110,protein:23,carbs:0,fat:1.5,fiber:0,portion:'100 g'},
+ {name:'Volkoren brood',barcode:'871000000003',kcal:82,protein:4,carbs:15,fat:1,fiber:2.4,portion:'1 snee'},
+ {name:'Griekse yoghurt',barcode:'871000000004',kcal:97,protein:9,carbs:4,fat:5,fiber:0,portion:'100 g'},
+ {name:'Ei',barcode:'871000000005',kcal:78,protein:6.3,carbs:.6,fat:5.3,fiber:0,portion:'1 stuk'},
+ {name:'Havermout',barcode:'871000000006',kcal:370,protein:13,carbs:60,fat:7,fiber:10,portion:'100 g'},
+ {name:'Zalm',barcode:'871000000007',kcal:208,protein:20,carbs:0,fat:13,fiber:0,portion:'100 g'}
+];
+let recentFoods=JSON.parse(localStorage.getItem('ntRecentFoods')||'[]');
+
+
+function analyzeSmartFood(){
+ let t=(document.getElementById('smartFoodText').value||'').toLowerCase();
+ if(!t)return;
+ let hits=allFoods().filter(p=>t.includes(p.name.toLowerCase()));
+ if(!hits.length){modal(`<h2>🧠 Maaltijd ontvangen</h2><div class="scanResult"><b>Ik heb gehoord:</b><p>${t}</p><p class="date">Koppel in een volgende versie een AI-model om vrije gesproken maaltijden automatisch naar ingrediënten en porties om te zetten.</p></div><button class="primary" onclick="databaseSearch()">Producten zoeken</button>`);return}
+ let p=hits[0];showProductResult(p,'Spraakherkenning');
+}
+
+function openScanner(){
+ modal(`<h2>⌁ Slimme voedingsscanner</h2>
+ <p class="date" style="color:#718078">Kies hoe je een product wilt toevoegen.</p>
+ <div class="scanOptions">
+  <div class="scanOption" onclick="barcodeScanner()"><div style="font-size:30px">▥</div><b>Barcode</b><small>Product scannen</small></div>
+  <div class="scanOption" onclick="aiMealPhoto()"><div style="font-size:30px">📷</div><b>Foto</b><small>Maaltijd herkennen</small></div>
+  <div class="scanOption" onclick="databaseSearch()"><div style="font-size:30px">🔎</div><b>Zoeken</b><small>Voedingsdatabase</small></div>
+  <div class="scanOption" onclick="smartInput()"><div style="font-size:30px">🧠</div><b>Beschrijven</b><small>AI invoer</small></div>
+  <div class="scanOption" onclick="addOwnProduct()"><div style="font-size:30px">✚</div><b>Eigen product</b><small>Zelf invoeren</small></div>
+ </div>`);
+}
+function barcodeScanner(){
+ modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Camera-scanner voorbereid</b><p class="date" style="color:#fff;opacity:.8">In de productieversie opent hier de camera met een barcode-scanner.</p></div>
+ <input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in voor demo" onkeydown="if(event.key==='Enter')lookupBarcode()">
+ <button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
+}
+function lookupBarcode(){
+ let code=document.getElementById('barcodeInput').value.trim();
+ let p=foodDB.find(x=>x.barcode===code);
+ if(!p){modal(`<h2>Geen product gevonden</h2><p class="date" style="color:#718078">Dit prototype bevat een lokale demo-database. In de echte app wordt dit gekoppeld aan een externe productdatabase/API.</p><button class="primary" onclick="databaseSearch()">Zoek op naam</button>`);return}
+ showProductResult(p,'Barcode herkend');
+}
+function databaseSearch(){
+ modal(`<h2>🔎 Voedingsdatabase</h2><input id="dbSearch" placeholder="Zoek bijvoorbeeld kip, banaan..." oninput="filterDB()" autofocus><div id="dbResults"></div>`);
+ filterDB();
+}
+function filterDB(){
+ let el=document.getElementById('dbResults');if(!el)return;
+ let q=(document.getElementById('dbSearch').value||'').toLowerCase();
+ let results=allFoods().filter(x=>x.name.toLowerCase().includes(q));
+ el.innerHTML=results.map((p,i)=>`<div class="searchResult"><div><b>${p.name}</b><br><small>${p.kcal} kcal · ${p.protein}g eiwit · ${p.portion}</small></div><button onclick="showProductResult(allFoods()[${allFoods().indexOf(p)}],'Database')">+</button></div>`).join('')||'<p class="date">Geen product gevonden.</p>';
+}
+function aiMealPhoto(){
+ modal(`<h2>📷 AI maaltijdherkenning</h2><div class="photozone"><div style="font-size:42px">🤖</div><b>Fotografeer je maaltijd</b><p class="date" style="color:#718078">De V10-flow is voorbereid voor AI-herkenning van ingrediënten, porties en voedingswaarden.</p><input type="file" accept="image/*" capture="environment" onchange="analyzeMealV10(this)" style="display:none" id="mealPhotoV10"><button onclick="document.getElementById('mealPhotoV10').click()">📷 Kies foto</button></div>`);
+}
+function analyzeMealV10(input){
+ if(!input.files[0])return;
+ let r=new FileReader();r.onload=e=>{
+   modal(`<h2>🤖 AI maaltijdanalyse</h2><img src="${e.target.result}" style="width:100%;height:190px;object-fit:cover;border-radius:16px">
+   <div class="scanResult"><b>Analyse voorbereid</b><p class="date" style="color:#718078">Een echte AI-koppeling herkent hier ingrediënten en schat portiegroottes. Controleer altijd de voorgestelde waarden.</p>
+   <div class="confidence"><i style="width:78%"></i></div><small>Verwachte herkenningszekerheid: 78%</small></div>
+   <button class="primary" onclick="smartInput()">Beschrijf ingrediënten voor nu</button>`);
+ };r.readAsDataURL(input.files[0]);
+}
+function showProductResult(p,source){
+ window.currentScannedProduct={...p};
+ modal(`<h2>✓ ${source}</h2><div class="scanResult"><div style="display:flex;justify-content:space-between;gap:8px"><b>${p.name}</b><span class="dbTag">${source}</span></div><p class="date" style="color:#718078">Basis: ${p.portion||'100 g'}</p><div class="macrogrid"><div class="macro"><b id="scanKcal">${Math.round(p.kcal)}</b><span>kcal</span></div><div class="macro"><b id="scanProtein">${(+p.protein).toFixed(1)}g</b><span>eiwit</span></div><div class="macro"><b id="scanCarbs">${(+p.carbs).toFixed(1)}g</b><span>koolhydraten</span></div></div></div>
+ <div class="portionRow"><button onclick="changePortion(-25)">−</button><input id="portionGrams" type="number" value="100" oninput="updatePortion()"><span>gram</span><button onclick="changePortion(25)">+</button></div>
+ <button onclick="toggleFavorite('${p.name.replace(/'/g,"\\'")}')" style="width:100%;margin-bottom:8px">⭐ Toevoegen/verwijderen favoriet</button>
+ <label>Eetmoment</label><select id="scanMeal"><option>Ontbijt</option><option>Lunch</option><option>Diner</option><option>Tussendoor</option></select>
+ <button class="primary" onclick="addScannedProduct(window.currentScannedProduct.name)">Toevoegen aan vandaag</button>`);
+}
+function changePortion(delta){let e=document.getElementById('portionGrams');e.value=Math.max(1,(+e.value||100)+delta);updatePortion()}
+function updatePortion(){
+ let p=window.currentScannedProduct,e=document.getElementById('portionGrams');if(!p||!e)return;
+ let f=(+e.value||100)/100;
+ document.getElementById('scanKcal').textContent=Math.round(p.kcal*f);
+ document.getElementById('scanProtein').textContent=(p.protein*f).toFixed(1)+'g';
+ document.getElementById('scanCarbs').textContent=(p.carbs*f).toFixed(1)+'g';
+}
+function addScannedProduct(name){
+ let p=window.currentScannedProduct||foodDB.find(x=>x.name===name);if(!p)return;
+ let meal=document.getElementById('scanMeal').value, grams=+document.getElementById('portionGrams').value||100, f=grams/100;
+ let item={name:p.name,kcal:p.kcal*f,protein:p.protein*f,carbs:p.carbs*f,fat:p.fat*f,fiber:p.fiber*f,meal,grams};
+ foods.push(item);persistSelectedDay();
+ recentFoods=[{name:p.name,kcal:Math.round(p.kcal*f),date:new Date().toISOString()},...recentFoods.filter(x=>x.name!==p.name)].slice(0,8);
+ localStorage.setItem('ntFoods',JSON.stringify(foods));localStorage.setItem('ntRecentFoods',JSON.stringify(recentFoods));
+ close();render();
+}
+function renderRecentFoods(){
+ let el=document.getElementById('recentFoods');if(!el)return;
+ el.innerHTML=recentFoods.length?recentFoods.slice(0,4).map((x,i)=>`<div class="recentItem"><span>🕘 ${x.name}</span><span><small>${x.kcal} kcal</small> <button onclick="quickRecent(${i})">+</button></span></div>`).join(''):'<span class="date">Nog geen producten toegevoegd.</span>';
+}
+function quickRecent(i){
+ let x=recentFoods[i],p=foodDB.find(y=>y.name===x.name);
+ if(p)showProductResult(p,'Recent product');
+}
+function showRecentFoods(){
+ modal(`<h2>🕘 Recente producten</h2>${recentFoods.map((x,i)=>`<div class="searchResult"><b>${x.name}</b><button onclick="quickRecent(${i})">Opnieuw toevoegen</button></div>`).join('')||'<p>Nog geen recente producten.</p>'}`);
+}
+let weightGoal=JSON.parse(localStorage.getItem('ntWeightGoal')||'null');
+function weeksBetween(a,b){return Math.max(1,Math.ceil((new Date(b)-new Date(a))/(1000*60*60*24*7)))}
+function goalPlan(start,target,weeks,tdee){
+ let delta=target-start; // kg total
+ let weekly=delta/weeks;
+ // Approx 7700 kcal/kg; cap at sensible ±1000 kcal/day
+ let dailyAdjustment=Math.max(-1000,Math.min(700,(weekly*7700)/7));
+ let kcal=Math.round(tdee+dailyAdjustment);
+ return {delta,weekly,dailyAdjustment,kcal};
+}
+function saveWeightGoal(goal){
+ weightGoal=goal;localStorage.setItem('ntWeightGoal',JSON.stringify(weightGoal));renderWeightGoal();
+}
+function renderWeightGoal(){
+ let current=weights.length?weights[weights.length-1].weight:(weightGoal?.startWeight||0);
+ if(!weightGoal)return;
+ let deadline=new Date(weightGoal.deadline), weeksLeft=Math.max(0,weeksBetween(new Date(),deadline));
+ let remaining=Math.abs(current-weightGoal.targetWeight);
+ let total=Math.abs(weightGoal.startWeight-weightGoal.targetWeight)||1;
+ let progress=Math.min(100,Math.max(0,(1-remaining/total)*100));
+ let deadlineText=deadline.toLocaleDateString('nl-NL',{day:'numeric',month:'short',year:'numeric'});
+ ['profileStartWeight','dashCurrentWeight'].forEach(id=>{let e=document.getElementById(id);if(e)e.textContent=(id==='dashCurrentWeight'?current:weightGoal.startWeight).toFixed(1)+' kg'});
+ ['profileTargetWeight','dashTargetWeight'].forEach(id=>{let e=document.getElementById(id);if(e)e.textContent=weightGoal.targetWeight.toFixed(1)+' kg'});
+ let pe=document.getElementById('profileDeadline');if(pe)pe.textContent=deadlineText;
+ let de=document.getElementById('dashWeeksLeft');if(de)de.textContent=weeksLeft+' wk';
+ let pace=Math.abs(weightGoal.weeklyChange||0).toFixed(2);
+ let direction=weightGoal.targetWeight<weightGoal.startWeight?'afvallen':'aankomen';
+ let pp=document.getElementById('profilePace');if(pp)pp.textContent=`Gepland: gemiddeld ${pace} kg per week ${direction}.`;
+ let dt=document.getElementById('dashGoalText');if(dt)dt.textContent=`${progress.toFixed(0)}% van je gewichtsreis voltooid · ${remaining.toFixed(1)} kg te gaan.`;
+}
+function weeklyProjection(){
+ let box=document.getElementById('weeklyCheckin');if(!box||!weightGoal)return;
+ if(weights.length<2){
+   box.innerHTML=`<b>📊 Wekelijkse check-in</b><p class="date" style="color:#526158">Voeg minimaal twee wekelijkse weegmomenten toe. Daarna voorspel ik of je op koers ligt.</p>`;
+   return;
+ }
+ let first=weights[0], last=weights[weights.length-1];
+ let elapsed=Math.max(1,(new Date(last.date)-new Date(first.date))/(1000*60*60*24*7));
+ let actualWeekly=(last.weight-first.weight)/elapsed;
+ let targetWeekly=weightGoal.weeklyChange;
+ let aligned=Math.abs(actualWeekly-targetWeekly)<=0.2;
+ let deadline=new Date(weightGoal.deadline), weeksLeft=Math.max(0,(deadline-new Date(last.date))/(1000*60*60*24*7));
+ let projected=last.weight+actualWeekly*weeksLeft;
+ let target=weightGoal.targetWeight;
+ let difference=Math.abs(projected-target);
+ let status=aligned?'🟢 Op koers':'🟡 Bijsturen';
+ let msg=aligned
+   ?`Je huidige trend is ${Math.abs(actualWeekly).toFixed(2)} kg per week. Als je dit tempo aanhoudt, ligt je voorspelde gewicht rond ${projected.toFixed(1)} kg.`
+   :`Je huidige trend is ${Math.abs(actualWeekly).toFixed(2)} kg per week. Op basis hiervan wordt ${projected.toFixed(1)} kg voorspeld; je doel is ${target.toFixed(1)} kg.`;
+ box.className='card checkin'+(aligned?'':' warn');
+ box.innerHTML=`<div style="display:flex;justify-content:space-between"><b>📊 Wekelijkse check-in</b><span class="badge${aligned?'':' warn'}">${status}</span></div><p class="date" style="color:#526158">${msg}</p><div class="timeline"><div class="timelineLine"><i style="width:${Math.min(100,Math.abs(actualWeekly/targetWeekly)*100)||0}%"></i></div><div class="timelineLabels"><span>Jouw trend</span><span>Doeltempo: ${Math.abs(targetWeekly).toFixed(2)} kg/wk</span></div></div>`;
+}
+function renderWeightV8(){
+ renderWeightGoal();weeklyProjection();
+ let list=document.getElementById('weightHistory');
+ if(list) list.innerHTML=weights.slice().reverse().slice(0,8).map(w=>`<div class="weighRow"><span>${new Date(w.date).toLocaleDateString('nl-NL')}</span><b>${w.weight.toFixed(1)} kg</b></div>`).join('');
+}
+
+let weighSettings=JSON.parse(localStorage.getItem('ntWeighSettings')||'{"day":1}');
+function movingAverageTrend(){
+ if(!weights.length)return null;
+ let sorted=[...weights].sort((a,b)=>new Date(a.date)-new Date(b.date));
+ if(sorted.length===1)return {trend:sorted[0].weight, weekly:0, sorted};
+ // Linear regression on time in weeks for robust trend
+ let t0=new Date(sorted[0].date).getTime();
+ let pts=sorted.map(w=>({x:(new Date(w.date).getTime()-t0)/(1000*60*60*24*7),y:w.weight}));
+ let n=pts.length,sx=pts.reduce((a,p)=>a+p.x,0),sy=pts.reduce((a,p)=>a+p.y,0);
+ let sxy=pts.reduce((a,p)=>a+p.x*p.y,0),sxx=pts.reduce((a,p)=>a+p.x*p.x,0);
+ let slope=(n*sxy-sx*sy)/(n*sxx-sx*sx||1);
+ let trend=pts.reduce((a,p)=>a+p.y,0)/n+slope*(pts[pts.length-1].x-pts.reduce((a,p)=>a+p.x,0)/n);
+ return {trend,weekly:slope,sorted};
+}
+function renderWeightChart(){
+ let svg=document.getElementById('weightChart'), trendEl=document.getElementById('trendWeight'), exp=document.getElementById('trendExplanation');
+ if(!svg)return;
+ let data=[...weights].sort((a,b)=>new Date(a.date)-new Date(b.date));
+ if(!data.length){svg.innerHTML='';return}
+ let vals=data.map(x=>x.weight), min=Math.min(...vals)-0.5,max=Math.max(...vals)+0.5, range=max-min||1;
+ let W=320,H=170,pad=18;
+ let points=data.map((d,i)=>`${pad+(i*(W-2*pad)/Math.max(1,data.length-1))},${pad+(max-d.weight)/range*(H-2*pad)}`).join(' ');
+ let tr=movingAverageTrend();
+ let trendPoints=data.map((d,i)=>{
+   let x=pad+(i*(W-2*pad)/Math.max(1,data.length-1));
+   let week=(new Date(d.date)-new Date(data[0].date))/(1000*60*60*24*7);
+   let yVal=data[0].weight+(tr?.weekly||0)*week;
+   return `${x},${pad+(max-yVal)/range*(H-2*pad)}`;
+ }).join(' ');
+ svg.innerHTML=`<line x1="${pad}" y1="${H-pad}" x2="${W-pad}" y2="${H-pad}" stroke="#dfe8e2"/><line x1="${pad}" y1="${pad}" x2="${pad}" y2="${H-pad}" stroke="#dfe8e2"/><polyline points="${points}" fill="none" stroke="#9bbcac" stroke-width="2"/><polyline points="${trendPoints}" fill="none" stroke="#167a52" stroke-width="4"/>${data.map((d,i)=>{let x=pad+(i*(W-2*pad)/Math.max(1,data.length-1)),y=pad+(max-d.weight)/range*(H-2*pad);return `<circle cx="${x}" cy="${y}" r="4" fill="#fff" stroke="#167a52" stroke-width="2"/>`}).join('')}<text x="${pad}" y="${H}" class="chartLabel">Start</text><text x="${W-50}" y="${H}" class="chartLabel">Nu</text>`;
+ if(tr&&trendEl){
+   trendEl.textContent=tr.trend.toFixed(1)+' kg';
+   if(data.length>=2)exp.textContent=`Trendtempo: ${tr.weekly>0?'+':''}${tr.weekly.toFixed(2)} kg per week. De groene lijn corrigeert voor normale vocht- en dagschommelingen.`;
+ }
+}
+function renderWeighDays(){
+ let el=document.getElementById('weighDays');if(!el)return;
+ const days=['Ma','Di','Wo','Do','Vr','Za','Zo'];
+ el.innerHTML=days.map((d,i)=>`<button class="${weighSettings.day===i+1?'selected':''}" onclick="setWeighDay(${i+1})">${d}</button>`).join('');
+}
+function setWeighDay(day){weighSettings.day=day;localStorage.setItem('ntWeighSettings',JSON.stringify(weighSettings));renderWeighDays()}
+function adaptiveKcalAdvice(){
+ let box=document.getElementById('adaptiveAdvice');if(!box||!weightGoal)return;
+ let tr=movingAverageTrend();
+ if(!tr||weights.length<3){box.innerHTML='<b>🔄 Adaptief kcal-advies</b><p class="date" style="color:#665d43">Na minimaal 3 weegmomenten vergelijk ik je werkelijke trend met het geplande tempo.</p>';return}
+ let target=weightGoal.weeklyChange;
+ let diff=tr.weekly-target;
+ let recommendation=goals.kcal, text='', action='';
+ if(Math.abs(diff)<=0.12){
+   action='🟢 Behouden';
+   text='Je werkelijke gewichtstrend ligt dicht bij je geplande tempo. Je huidige kcal-doel lijkt passend.';
+ } else {
+   // only modest adjustment, never automatic save
+   let adjust=Math.max(-200,Math.min(200,Math.round(diff*7700/7)));
+   recommendation=Math.max(1200,Math.round(goals.kcal-adjust));
+   action=target<0?'🟡 Mogelijk bijsturen':'🟡 Mogelijk bijsturen';
+   text=`Je trend wijkt af van je geplande tempo. Een indicatieve aanpassing naar ongeveer ${recommendation} kcal/dag kan helpen.`;
+ }
+ box.innerHTML=`<div style="display:flex;justify-content:space-between"><b>🔄 Adaptief kcal-advies</b><span class="badge${Math.abs(diff)<=.12?'':' warn'}">${action}</span></div><p class="date" style="color:#665d43">${text}</p>${recommendation!==goals.kcal?`<button class="primary" onclick="applyKcalRecommendation(${recommendation})">Gebruik voorstel: ${recommendation} kcal</button>`:''}`;
+}
+function applyKcalRecommendation(kcal){
+ goals.kcal=kcal;goals.protein=Math.round(kcal*.25/4);goals.carbs=Math.round(kcal*.45/4);goals.fat=Math.round(kcal*.30/9);goals.fiber=Math.round(kcal/1000*14);
+ localStorage.setItem('ntGoals',JSON.stringify(goals));render();alert('Je voedingsdoelen zijn aangepast op basis van je gewichtstrend.');
+}
+function nextWeighReminder(){
+ if(!reminders.weigh)return '';
+ const today=new Date().getDay()||7, target=weighSettings.day;
+ let days=(target-today+7)%7;if(days===0)days=7;
+ return `Volgend weegmoment over ${days} dag${days===1?'':'en'} (${['','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag','zondag'][target]}).`;
+}
+let darkMode=localStorage.getItem('ntDark')==='true';
+let installPrompt=null;
+const recipes=[
+ {name:'Kip met rijst & broccoli',kcal:620,protein:48,carbs:68,fat:14,fiber:9},
+ {name:'Eiwitrijk ontbijt',kcal:410,protein:35,carbs:42,fat:10,fiber:7},
+ {name:'Vegetarische bowl',kcal:540,protein:24,carbs:70,fat:16,fiber:15},
+ {name:'Skyr fruit bowl',kcal:290,protein:25,carbs:38,fat:4,fiber:6}
+];
+function renderCalendar(){
+ let el=document.getElementById('calendar');if(!el)return;
+ let now=new Date(), year=now.getFullYear(), month=now.getMonth(), today=now.getDate();
+ let days=new Date(year,month+1,0).getDate();
+ el.innerHTML=['Ma','Di','Wo','Do','Vr','Za','Zo'].map(x=>`<b style="font-size:10px;color:#718078">${x}</b>`).join('');
+ let start=(new Date(year,month,1).getDay()+6)%7;
+ for(let i=0;i<start;i++)el.innerHTML+='<span></span>';
+ for(let d=1;d<=days;d++){let cls='calday'+(d===today?' today done':'');el.innerHTML+=`<div class="${cls}">${d}</div>`}
+}
+function renderRecipes(){
+ let quick=document.getElementById('recipeQuick');if(!quick)return;
+ quick.innerHTML=recipes.slice(0,3).map((r,i)=>`<button onclick="addRecipe(${i})">🍳 ${r.name}<br><small>${r.kcal} kcal</small></button>`).join('');
+}
+function showRecipes(){
+ modal(`<h2>🍳 Slimme recepten</h2>${recipes.map((r,i)=>`<div class="recipe"><b>${r.name}</b><p class="date" style="color:#718078">${r.kcal} kcal · ${r.protein}g eiwit · ${r.carbs}g koolhydraten · ${r.fiber}g vezels</p><button onclick="addRecipe(${i})">+ Toevoegen aan vandaag</button></div>`).join('')}`);
+}
+function addRecipe(i){let r={...recipes[i],meal:'Diner'};chooseMeal(r)}
+function toggleTheme(){darkMode=!darkMode;localStorage.setItem('ntDark',darkMode);applyTheme()}
+function applyTheme(){document.body.classList.toggle('dark',darkMode);let s=document.getElementById('themeSwitch');if(s)s.classList.toggle('on',darkMode)}
+function installApp(){
+ if(installPrompt){installPrompt.prompt();installPrompt.userChoice.then(()=>installPrompt=null)}
+ else alert('Installatie is afhankelijk van je browser. Open dit prototype in Chrome of Safari en kies "Toevoegen aan beginscherm".');
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e});
+function onboardNext(n){document.querySelectorAll('.onboard .step').forEach(x=>x.classList.remove('show'));document.getElementById('ob'+n).classList.add('show')}
+function finishOnboarding(){
+ let age=+document.getElementById('obAge').value, weight=+document.getElementById('obWeight').value, height=+document.getElementById('obHeight').value;
+ let target=+document.getElementById('obTargetWeight').value, weeks=+document.getElementById('obDeadlineWeeks').value;
+ if(!age||!weight||!height||!target)return alert('Vul alle persoonlijke gegevens en je streefgewicht in.');
+ let sex=document.getElementById('obSex').value, activity=+document.getElementById('obActivity').value;
+ let bmr=10*weight+6.25*height-5*age+(sex==='male'?5:-161), tdee=bmr*activity;
+ let plan=goalPlan(weight,target,weeks,tdee);
+ goals.kcal=Math.max(1200,plan.kcal);goals.protein=Math.round(goals.kcal*.25/4);goals.carbs=Math.round(goals.kcal*.45/4);goals.fat=Math.round(goals.kcal*.30/9);goals.fiber=Math.round(goals.kcal/1000*14);
+ let deadline=new Date();deadline.setDate(deadline.getDate()+weeks*7);
+ saveWeightGoal({startWeight:weight,targetWeight:target,startDate:new Date().toISOString(),deadline:deadline.toISOString(),weeklyChange:plan.weekly,kcalAdjustment:plan.dailyAdjustment});
+ if(!weights.length){weights.push({date:new Date().toISOString(),weight});localStorage.setItem('ntWeights',JSON.stringify(weights))}
+ localStorage.setItem('ntGoals',JSON.stringify(goals));localStorage.setItem('ntOnboarded','true');
+ let verb=target<weight?'afvallen':'aankomen';
+ document.getElementById('obResult').innerHTML=`Van <b>${weight.toFixed(1)} kg</b> naar <b>${target.toFixed(1)} kg</b> in ${weeks} weken.<br><br>Daarvoor adviseren we gemiddeld <b>${goals.kcal} kcal per dag</b>.<br><small>Gepland tempo: ${Math.abs(plan.weekly).toFixed(2)} kg per week ${verb}.</small>`;
+ onboardNext(5);render();
+}
+function closeOnboarding(){document.getElementById('onboarding').classList.remove('show')}
+function checkOnboarding(){if(!localStorage.getItem('ntOnboarded'))document.getElementById('onboarding').classList.add('show')}
+function copyYesterday(){
+ if(!history.length)return alert('Nog geen eerdere dag beschikbaar.');
+ let last=history[history.length-1];alert('In de productversie worden de maaltijden van je vorige dag hier gekopieerd. De dagstructuur is al voorbereid.');
+}
+const baseRender=render;
+render=function(){loadSelectedDay();baseRender();renderV4();smartAnalysis();forecast();renderReminders();renderCalendar();renderRecipes();applyTheme();renderWeightGoal();weeklyProjection();renderWeightV8();renderWeightChart();renderWeighDays();adaptiveKcalAdvice();renderRecentFoods();renderFavorites();renderSelectedDay();renderSavedMeals();renderCoach();generateGroceries();}
+document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')close()};
+render();checkOnboarding();updatePWAStatus();registerNutriServiceWorker();
+</script><div id="installBanner" class="installBanner heroPWA"><b>📲 Installeer NutriTrack</b><p class="date" style="color:#fff;opacity:.85">Gebruik NutriTrack als app op je telefoon.</p><button class="install" onclick="installApp()">Installeren</button></div></body></html>
