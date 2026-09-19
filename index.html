@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V15</title>
+<title>NutriTrack V16</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
 *{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
@@ -49,9 +49,9 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V15</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="section"><h2>📲 NutriTrack V16</h2><button onclick="showInstallGuide()">Installatie</button></div>
 <div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V15 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="section"><h2>📱 NutriTrack V16 mobiel</h2><button onclick="installApp()">Installeer</button></div>
 <div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
 <div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
 <div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
@@ -136,7 +136,7 @@ document.getElementById('tip').textContent=msg;
 }
 function modal(html){document.getElementById('sheet').innerHTML=html;document.getElementById('modal').style.display='flex'}
 function close(){document.getElementById('modal').style.display='none'}
-function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren met AI<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="barcode()">📊 Barcode invoeren<small>Prototype voor productherkenning</small></button><button class="choice" onclick="photo()">📷 Foto van maaltijd<small>AI-functie voorbereid voor versie 3</small></button>`)}
+function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren met AI<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="barcodeScanner()">📊 Barcode invoeren<small>Prototype voor productherkenning</small></button><button class="choice" onclick="aiMealPhoto()">📷 Foto van maaltijd<small>AI-functie voorbereid voor versie 3</small></button>`)}
 function foodSearch(){modal(`<h2>Product zoeken</h2><input autofocus placeholder="Zoek bijvoorbeeld havermout..." oninput="searchFoods(this.value)" id="search"><div class="chips"><button class="chip" onclick="searchFoods('')">Populair</button><button class="chip" onclick="searchFoods('kip')">Eiwit</button><button class="chip" onclick="searchFoods('')">Alles</button></div><div id="foodList"></div>`);searchFoods('')}
 function searchFoods(q){q=q.toLowerCase();document.getElementById('foodList').innerHTML=db.filter(x=>x[0].toLowerCase().includes(q)).map((x,i)=>`<div class="food"><div><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g eiwit · ${x[3]}g kh</small></div><button onclick="pick(${db.indexOf(x)})">+ Voeg toe</button></div>`).join('')}
 function pick(i){let x=db[i];chooseMeal({name:x[0],kcal:x[1],protein:x[2],carbs:x[3],fat:x[4],fiber:x[5]})}
@@ -144,7 +144,7 @@ function chooseMeal(x){modal(`<h2>Wanneer heb je dit gegeten?</h2>${['Ontbijt','
 function addItem(x,meal){x.meal=meal;items.push(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
 function manual(){modal(`<h2>Handmatig invoeren</h2><select id="m"><option>Ontbijt</option><option>Lunch</option><option>Diner</option><option>Tussendoor</option></select><input id="n" placeholder="Naam maaltijd/product"><input id="aKcal" type="number" placeholder="Kcal"><input id="aProtein" type="number" placeholder="Eiwit (g)"><input id="aCarbs" type="number" placeholder="Koolhydraten (g)"><input id="aFat" type="number" placeholder="Vetten (g)"><input id="aFiber" type="number" placeholder="Vezels (g)"><button class="primary" onclick="saveManual()">Toevoegen</button>`)}
 function saveManual(){let n=document.getElementById('n').value.trim();if(!n)return alert('Vul een naam in.');let x={name:n,meal:m.value};['kcal','protein','carbs','fat','fiber'].forEach(k=>x[k]=+document.getElementById('a'+k[0].toUpperCase()+k.slice(1)).value||0);items.push(x);localStorage.setItem('ntItems',JSON.stringify(items));close();render()}
-function barcode(){modal(`<h2>Barcode scannen</h2><p class="date" style="color:#718078">In een native app opent hier de camera. Voor deze V2-demo kun je een barcode invoeren.</p><input id="code" placeholder="Bijv. 871..."><button class="primary" onclick="lookupBarcode()">Product opzoeken</button>`)}
+function barcode(){barcodeScanner()}
 function lookupBarcode(){
  let code=document.getElementById('barcodeInput').value.trim();
  if(!code)return;
@@ -295,7 +295,7 @@ function smartInput(){
  <button class="primary" onclick="analyzeSmartFood()">Analyseer maaltijd</button>`);
 }
 function parseSmartFood(){
- let q=document.getElementById('smartText').value.toLowerCase();
+ let q=(document.getElementById('smartFoodText')?.value||'').toLowerCase();
  if(!q)return;
  let matches=[];
  const aliases={
@@ -415,7 +415,7 @@ async function registerNutriServiceWorker(){
   if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
   try{
     await navigator.serviceWorker.register('./service-worker.js');
-    console.log('NutriTrack V15: offline service worker actief.');
+    console.log('NutriTrack V16: offline service worker actief.');
   }catch(e){
     console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
   }
@@ -564,7 +564,7 @@ function renderCoach(){
 // V11 – real daily storage, favorites, portions and external barcode database
 let selectedDate=localStorage.getItem('ntSelectedDate')||new Date().toISOString().slice(0,10);
 let foodDays=JSON.parse(localStorage.getItem('ntFoodDays')||'{}');
-let favorites=JSON.parse(localStorage.getItem('ntFavorites')||'[]');
+favorites=JSON.parse(localStorage.getItem('ntFavorites')||localStorage.getItem('ntFav')||'[]');
 
 function saveFoodDays(){localStorage.setItem('ntFoodDays',JSON.stringify(foodDays))}
 function dateKey(d=new Date()){return new Date(d).toISOString().slice(0,10)}
@@ -916,4 +916,8 @@ const baseRender=render;
 render=function(){loadSelectedDay();baseRender();renderV4();smartAnalysis();forecast();renderReminders();renderCalendar();renderRecipes();applyTheme();renderWeightGoal();weeklyProjection();renderWeightV8();renderWeightChart();renderWeighDays();adaptiveKcalAdvice();renderRecentFoods();renderFavorites();renderSelectedDay();renderSavedMeals();renderCoach();generateGroceries();}
 document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')close()};
 render();checkOnboarding();updatePWAStatus();registerNutriServiceWorker();
+
+// V16 compatibility helpers
+function photo(){ if(typeof aiMealPhoto==='function') aiMealPhoto(); }
+
 </script><div id="installBanner" class="installBanner heroPWA"><b>📲 Installeer NutriTrack</b><p class="date" style="color:#fff;opacity:.85">Gebruik NutriTrack als app op je telefoon.</p><button class="install" onclick="installApp()">Installeren</button></div></body></html>

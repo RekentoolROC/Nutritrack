@@ -1,26 +1,23 @@
-# NutriTrack V15
+# NutriTrack V16
 
-NutriTrack V15 is the next packaged version of the mobile nutrition app.
+V16 repareert de invoerproblemen uit V15.
 
-## Android
-1. Open `index.html` in a browser to test the app.
-2. For **install as an app / offline PWA**, the files must be hosted on HTTPS (or localhost).
-3. On Android Chrome, open the hosted page and choose **Install app** / **Add to Home screen** when offered.
+Belangrijkste correcties:
+- JavaScript start nu correct op Android en in de browser.
+- Eten toevoegen en handmatig invoeren werken weer.
+- Product zoeken en eigen producten blijven beschikbaar.
+- Barcode-menu gebruikt de actuele scannerfunctie.
+- Slimme invoer gebruikt het juiste invoerveld.
+- PWA-cache is verhoogd naar V16 zodat de telefoon de nieuwe versie kan ophalen.
+- Android PWA-iconen zijn nu PNG-bestanden.
 
-## Included
-- Daily kcal, protein, carbohydrates, fat and fiber
-- Breakfast, lunch, dinner and eating moments
-- Personal goal and target-weight flow
-- Weekly weigh-in / progress
-- Open Food Facts barcode/product lookup
-- Camera barcode flow where supported
-- Own products
-- Favorites and saved meals
-- Shopping list
-- Voice input for own products and meals
-- Local daily history/storage
-- PWA manifest + service worker for offline use
+## Bijwerken op GitHub
+Upload alle bestanden uit deze map naar de root van de bestaande repository en kies vervangen/committen.
 
-## Important
-Browser permissions for camera and microphone normally require HTTPS (or localhost).
-The app stores prototype data locally in the browser. A future version can add a real cloud account and synchronization.
+Na publicatie via GitHub Pages:
+1. Sluit NutriTrack volledig op de telefoon.
+2. Open de GitHub Pages-link één keer in Chrome.
+3. Vernieuw de pagina.
+4. Start daarna de geïnstalleerde NutriTrack-app opnieuw.
+
+Normaal hoeft de app niet opnieuw geïnstalleerd te worden.
