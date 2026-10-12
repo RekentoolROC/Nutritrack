@@ -1,7 +1,7 @@
 {
-  "name": "NutriTrack V16 - Persoonlijke voedingscoach",
+  "name": "NutriTrack V17",
   "short_name": "NutriTrack",
-  "description": "Persoonlijke voedingsapp voor kcal, eiwit, koolhydraten, vetten en vezels.",
+  "description": "NutriTrack V17 met uitgebreide voedingsdatabase",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
