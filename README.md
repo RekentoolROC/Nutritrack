@@ -11,3 +11,7 @@ V18 verbetert het toevoegen van eten:
 - nieuwe service-worker cache: nutritrack-v18
 
 Upload alle bestanden naar de hoofdmap van de GitHub Pages repository en overschrijf de bestaande bestanden.
+
+
+## V20
+Uitgebreide ingebouwde voedingsdatabase met veelgebruikte Nederlandse voedingsmiddelen en maaltijden. Branded producten en echte barcodes blijven via Open Food Facts lopen.
