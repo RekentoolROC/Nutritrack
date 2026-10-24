@@ -1,7 +1,7 @@
 {
-  "name": "NutriTrack V18 - Persoonlijke voedingscoach",
-  "short_name": "NutriTrack",
-  "description": "Persoonlijke voedingsapp met uitgebreide voedingsdatabase, barcode scanner en Open Food Facts.",
+  "name": "NutriTrack V19",
+  "short_name": "NutriTrack V19",
+  "description": "NutriTrack V19 met verbeterde barcode scanner en productdatabase.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

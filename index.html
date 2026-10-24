@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V18</title>
+<title>NutriTrack V19</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
 *{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
@@ -49,9 +49,9 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V18</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="section"><h2>📲 NutriTrack V19</h2><button onclick="showInstallGuide()">Installatie</button></div>
 <div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V18 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="section"><h2>📱 NutriTrack V19 mobiel</h2><button onclick="installApp()">Installeer</button></div>
 <div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
 <div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
 <div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
@@ -136,7 +136,7 @@ document.getElementById('tip').textContent=msg;
 }
 function modal(html){document.getElementById('sheet').innerHTML=html;document.getElementById('modal').style.display='flex'}
 function close(){document.getElementById('modal').style.display='none'}
-function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren met AI<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="barcodeScanner()">📊 Barcode invoeren<small>Prototype voor productherkenning</small></button><button class="choice" onclick="aiMealPhoto()">📷 Foto van maaltijd<small>AI-functie voorbereid voor versie 3</small></button>`)}
+function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren met AI<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="realCameraBarcode()">📷 Barcode scannen<small>Open direct de camera en zoek het product online</small></button><button class="choice" onclick="aiMealPhoto()">📷 Foto van maaltijd<small>AI-functie voorbereid voor versie 3</small></button>`)}
 function foodSearch(){modal(`<h2>Product zoeken</h2><input autofocus placeholder="Zoek bijvoorbeeld havermout..." oninput="searchFoods(this.value)" id="search"><div class="chips"><button class="chip" onclick="searchFoods('')">Populair</button><button class="chip" onclick="searchFoods('kip')">Eiwit</button><button class="chip" onclick="searchFoods('')">Alles</button></div><div id="foodList"></div>`);searchFoods('')}
 function searchFoods(q){q=q.toLowerCase();document.getElementById('foodList').innerHTML=db.filter(x=>x[0].toLowerCase().includes(q)).map((x,i)=>`<div class="food"><div><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g eiwit · ${x[3]}g kh</small></div><button onclick="pick(${db.indexOf(x)})">+ Voeg toe</button></div>`).join('')}
 function pick(i){let x=db[i];chooseMeal({name:x[0],kcal:x[1],protein:x[2],carbs:x[3],fat:x[4],fiber:x[5]})}
@@ -415,7 +415,7 @@ async function registerNutriServiceWorker(){
   if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
   try{
     await navigator.serviceWorker.register('./service-worker.js');
-    console.log('NutriTrack V18: offline service worker actief.');
+    console.log('NutriTrack V19: offline service worker actief.');
   }catch(e){
     console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
   }
@@ -470,7 +470,7 @@ function handleVoiceResult(mode,text){
 function voiceButton(mode,label='Spreek in'){
  return `<div class="voiceRow"><button class="voiceBtn" onclick="startVoice('${mode}')" title="Spraak invoeren">🎙️</button><span class="voiceStatus" id="voiceStatus">${label}</span></div>`;
 }
-// V18 – mobile-first features, real camera barcode flow, custom foods and meal planning
+// V19 – verbeterde camera-barcode scanner, Open Food Facts en uitgebreide productdatabase
 let customFoods=JSON.parse(localStorage.getItem('ntCustomFoods')||'[]');
 let savedMeals=JSON.parse(localStorage.getItem('ntSavedMeals')||'[]');
 let deferredInstallPrompt=null;
@@ -485,29 +485,82 @@ function installApp(){
 }
 
 async function realCameraBarcode(){
- modal(`<div class="bottomSheet"><h2>📷 Barcode scannen</h2><div class="cameraFrame"><video id="barcodeVideo" class="cameraVideo" autoplay playsinline></video><div class="scanLine"></div><p class="date">Richt de camera op de barcode.</p></div><p id="cameraScanStatus" class="date">Camera wordt gestart...</p><button onclick="stopBarcodeCamera();barcodeScanner()">Handmatig invoeren</button></div>`);
- try{
-   const video=document.getElementById('barcodeVideo');
-   const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
-   video.srcObject=stream;window.ntCameraStream=stream;
-   if('BarcodeDetector' in window){
-     let formats=['ean_13','ean_8','upc_a','upc_e','code_128'];
-     try{const supported=await BarcodeDetector.getSupportedFormats(); formats=formats.filter(f=>supported.includes(f));}catch(e){}
-     const detector=new BarcodeDetector({formats});
-     let scanning=true;
-     const scan=async()=>{
-       if(!window.ntCameraStream||!scanning)return;
-       try{const codes=await detector.detect(video);if(codes.length){scanning=false; if(navigator.vibrate)navigator.vibrate(120); stopBarcodeCamera(); lookupOpenFoodFacts(codes[0].rawValue); return}}catch(e){}
-       requestAnimationFrame(scan);
-     };
-     scan();
-     document.getElementById('cameraScanStatus').textContent='✓ Scanner actief – richt op de streepjescode.';
-   }else document.getElementById('cameraScanStatus').textContent='Automatische barcodeherkenning wordt niet door deze browser ondersteund. Gebruik handmatige invoer.';
- }catch(e){document.getElementById('cameraScanStatus').textContent='Camera niet beschikbaar. Controleer de camerarechten.'}
+  modal(`<div class="bottomSheet">
+    <h2>📷 Barcode scannen</h2>
+    <div class="cameraFrame"><video id="barcodeVideo" class="cameraVideo" autoplay playsinline muted></video><div class="scanLine"></div></div>
+    <p id="cameraScanStatus" class="date">Camera wordt gestart...</p>
+    <button class="primary" id="cameraRetry" style="display:none" onclick="realCameraBarcode()">Opnieuw proberen</button>
+    <button onclick="stopBarcodeCamera();barcodeScanner()">Barcode handmatig invoeren</button>
+  </div>`);
+  try{
+    if(!window.isSecureContext){throw new Error('secure_context')}
+    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){throw new Error('media')}
+    const video=document.getElementById('barcodeVideo');
+    const stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:{exact:'environment'},width:{ideal:1280},height:{ideal:720}},
+      audio:false
+    });
+    video.srcObject=stream; window.ntCameraStream=stream;
+    await video.play();
+
+    let detector=null;
+    if('BarcodeDetector' in window){
+      let formats=['ean_13','ean_8','upc_a','upc_e','code_128','code_39','itf'];
+      try{
+        const supported=await BarcodeDetector.getSupportedFormats();
+        formats=formats.filter(f=>supported.includes(f));
+      }catch(e){}
+      if(formats.length) detector=new BarcodeDetector({formats});
+    }
+
+    if(detector){
+      document.getElementById('cameraScanStatus').textContent='✓ Camera actief — richt op de barcode.';
+      let scanning=true;
+      const scan=async()=>{
+        if(!window.ntCameraStream || !scanning)return;
+        try{
+          const codes=await detector.detect(video);
+          if(codes.length && codes[0].rawValue){
+            scanning=false;
+            if(navigator.vibrate) navigator.vibrate(120);
+            const code=codes[0].rawValue;
+            stopBarcodeCamera();
+            lookupOpenFoodFacts(code);
+            return;
+          }
+        }catch(e){}
+        requestAnimationFrame(scan);
+      };
+      scan();
+    }else{
+      document.getElementById('cameraScanStatus').textContent='✓ Camera actief, maar automatische barcodeherkenning wordt niet ondersteund. Gebruik handmatige invoer.';
+    }
+  }catch(e){
+    const status=document.getElementById('cameraScanStatus');
+    if(status){
+      let msg='Camera kon niet worden gestart.';
+      if(e && e.name==='NotAllowedError') msg='Cameratoegang is geweigerd. Geef NutriTrack toegang tot de camera in de browserinstellingen.';
+      else if(e && e.name==='NotFoundError') msg='Geen camera gevonden.';
+      else if(e && e.message==='secure_context') msg='Open NutriTrack via de beveiligde HTTPS-webpagina.';
+      status.textContent=msg;
+    }
+    const retry=document.getElementById('cameraRetry'); if(retry) retry.style.display='block';
+  }
 }
-function stopBarcodeCamera(){if(window.ntCameraStream){window.ntCameraStream.getTracks().forEach(t=>t.stop());window.ntCameraStream=null}}
+function stopBarcodeCamera(){
+  if(window.ntCameraStream){
+    window.ntCameraStream.getTracks().forEach(t=>t.stop());
+    window.ntCameraStream=null;
+  }
+  const video=document.getElementById('barcodeVideo');
+  if(video) video.srcObject=null;
+}
 function barcodeScanner(){
- modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Scan met je camera</b><p class="date" style="color:#fff;opacity:.8">Houd de barcode rustig binnen het kader. Het product wordt daarna automatisch opgezocht.</p><button class="install" onclick="realCameraBarcode()">Open camera</button></div><input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in" onkeydown="if(event.key==='Enter')lookupBarcode()"><button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
+ modal(`<h2>▥ Barcode</h2>
+   <p class="date">Werkt de camera niet? Voer de EAN-barcode handmatig in.</p>
+   <input id="barcodeInput" inputmode="numeric" pattern="[0-9]*" placeholder="Bijvoorbeeld 8710400260830" onkeydown="if(event.key==='Enter')lookupBarcode()">
+   <button class="primary" onclick="lookupBarcode()">Zoek product</button>
+   <button onclick="realCameraBarcode()">📷 Opnieuw camera openen</button>`);
 }
 function allFoods(){return [...foodDB,...customFoods]}
 
