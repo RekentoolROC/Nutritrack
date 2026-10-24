@@ -1,10 +1,13 @@
-# NutriTrack V17
-Uitgebreide Nederlandse basisdatabase voor algemene voedingsmiddelen.
+# NutriTrack V18
 
-- Veel meer algemene producten en ingrediënten.
-- Zoekaliassen voor makkelijker zoeken.
-- Open Food Facts blijft geschikt voor merkproducten en barcodes.
-- Eigen producten en favorieten blijven behouden.
-- Service-worker cache is V17.
+V18 verbetert het toevoegen van eten:
 
-Upload alle bestanden naar GitHub Pages en vervang de V16-bestanden. Open de Pages-site daarna één keer in Chrome en start de geïnstalleerde app opnieuw.
+- veel grotere Nederlandse basisdatabase met gangbare voedingsmiddelen
+- slimmer zoeken met categorieën en eenvoudige zoektermen
+- echte camera-barcode scanner waar de browser BarcodeDetector ondersteunt
+- automatische lookup van barcodes via Open Food Facts
+- fallback naar handmatige barcode en eigen product
+- Open Food Facts v3 met v2 fallback
+- nieuwe service-worker cache: nutritrack-v18
+
+Upload alle bestanden naar de hoofdmap van de GitHub Pages repository en overschrijf de bestaande bestanden.

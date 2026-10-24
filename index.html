@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V17</title>
+<title>NutriTrack V18</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
 *{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
@@ -49,9 +49,9 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V17</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="section"><h2>📲 NutriTrack V18</h2><button onclick="showInstallGuide()">Installatie</button></div>
 <div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V17 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="section"><h2>📱 NutriTrack V18 mobiel</h2><button onclick="installApp()">Installeer</button></div>
 <div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
 <div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
 <div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
@@ -107,7 +107,6 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 </div>
 <div class="modal" id="modal"><div class="sheet" id="sheet"></div></div>
 
-<script id='nutritrack-v17-database'>window.NUTRITRACK_V17_FOODS=[{"name": "Volkoren brood", "category": "brood", "kcal": 247, "protein": 9, "carbs": 41, "fat": 3.4, "fiber": 7, "portion": 100, "unit": "g", "aliases": ["volkoren brood"]}, {"name": "Wit brood", "category": "brood", "kcal": 265, "protein": 8.5, "carbs": 49, "fat": 3.2, "fiber": 2.7, "portion": 100, "unit": "g", "aliases": ["wit brood"]}, {"name": "Meergranenbrood", "category": "brood", "kcal": 245, "protein": 9, "carbs": 43, "fat": 4, "fiber": 6.5, "portion": 100, "unit": "g", "aliases": ["meergranenbrood"]}, {"name": "Roggebrood", "category": "brood", "kcal": 210, "protein": 6, "carbs": 39, "fat": 1.5, "fiber": 8, "portion": 100, "unit": "g", "aliases": ["roggebrood"]}, {"name": "Havermout", "category": "ontbijt", "kcal": 370, "protein": 13, "carbs": 60, "fat": 7, "fiber": 10, "portion": 100, "unit": "g", "aliases": ["havermout"]}, {"name": "Muesli", "category": "ontbijt", "kcal": 380, "protein": 10, "carbs": 65, "fat": 7, "fiber": 8, "portion": 100, "unit": "g", "aliases": ["muesli"]}, {"name": "Cornflakes", "category": "ontbijt", "kcal": 360, "protein": 7, "carbs": 80, "fat": 1, "fiber": 3, "portion": 100, "unit": "g", "aliases": ["cornflakes"]}, {"name": "Magere melk", "category": "zuivel", "kcal": 35, "protein": 3.5, "carbs": 5, "fat": 0.1, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["magere melk"]}, {"name": "Halfvolle melk", "category": "zuivel", "kcal": 47, "protein": 3.5, "carbs": 4.8, "fat": 1.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["halfvolle melk"]}, {"name": "Volle melk", "category": "zuivel", "kcal": 64, "protein": 3.3, "carbs": 4.7, "fat": 3.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["volle melk"]}, {"name": "Magere yoghurt", "category": "zuivel", "kcal": 35, "protein": 4.5, "carbs": 5, "fat": 0.1, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["magere yoghurt"]}, {"name": "Griekse yoghurt 0%", "category": "zuivel", "kcal": 59, "protein": 10, "carbs": 3.6, "fat": 0.4, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["griekse yoghurt 0%"]}, {"name": "Kwark mager", "category": "zuivel", "kcal": 55, "protein": 10, "carbs": 4, "fat": 0.2, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kwark mager"]}, {"name": "Skyr naturel", "category": "zuivel", "kcal": 63, "protein": 11, "carbs": 4, "fat": 0.2, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["skyr naturel"]}, {"name": "Kaas 20+", "category": "zuivel", "kcal": 265, "protein": 30, "carbs": 0, "fat": 15, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kaas 20+"]}, {"name": "Kaas 30+", "category": "zuivel", "kcal": 330, "protein": 27, "carbs": 0, "fat": 24, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kaas 30+"]}, {"name": "Kaas 48+", "category": "zuivel", "kcal": 380, "protein": 25, "carbs": 0, "fat": 31, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kaas 48+"]}, {"name": "Ei", "category": "eieren", "kcal": 143, "protein": 12.6, "carbs": 0.7, "fat": 9.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["ei"]}, {"name": "Kipfilet", "category": "vlees", "kcal": 110, "protein": 23, "carbs": 0, "fat": 1.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kipfilet"]}, {"name": "Kipdijfilet", "category": "vlees", "kcal": 150, "protein": 20, "carbs": 0, "fat": 7, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kipdijfilet"]}, {"name": "Kalkoenfilet", "category": "vlees", "kcal": 110, "protein": 24, "carbs": 0, "fat": 1.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kalkoenfilet"]}, {"name": "Rundergehakt mager", "category": "vlees", "kcal": 170, "protein": 21, "carbs": 0, "fat": 9, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["rundergehakt mager"]}, {"name": "Runderbiefstuk", "category": "vlees", "kcal": 145, "protein": 22, "carbs": 0, "fat": 6.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["runderbiefstuk"]}, {"name": "Varkensfilet", "category": "vlees", "kcal": 140, "protein": 22, "carbs": 0, "fat": 5.5, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["varkensfilet"]}, {"name": "Ham", "category": "vleeswaren", "kcal": 120, "protein": 20, "carbs": 1, "fat": 4, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["ham"]}, {"name": "Tonijn op water", "category": "vis", "kcal": 116, "protein": 26, "carbs": 0, "fat": 1, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["tonijn op water"]}, {"name": "Zalm", "category": "vis", "kcal": 208, "protein": 20, "carbs": 0, "fat": 13, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["zalm"]}, {"name": "Kabeljauw", "category": "vis", "kcal": 82, "protein": 18, "carbs": 0, "fat": 0.7, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["kabeljauw"]}, {"name": "Haring", "category": "vis", "kcal": 220, "protein": 18, "carbs": 0, "fat": 16, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["haring"]}, {"name": "Garnalen", "category": "vis", "kcal": 99, "protein": 24, "carbs": 0, "fat": 0.3, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["garnalen"]}, {"name": "Linzen gekookt", "category": "peulvruchten", "kcal": 116, "protein": 9, "carbs": 20, "fat": 0.4, "fiber": 7.9, "portion": 100, "unit": "g", "aliases": ["linzen gekookt"]}, {"name": "Kikkererwten gekookt", "category": "peulvruchten", "kcal": 164, "protein": 9, "carbs": 27, "fat": 2.6, "fiber": 7.6, "portion": 100, "unit": "g", "aliases": ["kikkererwten gekookt"]}, {"name": "Kidneybonen gekookt", "category": "peulvruchten", "kcal": 127, "protein": 8.7, "carbs": 23, "fat": 0.5, "fiber": 6.4, "portion": 100, "unit": "g", "aliases": ["kidneybonen gekookt"]}, {"name": "Bruine bonen gekookt", "category": "peulvruchten", "kcal": 132, "protein": 8.9, "carbs": 24, "fat": 0.5, "fiber": 7.4, "portion": 100, "unit": "g", "aliases": ["bruine bonen gekookt"]}, {"name": "Tofu", "category": "vleesvervangers", "kcal": 144, "protein": 15, "carbs": 2.8, "fat": 8, "fiber": 0.3, "portion": 100, "unit": "g", "aliases": ["tofu"]}, {"name": "Tempeh", "category": "vleesvervangers", "kcal": 195, "protein": 20, "carbs": 8, "fat": 11, "fiber": 5, "portion": 100, "unit": "g", "aliases": ["tempeh"]}, {"name": "Vega gehakt", "category": "vleesvervangers", "kcal": 170, "protein": 17, "carbs": 6, "fat": 8, "fiber": 5, "portion": 100, "unit": "g", "aliases": ["vega gehakt"]}, {"name": "Aardappel gekookt", "category": "aardappelen", "kcal": 87, "protein": 1.9, "carbs": 18, "fat": 0.1, "fiber": 1.8, "portion": 100, "unit": "g", "aliases": ["aardappel gekookt"]}, {"name": "Zoete aardappel", "category": "aardappelen", "kcal": 86, "protein": 1.6, "carbs": 20, "fat": 0.1, "fiber": 3, "portion": 100, "unit": "g", "aliases": ["zoete aardappel"]}, {"name": "Rijst gekookt", "category": "granen", "kcal": 130, "protein": 2.7, "carbs": 28, "fat": 0.3, "fiber": 0.4, "portion": 100, "unit": "g", "aliases": ["rijst gekookt"]}, {"name": "Zilvervliesrijst gekookt", "category": "granen", "kcal": 123, "protein": 2.7, "carbs": 26, "fat": 1, "fiber": 1.6, "portion": 100, "unit": "g", "aliases": ["zilvervliesrijst gekookt"]}, {"name": "Pasta gekookt", "category": "granen", "kcal": 158, "protein": 5.8, "carbs": 31, "fat": 0.9, "fiber": 1.8, "portion": 100, "unit": "g", "aliases": ["pasta gekookt"]}, {"name": "Volkoren pasta gekookt", "category": "granen", "kcal": 149, "protein": 5.5, "carbs": 28, "fat": 1.5, "fiber": 4, "portion": 100, "unit": "g", "aliases": ["volkoren pasta gekookt"]}, {"name": "Couscous gekookt", "category": "granen", "kcal": 112, "protein": 3.8, "carbs": 23, "fat": 0.2, "fiber": 1.4, "portion": 100, "unit": "g", "aliases": ["couscous gekookt"]}, {"name": "Quinoa gekookt", "category": "granen", "kcal": 120, "protein": 4.4, "carbs": 21, "fat": 1.9, "fiber": 2.8, "portion": 100, "unit": "g", "aliases": ["quinoa gekookt"]}, {"name": "Broccoli", "category": "groente", "kcal": 34, "protein": 2.8, "carbs": 4.5, "fat": 0.4, "fiber": 3.3, "portion": 100, "unit": "g", "aliases": ["broccoli"]}, {"name": "Bloemkool", "category": "groente", "kcal": 25, "protein": 1.9, "carbs": 3, "fat": 0.3, "fiber": 2, "portion": 100, "unit": "g", "aliases": ["bloemkool"]}, {"name": "Wortel", "category": "groente", "kcal": 41, "protein": 0.9, "carbs": 10, "fat": 0.2, "fiber": 2.8, "portion": 100, "unit": "g", "aliases": ["wortel"]}, {"name": "Spinazie", "category": "groente", "kcal": 23, "protein": 2.9, "carbs": 1.4, "fat": 0.4, "fiber": 2.2, "portion": 100, "unit": "g", "aliases": ["spinazie"]}, {"name": "Sperziebonen", "category": "groente", "kcal": 31, "protein": 1.8, "carbs": 5.4, "fat": 0.2, "fiber": 3.4, "portion": 100, "unit": "g", "aliases": ["sperziebonen"]}, {"name": "Paprika rood", "category": "groente", "kcal": 31, "protein": 1, "carbs": 6, "fat": 0.3, "fiber": 2.1, "portion": 100, "unit": "g", "aliases": ["paprika rood"]}, {"name": "Komkommer", "category": "groente", "kcal": 15, "protein": 0.7, "carbs": 2.2, "fat": 0.1, "fiber": 0.5, "portion": 100, "unit": "g", "aliases": ["komkommer"]}, {"name": "Tomaat", "category": "groente", "kcal": 18, "protein": 0.9, "carbs": 3.9, "fat": 0.2, "fiber": 1.2, "portion": 100, "unit": "g", "aliases": ["tomaat"]}, {"name": "Courgette", "category": "groente", "kcal": 17, "protein": 1.2, "carbs": 3.1, "fat": 0.3, "fiber": 1, "portion": 100, "unit": "g", "aliases": ["courgette"]}, {"name": "Aubergine", "category": "groente", "kcal": 25, "protein": 1, "carbs": 6, "fat": 0.2, "fiber": 3, "portion": 100, "unit": "g", "aliases": ["aubergine"]}, {"name": "Champignons", "category": "groente", "kcal": 22, "protein": 3.1, "carbs": 3.3, "fat": 0.3, "fiber": 1, "portion": 100, "unit": "g", "aliases": ["champignons"]}, {"name": "Ui", "category": "groente", "kcal": 40, "protein": 1.1, "carbs": 9.3, "fat": 0.1, "fiber": 1.7, "portion": 100, "unit": "g", "aliases": ["ui"]}, {"name": "Mais", "category": "groente", "kcal": 86, "protein": 3.3, "carbs": 19, "fat": 1.4, "fiber": 2.7, "portion": 100, "unit": "g", "aliases": ["mais"]}, {"name": "Avocado", "category": "groente", "kcal": 160, "protein": 2, "carbs": 1.8, "fat": 15, "fiber": 6.7, "portion": 100, "unit": "g", "aliases": ["avocado"]}, {"name": "Sla", "category": "groente", "kcal": 15, "protein": 1.4, "carbs": 2.9, "fat": 0.2, "fiber": 1.3, "portion": 100, "unit": "g", "aliases": ["sla"]}, {"name": "Appel", "category": "fruit", "kcal": 52, "protein": 0.3, "carbs": 14, "fat": 0.2, "fiber": 2.4, "portion": 100, "unit": "g", "aliases": ["appel"]}, {"name": "Banaan", "category": "fruit", "kcal": 89, "protein": 1.1, "carbs": 23, "fat": 0.3, "fiber": 2.6, "portion": 100, "unit": "g", "aliases": ["banaan"]}, {"name": "Peer", "category": "fruit", "kcal": 57, "protein": 0.4, "carbs": 15, "fat": 0.1, "fiber": 3.1, "portion": 100, "unit": "g", "aliases": ["peer"]}, {"name": "Sinaasappel", "category": "fruit", "kcal": 47, "protein": 0.9, "carbs": 12, "fat": 0.1, "fiber": 2.4, "portion": 100, "unit": "g", "aliases": ["sinaasappel"]}, {"name": "Mandarijn", "category": "fruit", "kcal": 53, "protein": 0.8, "carbs": 13, "fat": 0.3, "fiber": 1.8, "portion": 100, "unit": "g", "aliases": ["mandarijn"]}, {"name": "Druiven", "category": "fruit", "kcal": 69, "protein": 0.7, "carbs": 18, "fat": 0.2, "fiber": 0.9, "portion": 100, "unit": "g", "aliases": ["druiven"]}, {"name": "Aardbeien", "category": "fruit", "kcal": 32, "protein": 0.7, "carbs": 7.7, "fat": 0.3, "fiber": 2, "portion": 100, "unit": "g", "aliases": ["aardbeien"]}, {"name": "Blauwe bessen", "category": "fruit", "kcal": 57, "protein": 0.7, "carbs": 14, "fat": 0.3, "fiber": 2.4, "portion": 100, "unit": "g", "aliases": ["blauwe bessen"]}, {"name": "Frambozen", "category": "fruit", "kcal": 52, "protein": 1.2, "carbs": 12, "fat": 0.7, "fiber": 6.5, "portion": 100, "unit": "g", "aliases": ["frambozen"]}, {"name": "Kiwi", "category": "fruit", "kcal": 61, "protein": 1.1, "carbs": 15, "fat": 0.5, "fiber": 3, "portion": 100, "unit": "g", "aliases": ["kiwi"]}, {"name": "Ananas", "category": "fruit", "kcal": 50, "protein": 0.5, "carbs": 13, "fat": 0.1, "fiber": 1.4, "portion": 100, "unit": "g", "aliases": ["ananas"]}, {"name": "Mango", "category": "fruit", "kcal": 60, "protein": 0.8, "carbs": 15, "fat": 0.4, "fiber": 1.6, "portion": 100, "unit": "g", "aliases": ["mango"]}, {"name": "Sinaasappelsap", "category": "drank", "kcal": 45, "protein": 0.7, "carbs": 10, "fat": 0.2, "fiber": 0.2, "portion": 100, "unit": "g", "aliases": ["sinaasappelsap"]}, {"name": "Appelsap", "category": "drank", "kcal": 46, "protein": 0.1, "carbs": 11, "fat": 0.1, "fiber": 0.2, "portion": 100, "unit": "g", "aliases": ["appelsap"]}, {"name": "Koffie zwart", "category": "drank", "kcal": 2, "protein": 0.3, "carbs": 0, "fat": 0, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["koffie zwart"]}, {"name": "Thee zonder suiker", "category": "drank", "kcal": 1, "protein": 0, "carbs": 0, "fat": 0, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["thee zonder suiker"]}, {"name": "Olijfolie", "category": "vetten", "kcal": 884, "protein": 0, "carbs": 0, "fat": 100, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["olijfolie"]}, {"name": "Roomboter", "category": "vetten", "kcal": 717, "protein": 0.9, "carbs": 0.1, "fat": 81, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["roomboter"]}, {"name": "Halvarine", "category": "vetten", "kcal": 360, "protein": 0.5, "carbs": 0.5, "fat": 40, "fiber": 0, "portion": 100, "unit": "g", "aliases": ["halvarine"]}, {"name": "Pindakaas", "category": "beleg", "kcal": 588, "protein": 25, "carbs": 20, "fat": 50, "fiber": 6, "portion": 100, "unit": "g", "aliases": ["pindakaas"]}, {"name": "Hummus", "category": "beleg", "kcal": 166, "protein": 8, "carbs": 14, "fat": 10, "fiber": 6, "portion": 100, "unit": "g", "aliases": ["hummus"]}, {"name": "Jam", "category": "beleg", "kcal": 250, "protein": 0.4, "carbs": 62, "fat": 0.2, "fiber": 1, "portion": 100, "unit": "g", "aliases": ["jam"]}, {"name": "Honing", "category": "beleg", "kcal": 304, "protein": 0.3, "carbs": 82, "fat": 0, "fiber": 0.2, "portion": 100, "unit": "g", "aliases": ["honing"]}, {"name": "Amandelen", "category": "noten", "kcal": 579, "protein": 21, "carbs": 22, "fat": 50, "fiber": 12.5, "portion": 100, "unit": "g", "aliases": ["amandelen"]}, {"name": "Walnoten", "category": "noten", "kcal": 654, "protein": 15, "carbs": 14, "fat": 65, "fiber": 6.7, "portion": 100, "unit": "g", "aliases": ["walnoten"]}, {"name": "Cashewnoten", "category": "noten", "kcal": 553, "protein": 18, "carbs": 30, "fat": 44, "fiber": 3.3, "portion": 100, "unit": "g", "aliases": ["cashewnoten"]}, {"name": "Pistachenoten", "category": "noten", "kcal": 562, "protein": 20, "carbs": 28, "fat": 45, "fiber": 10, "portion": 100, "unit": "g", "aliases": ["pistachenoten"]}, {"name": "Chiazaad", "category": "zaden", "kcal": 486, "protein": 17, "carbs": 42, "fat": 31, "fiber": 34, "portion": 100, "unit": "g", "aliases": ["chiazaad"]}];</script>
 <script>
 const defaults={kcal:2200,protein:140,carbs:250,fat:75,fiber:30};
 let goals=JSON.parse(localStorage.getItem('ntGoals')||'null')||defaults;
@@ -416,7 +415,7 @@ async function registerNutriServiceWorker(){
   if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
   try{
     await navigator.serviceWorker.register('./service-worker.js');
-    console.log('NutriTrack V17: offline service worker actief.');
+    console.log('NutriTrack V18: offline service worker actief.');
   }catch(e){
     console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
   }
@@ -471,7 +470,7 @@ function handleVoiceResult(mode,text){
 function voiceButton(mode,label='Spreek in'){
  return `<div class="voiceRow"><button class="voiceBtn" onclick="startVoice('${mode}')" title="Spraak invoeren">🎙️</button><span class="voiceStatus" id="voiceStatus">${label}</span></div>`;
 }
-// V12 – mobile-first features, real camera barcode flow, custom foods and meal planning
+// V18 – mobile-first features, real camera barcode flow, custom foods and meal planning
 let customFoods=JSON.parse(localStorage.getItem('ntCustomFoods')||'[]');
 let savedMeals=JSON.parse(localStorage.getItem('ntSavedMeals')||'[]');
 let deferredInstallPrompt=null;
@@ -492,19 +491,23 @@ async function realCameraBarcode(){
    const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
    video.srcObject=stream;window.ntCameraStream=stream;
    if('BarcodeDetector' in window){
-     const detector=new BarcodeDetector({formats:['ean_13','ean_8','upc_a','upc_e','code_128']});
+     let formats=['ean_13','ean_8','upc_a','upc_e','code_128'];
+     try{const supported=await BarcodeDetector.getSupportedFormats(); formats=formats.filter(f=>supported.includes(f));}catch(e){}
+     const detector=new BarcodeDetector({formats});
+     let scanning=true;
      const scan=async()=>{
-       if(!window.ntCameraStream)return;
-       try{const codes=await detector.detect(video);if(codes.length){stopBarcodeCamera();lookupOpenFoodFacts(codes[0].rawValue);return}}catch(e){}
+       if(!window.ntCameraStream||!scanning)return;
+       try{const codes=await detector.detect(video);if(codes.length){scanning=false; if(navigator.vibrate)navigator.vibrate(120); stopBarcodeCamera(); lookupOpenFoodFacts(codes[0].rawValue); return}}catch(e){}
        requestAnimationFrame(scan);
-     };scan();
-     document.getElementById('cameraScanStatus').textContent='Scanner actief – barcode wordt automatisch herkend.';
-   }else document.getElementById('cameraScanStatus').textContent='Deze browser ondersteunt automatische barcodeherkenning nog niet. Gebruik handmatige invoer.';
+     };
+     scan();
+     document.getElementById('cameraScanStatus').textContent='✓ Scanner actief – richt op de streepjescode.';
+   }else document.getElementById('cameraScanStatus').textContent='Automatische barcodeherkenning wordt niet door deze browser ondersteund. Gebruik handmatige invoer.';
  }catch(e){document.getElementById('cameraScanStatus').textContent='Camera niet beschikbaar. Controleer de camerarechten.'}
 }
 function stopBarcodeCamera(){if(window.ntCameraStream){window.ntCameraStream.getTracks().forEach(t=>t.stop());window.ntCameraStream=null}}
 function barcodeScanner(){
- modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Scan met je camera</b><p class="date" style="color:#fff;opacity:.8">Of voer de barcode handmatig in.</p><button class="install" onclick="realCameraBarcode()">Open camera</button></div><input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in" onkeydown="if(event.key==='Enter')lookupBarcode()"><button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
+ modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Scan met je camera</b><p class="date" style="color:#fff;opacity:.8">Houd de barcode rustig binnen het kader. Het product wordt daarna automatisch opgezocht.</p><button class="install" onclick="realCameraBarcode()">Open camera</button></div><input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in" onkeydown="if(event.key==='Enter')lookupBarcode()"><button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
 }
 function allFoods(){return [...foodDB,...customFoods]}
 
@@ -602,42 +605,137 @@ function showFavorites(){
 }
 async function lookupOpenFoodFacts(code){
  const status=document.getElementById('barcodeStatus');
- if(status)status.innerHTML='<span class="apiStatus">🔄 Online productdatabase wordt geraadpleegd...</span>';
+ if(status)status.innerHTML='<span class="apiStatus">🔄 Product wordt opgezocht...</span>';
+ const clean=String(code).replace(/\D/g,'');
+ if(clean.length<8){alert('Barcode is te kort.');return;}
  try{
-   const url='https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(code)+'.json';
-   const res=await fetch(url,{headers:{'User-Agent':'NutriTrack/1.0'}});
-   if(!res.ok)throw new Error('API niet bereikbaar');
-   const data=await res.json();
-   if(!data.product)throw new Error('Product niet gevonden');
+   let data=null, lastErr=null;
+   for(const url of [
+     'https://world.openfoodfacts.org/api/v3/product/'+encodeURIComponent(clean)+'.json?fields=code,product_name,product_name_nl,generic_name,brands,image_front_url,serving_size,nutriments,nutriscore_grade',
+     'https://world.openfoodfacts.org/api/v2/product/'+encodeURIComponent(clean)+'.json?fields=product_name,product_name_nl,generic_name,brands,image_front_url,serving_size,nutriments,nutrition_grades'
+   ]){
+     try{const res=await fetch(url); if(!res.ok)throw new Error('API '+res.status); const d=await res.json(); if(d.status===1 || d.product){data=d;break;} lastErr=new Error('Niet gevonden');}catch(e){lastErr=e;}
+   }
+   if(!data || !data.product)throw lastErr||new Error('Product niet gevonden');
    const p=data.product, n=p.nutriments||{};
-   const per100={
-     name:p.product_name||p.product_name_nl||p.generic_name||'Onbekend product',
-     barcode:code,
-     kcal:Math.round(Number(n['energy-kcal_100g'] ?? (n.energy_100g?Number(n.energy_100g)/4.184:0))||0),
-     protein:Number(n.proteins_100g||0),
-     carbs:Number(n.carbohydrates_100g||0),
-     fat:Number(n.fat_100g||0),
-     fiber:Number(n.fiber_100g||0),
-     portion:p.serving_size||'100 g',
-     source:'Open Food Facts'
-   };
-   showProductResult(per100,'Online barcode database');
+   const kcal=Number(n['energy-kcal_100g'] ?? n['energy-kcal_value'] ?? (n.energy_100g?Number(n.energy_100g)/4.184:0))||0;
+   const per100={name:p.product_name_nl||p.product_name||p.generic_name||('Product '+clean),barcode:clean,brand:p.brands||'',kcal:Math.round(kcal),protein:Number(n.proteins_100g||0),carbs:Number(n.carbohydrates_100g||0),fat:Number(n.fat_100g||0),fiber:Number(n.fiber_100g||0),portion:p.serving_size||'100 g',image:p.image_front_url||'',nutriscore:p.nutriscore_grade||'',source:'Open Food Facts'};
+   showProductResult(per100,'Barcode herkend');
  }catch(err){
-   let p=foodDB.find(x=>x.barcode===code);
-   if(p)showProductResult(p,'Lokale database');
-   else modal(`<h2>Product niet gevonden</h2><p class="date" style="color:#718078">De online barcode database gaf geen product terug voor deze barcode. Je kunt het product handmatig toevoegen of op naam zoeken.</p><button class="primary" onclick="databaseSearch()">Zoek op naam</button>`);
+   const p=allFoods().find(x=>x.barcode===clean);
+   if(p){showProductResult(p,'Lokale database');return;}
+   modal(`<h2>🔎 Product niet gevonden</h2><p class="date">Deze barcode staat niet in Open Food Facts. Je kunt het product zelf invoeren en eventueel de barcode opslaan.</p><button class="primary" onclick="addOwnProduct()">Eigen product toevoegen</button><button onclick="databaseSearch()">Zoek op naam</button>`);
  }
 }
 // V10 – product database, barcode flow and AI recognition preparation
 const foodDB=[
- {name:'Banaan',barcode:'4011',kcal:105,protein:1.3,carbs:27,fat:.4,fiber:3.1,portion:'1 stuk'},
- {name:'Skyr naturel',barcode:'871000000001',kcal:63,protein:11,carbs:4,fat:.2,fiber:0,portion:'100 g'},
- {name:'Kipfilet',barcode:'871000000002',kcal:110,protein:23,carbs:0,fat:1.5,fiber:0,portion:'100 g'},
- {name:'Volkoren brood',barcode:'871000000003',kcal:82,protein:4,carbs:15,fat:1,fiber:2.4,portion:'1 snee'},
- {name:'Griekse yoghurt',barcode:'871000000004',kcal:97,protein:9,carbs:4,fat:5,fiber:0,portion:'100 g'},
- {name:'Ei',barcode:'871000000005',kcal:78,protein:6.3,carbs:.6,fat:5.3,fiber:0,portion:'1 stuk'},
- {name:'Havermout',barcode:'871000000006',kcal:370,protein:13,carbs:60,fat:7,fiber:10,portion:'100 g'},
- {name:'Zalm',barcode:'871000000007',kcal:208,protein:20,carbs:0,fat:13,fiber:0,portion:'100 g'}
+ {name:"Banaan",category:"fruit",barcode:'9000000000000',kcal:105,protein:1.3,carbs:27,fat:0.4,fiber:3.1,portion:"1 stuk"},
+ {name:"Appel",category:"fruit",barcode:'9000000000001',kcal:52,protein:0.3,carbs:14,fat:0.2,fiber:2.4,portion:"1 stuk"},
+ {name:"Peer",category:"fruit",barcode:'9000000000002',kcal:57,protein:0.4,carbs:15,fat:0.1,fiber:3.1,portion:"1 stuk"},
+ {name:"Sinaasappel",category:"fruit",barcode:'9000000000003',kcal:47,protein:0.9,carbs:12,fat:0.1,fiber:2.4,portion:"1 stuk"},
+ {name:"Mandarijn",category:"fruit",barcode:'9000000000004',kcal:53,protein:0.8,carbs:13,fat:0.3,fiber:1.8,portion:"1 stuk"},
+ {name:"Kiwi",category:"fruit",barcode:'9000000000005',kcal:61,protein:1.1,carbs:15,fat:0.5,fiber:3,portion:"1 stuk"},
+ {name:"Aardbeien",category:"fruit",barcode:'9000000000006',kcal:32,protein:0.7,carbs:7.7,fat:0.3,fiber:2,portion:"100 g"},
+ {name:"Blauwe bessen",category:"fruit",barcode:'9000000000007',kcal:57,protein:0.7,carbs:14,fat:0.3,fiber:2.4,portion:"100 g"},
+ {name:"Druiven",category:"fruit",barcode:'9000000000008',kcal:69,protein:0.7,carbs:18,fat:0.2,fiber:0.9,portion:"100 g"},
+ {name:"Mango",category:"fruit",barcode:'9000000000009',kcal:60,protein:0.8,carbs:15,fat:0.4,fiber:1.6,portion:"100 g"},
+ {name:"Ananas",category:"fruit",barcode:'9000000000010',kcal:50,protein:0.5,carbs:13,fat:0.1,fiber:1.4,portion:"100 g"},
+ {name:"Perzik",category:"fruit",barcode:'9000000000011',kcal:39,protein:0.9,carbs:10,fat:0.3,fiber:1.5,portion:"1 stuk"},
+ {name:"Volkoren brood",category:"brood",barcode:'9000000000012',kcal:82,protein:4,carbs:15,fat:1,fiber:2.4,portion:"1 snee"},
+ {name:"Wit brood",category:"brood",barcode:'9000000000013',kcal:75,protein:2.6,carbs:14,fat:0.9,fiber:0.8,portion:"1 snee"},
+ {name:"Meergranenbrood",category:"brood",barcode:'9000000000014',kcal:85,protein:3.8,carbs:14,fat:1.3,fiber:2.5,portion:"1 snee"},
+ {name:"Volkoren bol",category:"brood",barcode:'9000000000015',kcal:150,protein:6,carbs:27,fat:2,fiber:4,portion:"1 stuk"},
+ {name:"Wrap volkoren",category:"brood",barcode:'9000000000016',kcal:170,protein:5,carbs:29,fat:3.5,fiber:4,portion:"1 stuk"},
+ {name:"Kn\u00e4ckebr\u00f6d volkoren",category:"brood",barcode:'9000000000017',kcal:40,protein:1.3,carbs:7,fat:0.5,fiber:1.5,portion:"1 stuk"},
+ {name:"Havermout",category:"ontbijt",barcode:'9000000000018',kcal:370,protein:13,carbs:60,fat:7,fiber:10,portion:"100 g"},
+ {name:"Muesli",category:"ontbijt",barcode:'9000000000019',kcal:380,protein:10,carbs:65,fat:7,fiber:8,portion:"100 g"},
+ {name:"Cruesli",category:"ontbijt",barcode:'9000000000020',kcal:450,protein:8,carbs:67,fat:16,fiber:6,portion:"100 g"},
+ {name:"Cornflakes",category:"ontbijt",barcode:'9000000000021',kcal:357,protein:7,carbs:84,fat:0.4,fiber:3,portion:"100 g"},
+ {name:"Chiazaad",category:"ontbijt",barcode:'9000000000022',kcal:486,protein:17,carbs:8,fat:31,fiber:34,portion:"100 g"},
+ {name:"Pindakaas",category:"beleg",barcode:'9000000000023',kcal:630,protein:26,carbs:12,fat:50,fiber:6,portion:"100 g"},
+ {name:"Jam",category:"beleg",barcode:'9000000000024',kcal:250,protein:0.4,carbs:62,fat:0.1,fiber:1,portion:"100 g"},
+ {name:"Honing",category:"beleg",barcode:'9000000000025',kcal:304,protein:0.3,carbs:82,fat:0,fiber:0.2,portion:"100 g"},
+ {name:"Hummus",category:"beleg",barcode:'9000000000026',kcal:240,protein:8,carbs:14,fat:17,fiber:6,portion:"100 g"},
+ {name:"20+ kaas",category:"zuivel",barcode:'9000000000027',kcal:260,protein:30,carbs:0,fat:14,fiber:0,portion:"100 g"},
+ {name:"30+ kaas",category:"zuivel",barcode:'9000000000028',kcal:300,protein:30,carbs:0,fat:20,fiber:0,portion:"100 g"},
+ {name:"48+ kaas",category:"zuivel",barcode:'9000000000029',kcal:380,protein:25,carbs:0,fat:31,fiber:0,portion:"100 g"},
+ {name:"Skyr naturel",category:"zuivel",barcode:'9000000000030',kcal:63,protein:11,carbs:4,fat:0.2,fiber:0,portion:"100 g"},
+ {name:"Griekse yoghurt",category:"zuivel",barcode:'9000000000031',kcal:97,protein:9,carbs:4,fat:5,fiber:0,portion:"100 g"},
+ {name:"Magere yoghurt",category:"zuivel",barcode:'9000000000032',kcal:38,protein:4.5,carbs:5,fat:0.1,fiber:0,portion:"100 g"},
+ {name:"Halfvolle yoghurt",category:"zuivel",barcode:'9000000000033',kcal:50,protein:4,carbs:5.5,fat:1.5,fiber:0,portion:"100 g"},
+ {name:"Magere kwark",category:"zuivel",barcode:'9000000000034',kcal:65,protein:10,carbs:4,fat:0.2,fiber:0,portion:"100 g"},
+ {name:"Volle kwark",category:"zuivel",barcode:'9000000000035',kcal:120,protein:8,carbs:4,fat:8,fiber:0,portion:"100 g"},
+ {name:"Cottage cheese",category:"zuivel",barcode:'9000000000036',kcal:98,protein:12,carbs:3.4,fat:4.3,fiber:0,portion:"100 g"},
+ {name:"Halfvolle melk",category:"zuivel",barcode:'9000000000037',kcal:47,protein:3.5,carbs:4.8,fat:1.5,fiber:0,portion:"100 ml"},
+ {name:"Volle melk",category:"zuivel",barcode:'9000000000038',kcal:64,protein:3.4,carbs:4.8,fat:3.6,fiber:0,portion:"100 ml"},
+ {name:"Karnemelk",category:"zuivel",barcode:'9000000000039',kcal:40,protein:3.5,carbs:4.7,fat:0.9,fiber:0,portion:"100 ml"},
+ {name:"Sojadrink ongezoet",category:"drank",barcode:'9000000000040',kcal:33,protein:3.3,carbs:0.7,fat:1.8,fiber:0.5,portion:"100 ml"},
+ {name:"Amandeldrink ongezoet",category:"drank",barcode:'9000000000041',kcal:15,protein:0.5,carbs:0.3,fat:1.1,fiber:0.2,portion:"100 ml"},
+ {name:"Ei",category:"eiwit",barcode:'9000000000042',kcal:78,protein:6.3,carbs:0.6,fat:5.3,fiber:0,portion:"1 stuk"},
+ {name:"Eiwit",category:"eiwit",barcode:'9000000000043',kcal:52,protein:10.9,carbs:0.7,fat:0.2,fiber:0,portion:"100 g"},
+ {name:"Kipfilet",category:"vlees",barcode:'9000000000044',kcal:110,protein:23,carbs:0,fat:1.5,fiber:0,portion:"100 g"},
+ {name:"Kipdij",category:"vlees",barcode:'9000000000045',kcal:170,protein:18,carbs:0,fat:10,fiber:0,portion:"100 g"},
+ {name:"Kalkoenfilet",category:"vlees",barcode:'9000000000046',kcal:110,protein:24,carbs:0,fat:1,fiber:0,portion:"100 g"},
+ {name:"Rundergehakt mager",category:"vlees",barcode:'9000000000047',kcal:170,protein:21,carbs:0,fat:9,fiber:0,portion:"100 g"},
+ {name:"Biefstuk",category:"vlees",barcode:'9000000000048',kcal:190,protein:26,carbs:0,fat:9,fiber:0,portion:"100 g"},
+ {name:"Varkensfilet",category:"vlees",barcode:'9000000000049',kcal:145,protein:22,carbs:0,fat:6,fiber:0,portion:"100 g"},
+ {name:"Ham",category:"vlees",barcode:'9000000000050',kcal:120,protein:20,carbs:1,fat:4,fiber:0,portion:"100 g"},
+ {name:"Rosbief",category:"vlees",barcode:'9000000000051',kcal:145,protein:24,carbs:0,fat:5,fiber:0,portion:"100 g"},
+ {name:"Tonijn uit water",category:"vis",barcode:'9000000000052',kcal:116,protein:26,carbs:0,fat:1,fiber:0,portion:"100 g"},
+ {name:"Zalm",category:"vis",barcode:'9000000000053',kcal:208,protein:20,carbs:0,fat:13,fiber:0,portion:"100 g"},
+ {name:"Kabeljauw",category:"vis",barcode:'9000000000054',kcal:82,protein:18,carbs:0,fat:0.7,fiber:0,portion:"100 g"},
+ {name:"Garnalen",category:"vis",barcode:'9000000000055',kcal:99,protein:24,carbs:0.2,fat:0.3,fiber:0,portion:"100 g"},
+ {name:"Makreel",category:"vis",barcode:'9000000000056',kcal:205,protein:19,carbs:0,fat:14,fiber:0,portion:"100 g"},
+ {name:"Aardappelen",category:"groente",barcode:'9000000000057',kcal:77,protein:2,carbs:17,fat:0.1,fiber:2.2,portion:"100 g"},
+ {name:"Zoete aardappel",category:"groente",barcode:'9000000000058',kcal:86,protein:1.6,carbs:20,fat:0.1,fiber:3,portion:"100 g"},
+ {name:"Rijst gekookt",category:"granen",barcode:'9000000000059',kcal:130,protein:2.7,carbs:28,fat:0.3,fiber:0.4,portion:"100 g"},
+ {name:"Zilvervliesrijst gekookt",category:"granen",barcode:'9000000000060',kcal:123,protein:2.7,carbs:26,fat:1,fiber:0.6,portion:"100 g"},
+ {name:"Pasta gekookt",category:"granen",barcode:'9000000000061',kcal:158,protein:5.8,carbs:31,fat:0.9,fiber:1.8,portion:"100 g"},
+ {name:"Volkoren pasta gekookt",category:"granen",barcode:'9000000000062',kcal:149,protein:5.8,carbs:27,fat:1.7,fiber:4.5,portion:"100 g"},
+ {name:"Couscous gekookt",category:"granen",barcode:'9000000000063',kcal:112,protein:3.8,carbs:23,fat:0.2,fiber:1.4,portion:"100 g"},
+ {name:"Quinoa gekookt",category:"granen",barcode:'9000000000064',kcal:120,protein:4.4,carbs:21,fat:1.9,fiber:2.8,portion:"100 g"},
+ {name:"Linzen gekookt",category:"peulvrucht",barcode:'9000000000065',kcal:116,protein:9,carbs:20,fat:0.4,fiber:7.9,portion:"100 g"},
+ {name:"Kikkererwten gekookt",category:"peulvrucht",barcode:'9000000000066',kcal:164,protein:8.9,carbs:27,fat:2.6,fiber:7.6,portion:"100 g"},
+ {name:"Kidneybonen gekookt",category:"peulvrucht",barcode:'9000000000067',kcal:127,protein:8.7,carbs:23,fat:0.5,fiber:6.4,portion:"100 g"},
+ {name:"Broccoli",category:"groente",barcode:'9000000000068',kcal:34,protein:2.8,carbs:7,fat:0.4,fiber:2.6,portion:"100 g"},
+ {name:"Bloemkool",category:"groente",barcode:'9000000000069',kcal:25,protein:1.9,carbs:5,fat:0.3,fiber:2,portion:"100 g"},
+ {name:"Spinazie",category:"groente",barcode:'9000000000070',kcal:23,protein:2.9,carbs:3.6,fat:0.4,fiber:2.2,portion:"100 g"},
+ {name:"Wortel",category:"groente",barcode:'9000000000071',kcal:41,protein:0.9,carbs:10,fat:0.2,fiber:2.8,portion:"100 g"},
+ {name:"Paprika rood",category:"groente",barcode:'9000000000072',kcal:31,protein:1,carbs:6,fat:0.3,fiber:2.1,portion:"100 g"},
+ {name:"Komkommer",category:"groente",barcode:'9000000000073',kcal:15,protein:0.7,carbs:3.6,fat:0.1,fiber:0.5,portion:"100 g"},
+ {name:"Tomaat",category:"groente",barcode:'9000000000074',kcal:18,protein:0.9,carbs:3.9,fat:0.2,fiber:1.2,portion:"100 g"},
+ {name:"Courgette",category:"groente",barcode:'9000000000075',kcal:17,protein:1.2,carbs:3.1,fat:0.3,fiber:1,portion:"100 g"},
+ {name:"Champignons",category:"groente",barcode:'9000000000076',kcal:22,protein:3.1,carbs:3.3,fat:0.3,fiber:1,portion:"100 g"},
+ {name:"Sperziebonen",category:"groente",barcode:'9000000000077',kcal:31,protein:1.8,carbs:7,fat:0.2,fiber:2.7,portion:"100 g"},
+ {name:"Doperwten",category:"groente",barcode:'9000000000078',kcal:81,protein:5.4,carbs:14,fat:0.4,fiber:5.7,portion:"100 g"},
+ {name:"Mais",category:"groente",barcode:'9000000000079',kcal:86,protein:3.2,carbs:19,fat:1.2,fiber:2.7,portion:"100 g"},
+ {name:"Avocado",category:"groente",barcode:'9000000000080',kcal:160,protein:2,carbs:9,fat:15,fiber:7,portion:"100 g"},
+ {name:"Olijfolie",category:"vet",barcode:'9000000000081',kcal:884,protein:0,carbs:0,fat:100,fiber:0,portion:"100 ml"},
+ {name:"Roomboter",category:"vet",barcode:'9000000000082',kcal:717,protein:0.9,carbs:0.1,fat:81,fiber:0,portion:"100 g"},
+ {name:"Halvarine",category:"vet",barcode:'9000000000083',kcal:360,protein:0.5,carbs:0.5,fat:40,fiber:0,portion:"100 g"},
+ {name:"Amandelen",category:"noten",barcode:'9000000000084',kcal:579,protein:21,carbs:22,fat:50,fiber:12.5,portion:"100 g"},
+ {name:"Walnoten",category:"noten",barcode:'9000000000085',kcal:654,protein:15,carbs:14,fat:65,fiber:6.7,portion:"100 g"},
+ {name:"Cashewnoten",category:"noten",barcode:'9000000000086',kcal:553,protein:18,carbs:30,fat:44,fiber:3.3,portion:"100 g"},
+ {name:"Pistachenoten",category:"noten",barcode:'9000000000087',kcal:562,protein:20,carbs:28,fat:45,fiber:10,portion:"100 g"},
+ {name:"Pure chocolade 70%",category:"snack",barcode:'9000000000088',kcal:598,protein:8,carbs:46,fat:43,fiber:11,portion:"100 g"},
+ {name:"Melkchocolade",category:"snack",barcode:'9000000000089',kcal:535,protein:8,carbs:59,fat:30,fiber:3,portion:"100 g"},
+ {name:"Rijstwafel",category:"snack",barcode:'9000000000090',kcal:387,protein:8,carbs:81,fat:3,fiber:3.5,portion:"1 stuk"},
+ {name:"Popcorn naturel",category:"snack",barcode:'9000000000091',kcal:387,protein:13,carbs:78,fat:4.5,fiber:15,portion:"100 g"},
+ {name:"Tomatensoep",category:"maaltijd",barcode:'9000000000092',kcal:35,protein:1.2,carbs:5,fat:0.8,fiber:1.2,portion:"100 ml"},
+ {name:"Groentesoep",category:"maaltijd",barcode:'9000000000093',kcal:35,protein:1.5,carbs:5,fat:1,fiber:1.5,portion:"100 ml"},
+ {name:"Kippensoep",category:"maaltijd",barcode:'9000000000094',kcal:45,protein:5,carbs:3,fat:1.5,fiber:0.5,portion:"100 ml"},
+ {name:"Pannenkoek",category:"maaltijd",barcode:'9000000000095',kcal:227,protein:6,carbs:28,fat:10,fiber:1,portion:"1 stuk"},
+ {name:"Pizza margherita",category:"maaltijd",barcode:'9000000000096',kcal:250,protein:11,carbs:30,fat:10,fiber:2,portion:"100 g"},
+ {name:"Lasagne",category:"maaltijd",barcode:'9000000000097',kcal:160,protein:9,carbs:14,fat:8,fiber:1.5,portion:"100 g"},
+ {name:"Nasi goreng",category:"maaltijd",barcode:'9000000000098',kcal:170,protein:6,carbs:25,fat:5,fiber:1.5,portion:"100 g"},
+ {name:"Stamppot",category:"maaltijd",barcode:'9000000000099',kcal:110,protein:3,carbs:15,fat:4,fiber:2,portion:"100 g"},
+ {name:"Water",category:"drank",barcode:'9000000000100',kcal:0,protein:0,carbs:0,fat:0,fiber:0,portion:"100 ml"},
+ {name:"Koffie zwart",category:"drank",barcode:'9000000000101',kcal:2,protein:0.1,carbs:0,fat:0,fiber:0,portion:"100 ml"},
+ {name:"Thee zonder suiker",category:"drank",barcode:'9000000000102',kcal:1,protein:0,carbs:0,fat:0,fiber:0,portion:"100 ml"},
+ {name:"Cola",category:"drank",barcode:'9000000000103',kcal:42,protein:0,carbs:10.6,fat:0,fiber:0,portion:"100 ml"},
+ {name:"Cola zero",category:"drank",barcode:'9000000000104',kcal:1,protein:0,carbs:0,fat:0,fiber:0,portion:"100 ml"},
+ {name:"Sinaasappelsap",category:"drank",barcode:'9000000000105',kcal:45,protein:0.7,carbs:10,fat:0.2,fiber:0.2,portion:"100 ml"},
+ {name:"Appelsap",category:"drank",barcode:'9000000000106',kcal:46,protein:0.1,carbs:11,fat:0,fiber:0.1,portion:"100 ml"}
 ];
 let recentFoods=JSON.parse(localStorage.getItem('ntRecentFoods')||'[]');
 
@@ -667,10 +765,9 @@ function barcodeScanner(){
  <button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
 }
 function lookupBarcode(){
- let code=document.getElementById('barcodeInput').value.trim();
- let p=foodDB.find(x=>x.barcode===code);
- if(!p){modal(`<h2>Geen product gevonden</h2><p class="date" style="color:#718078">Dit prototype bevat een lokale demo-database. In de echte app wordt dit gekoppeld aan een externe productdatabase/API.</p><button class="primary" onclick="databaseSearch()">Zoek op naam</button>`);return}
- showProductResult(p,'Barcode herkend');
+ let code=(document.getElementById('barcodeInput')?.value||'').replace(/\D/g,'').trim();
+ if(code.length<8){alert('Voer een geldige barcode in.');return;}
+ lookupOpenFoodFacts(code);
 }
 function databaseSearch(){
  modal(`<h2>🔎 Voedingsdatabase</h2><input id="dbSearch" placeholder="Zoek bijvoorbeeld kip, banaan..." oninput="filterDB()" autofocus><div id="dbResults"></div>`);
@@ -678,9 +775,11 @@ function databaseSearch(){
 }
 function filterDB(){
  let el=document.getElementById('dbResults');if(!el)return;
- let q=(document.getElementById('dbSearch').value||'').toLowerCase();
- let results=allFoods().filter(x=>x.name.toLowerCase().includes(q));
- el.innerHTML=results.map((p,i)=>`<div class="searchResult"><div><b>${p.name}</b><br><small>${p.kcal} kcal · ${p.protein}g eiwit · ${p.portion}</small></div><button onclick="showProductResult(allFoods()[${allFoods().indexOf(p)}],'Database')">+</button></div>`).join('')||'<p class="date">Geen product gevonden.</p>';
+ let q=(document.getElementById('dbSearch').value||'').toLowerCase().trim();
+ const aliases={kip:'kipfilet',yoghurt:'magere yoghurt',kwark:'magere kwark',kaas:'30+ kaas',rijst:'rijst gekookt',pasta:'pasta gekookt',aardappel:'aardappelen',brood:'volkoren brood',fruit:'appel',groente:'broccoli',vis:'zalm',noten:'amandelen',melk:'halfvolle melk'};
+ if(aliases[q])q=aliases[q];
+ let results=allFoods().filter(x=>!q||x.name.toLowerCase().includes(q)||String(x.category||'').includes(q)).slice(0,60);
+ el.innerHTML=results.map((p)=>{const i=allFoods().indexOf(p);return `<div class="searchResult"><div><b>${p.name}</b><br><small>${p.kcal} kcal · ${p.protein}g eiwit · ${p.carbs}g kh · ${p.portion}</small></div><button onclick="showProductResult(allFoods()[${i}],'Database')">+</button></div>`}).join('')||'<p class="date">Geen product gevonden. Probeer een andere naam.</p>';
 }
 function aiMealPhoto(){
  modal(`<h2>📷 AI maaltijdherkenning</h2><div class="photozone"><div style="font-size:42px">🤖</div><b>Fotografeer je maaltijd</b><p class="date" style="color:#718078">De V10-flow is voorbereid voor AI-herkenning van ingrediënten, porties en voedingswaarden.</p><input type="file" accept="image/*" capture="environment" onchange="analyzeMealV10(this)" style="display:none" id="mealPhotoV10"><button onclick="document.getElementById('mealPhotoV10').click()">📷 Kies foto</button></div>`);
@@ -918,19 +1017,7 @@ render=function(){loadSelectedDay();baseRender();renderV4();smartAnalysis();fore
 document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')close()};
 render();checkOnboarding();updatePWAStatus();registerNutriServiceWorker();
 
-// V17 compatibility helpers
+// V18 compatibility helpers
 function photo(){ if(typeof aiMealPhoto==='function') aiMealPhoto(); }
 
-</script><div id="installBanner" class="installBanner heroPWA"><b>📲 Installeer NutriTrack</b><p class="date" style="color:#fff;opacity:.85">Gebruik NutriTrack als app op je telefoon.</p><button class="install" onclick="installApp()">Installeren</button></div><script id="nutritrack-v17-engine">
-(function(){
- const db=window.NUTRITRACK_V17_FOODS||[];
- window.nutriV17Search=function(q,limit){
-  q=String(q||'').toLowerCase().trim(); if(!q)return [];
-  return db.map(x=>{let h=(x.name+' '+(x.aliases||[]).join(' ')).toLowerCase(),s=0;
-    if(h===q)s+=100;if(h.includes(q))s+=50;q.split(/\s+/).forEach(t=>{if(h.includes(t))s+=8});
-    return {x,s}}).filter(a=>a.s).sort((a,b)=>b.s-a.s).slice(0,limit||10).map(a=>a.x);
- };
- window.nutriV17Count=db.length;
- try{localStorage.setItem('nutritrack_v17_base_db',JSON.stringify(db));}catch(e){}
-})();
-</script></body></html>
+</script><div id="installBanner" class="installBanner heroPWA"><b>📲 Installeer NutriTrack</b><p class="date" style="color:#fff;opacity:.85">Gebruik NutriTrack als app op je telefoon.</p><button class="install" onclick="installApp()">Installeren</button></div></body></html>
