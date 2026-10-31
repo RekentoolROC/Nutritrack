@@ -1,8 +1,10 @@
 <!DOCTYPE html>
+const RETAILERS_V201=["Albert Heijn","AH","Jumbo","PLUS","Lidl","Aldi","Dirk","Spar","Picnic","Ekoplaza","Hoogvliet","Vomar","Nettorama","DekaMarkt","Boni","Jan Linders","Coop"];
+
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V20</title>
+<title>NutriTrack V20.1</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
 *{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
@@ -49,9 +51,9 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V20</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="section"><h2>📲 NutriTrack V20.1</h2><button onclick="showInstallGuide()">Installatie</button></div>
 <div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V20 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="section"><h2>📱 NutriTrack V20.1 mobiel</h2><button onclick="installApp()">Installeer</button></div>
 <div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
 <div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
 <div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
@@ -286,7 +288,7 @@ const db=[
 ["Pistachenoten 30g",168,6,8,13,3],
 ["Hazelnoten 30g",188,4.5,5,18,3],
 ["Pecannoten 30g",207,2.8,4,21,3],
-["Pinda"s 30g",170,7,5,14,2.5],
+["Pinda's 30g",170,7,5,14,2.5],
 ["Chiazaad 15g",73,2.5,0.8,4.7,5],
 ["Lijnzaad 15g",80,2.7,0.5,6.3,4],
 ["Pompoenpitten 30g",170,9,3,14,2],
@@ -673,7 +675,7 @@ async function registerNutriServiceWorker(){
   if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
   try{
     await navigator.serviceWorker.register('./service-worker.js');
-    console.log('NutriTrack V20: offline service worker actief.');
+    console.log('NutriTrack V20.1: offline service worker actief.');
   }catch(e){
     console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
   }
@@ -1070,19 +1072,35 @@ function openScanner(){
   <div class="scanOption" onclick="addOwnProduct()"><div style="font-size:30px">✚</div><b>Eigen product</b><small>Zelf invoeren</small></div>
  </div>`);
 }
-function barcodeScanner(){
- modal(`<h2>▥ Barcode scannen</h2><div class="scanHero"><div class="scanCircle">▥</div><b>Camera-scanner voorbereid</b><p class="date" style="color:#fff;opacity:.8">In de productieversie opent hier de camera met een barcode-scanner.</p></div>
- <input id="barcodeInput" inputmode="numeric" placeholder="Voer barcode in voor demo" onkeydown="if(event.key==='Enter')lookupBarcode()">
- <button class="primary" onclick="lookupBarcode()">Zoek product</button>`);
-}
-function lookupBarcode(){
- let code=(document.getElementById('barcodeInput')?.value||'').replace(/\D/g,'').trim();
- if(code.length<8){alert('Voer een geldige barcode in.');return;}
- lookupOpenFoodFacts(code);
-}
+
+
 function databaseSearch(){
- modal(`<h2>🔎 Voedingsdatabase</h2><input id="dbSearch" placeholder="Zoek bijvoorbeeld kip, banaan..." oninput="filterDB()" autofocus><div id="dbResults"></div>`);
+ modal(`<h2>🔎 Voedingsdatabase</h2>
+ <input id="dbSearch" placeholder="Zoek bijvoorbeeld kip, banaan..." oninput="filterDB()" autofocus>
+ <div style="display:flex;gap:8px;margin:8px 0;flex-wrap:wrap">
+   <button onclick="searchRetailerProductsV201(document.getElementById('dbSearch').value,'')">🌐 Online zoeken</button>
+   <button onclick="searchRetailerProductsV201(document.getElementById('dbSearch').value,'Albert Heijn')">AH</button>
+   <button onclick="searchRetailerProductsV201(document.getElementById('dbSearch').value,'Jumbo')">Jumbo</button>
+   <button onclick="searchRetailerProductsV201(document.getElementById('dbSearch').value,'PLUS')">PLUS</button>
+ </div>
+ <div id="dbOnlineStatus" class="date"></div><div id="dbResults"></div>`);
  filterDB();
+}
+async function searchRetailerProductsV201(query, retailer=""){
+ const q=String(query||"").trim(), r=String(retailer||"").trim();
+ const status=document.getElementById('dbOnlineStatus'), el=document.getElementById('dbResults');
+ if(!q&&!r){if(status)status.textContent='Vul eerst een productnaam in.';return;}
+ if(status)status.textContent='🌐 Online producten worden gezocht...';
+ try{
+  const search=[q,r].filter(Boolean).join(' ');
+  const url='https://world.openfoodfacts.org/cgi/search.pl?search_terms='+encodeURIComponent(search)+'&search_simple=1&action=process&json=1&page_size=20&fields=code,product_name,product_name_nl,brands,nutriments,image_front_url,serving_size,nutriscore_grade';
+  const res=await fetch(url); if(!res.ok)throw new Error('API '+res.status);
+  const data=await res.json();
+  const products=(data.products||[]).map(p=>({name:p.product_name_nl||p.product_name||'Onbekend product',barcode:p.code||'',brand:p.brands||'',kcal:Math.round(Number(p.nutriments?.['energy-kcal_100g']||0)),protein:Number(p.nutriments?.proteins_100g||0),carbs:Number(p.nutriments?.carbohydrates_100g||0),fat:Number(p.nutriments?.fat_100g||0),fiber:Number(p.nutriments?.fiber_100g||0),portion:p.serving_size||'100 g',image:p.image_front_url||'',nutriscore:p.nutriscore_grade||'',source:'Open Food Facts'})).filter(p=>p.name&&(p.kcal||p.protein||p.carbs||p.fat||p.fiber||p.brand));
+  window.ntOnlineProducts=products;
+  if(status)status.textContent=products.length+' online producten gevonden'+(r?' voor '+r:'')+'.';
+  el.innerHTML=products.map((p,i)=>`<div class="searchResult"><div><b>${p.name}</b><br><small>${p.brand||'Onbekend merk'} · ${p.kcal} kcal · ${p.protein}g eiwit · ${p.carbs}g kh · ${p.portion}</small></div><button onclick="showProductResult(window.ntOnlineProducts[${i}],'Open Food Facts')">+</button></div>`).join('')||'<p class="date">Geen online product gevonden.</p>';
+ }catch(err){if(status)status.textContent='Online zoeken lukt nu niet. De lokale database blijft beschikbaar.';}
 }
 function filterDB(){
  let el=document.getElementById('dbResults');if(!el)return;
