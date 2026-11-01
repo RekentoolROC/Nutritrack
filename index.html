@@ -4,11 +4,11 @@ const RETAILERS_V201=["Albert Heijn","AH","Jumbo","PLUS","Lidl","Aldi","Dirk","S
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V21</title>
+<title>NutriTrack V22</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
-*{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
-.app{max-width:500px;margin:auto;min-height:100vh;background:#fff;padding-bottom:92px}
+*{box-sizing:border-box}html,body{width:100%;min-width:0;overflow-x:hidden}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink);overscroll-behavior-x:none}
+.app{width:100%;max-width:500px;margin:auto;min-height:100vh;background:#fff;padding-bottom:92px;overflow-x:hidden}
 header{padding:24px 20px 20px;background:linear-gradient(145deg,#126b47,#30a873);color:#fff;border-radius:0 0 30px 30px}
 .top{display:flex;justify-content:space-between;align-items:center}.top button{border:0;background:#ffffff22;color:#fff;border-radius:12px;padding:9px 12px;font-size:18px}
 h1{font-size:24px;margin:0}.date{margin:5px 0 0;opacity:.82;text-transform:capitalize;font-size:14px}
@@ -19,7 +19,7 @@ h1{font-size:24px;margin:0}.date{margin:5px 0 0;opacity:.82;text-transform:capit
 .tip{background:var(--light);border:0}.tip h3{margin:0 0 6px;font-size:15px}.tip p{margin:0;color:#536158;font-size:13px;line-height:1.45}
 .fab{position:fixed;bottom:76px;left:50%;transform:translateX(-50%);border:0;background:var(--green);color:#fff;padding:15px 25px;border-radius:28px;font-size:15px;font-weight:bold;box-shadow:0 8px 25px #167a5250}
 nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(500px,100%);height:66px;background:#fff;border-top:1px solid #eee;display:flex;justify-content:space-around;align-items:center;color:var(--muted);font-size:11px}nav div{text-align:center}.active{color:var(--green);font-weight:bold}
-.modal{display:none;position:fixed;inset:0;background:#0005;z-index:5;align-items:flex-end;justify-content:center}.sheet{background:#fff;width:min(500px,100%);border-radius:25px 25px 0 0;padding:22px;max-height:88vh;overflow:auto}.sheet h2{margin:0 0 15px}.choice{width:100%;padding:16px;margin:7px 0;border:1px solid #e7ebe8;border-radius:15px;background:#fff;text-align:left;font-size:15px}.choice small{display:block;color:var(--muted);margin-top:3px}
+.modal{display:none;position:fixed;inset:0;background:#0005;z-index:100;align-items:flex-end;justify-content:center}.sheet{background:#fff;width:min(500px,100%);max-width:100vw;border-radius:25px 25px 0 0;padding:22px;max-height:88vh;overflow:auto}.modal.cameraOpen{align-items:stretch;background:#050806}.modal.cameraOpen .sheet{width:100%;max-width:none;height:100dvh;max-height:none;padding:0;border-radius:0;background:#050806;color:#fff;overflow:hidden;display:flex;flex-direction:column}.modal.cameraOpen .sheet h2{color:#fff}.modal.cameraOpen .sheet .date{color:#fff!important;opacity:.78}.sheet h2{margin:0 0 15px}.choice{width:100%;padding:16px;margin:7px 0;border:1px solid #e7ebe8;border-radius:15px;background:#fff;text-align:left;font-size:15px}.choice small{display:block;color:var(--muted);margin-top:3px}
 input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px;margin:5px 0 10px;font-size:14px}.primary{width:100%;padding:14px;border:0;border-radius:12px;background:var(--green);color:#fff;font-weight:bold;font-size:15px}.food{padding:12px 0;border-bottom:1px solid #eee;display:flex;justify-content:space-between}.food button{background:var(--light);color:var(--green);border:0;border-radius:10px;padding:7px 11px;font-weight:bold}.chips{display:flex;gap:8px;overflow:auto;margin-bottom:10px}.chip{white-space:nowrap;border:1px solid #dce5df;background:#fff;border-radius:20px;padding:8px 12px;font-size:12px}.hidden{display:none}
 
 .score{display:flex;align-items:center;gap:14px}.scoreCircle{width:76px;height:76px;border-radius:50%;background:conic-gradient(#1f9b68 calc(var(--s)*1%),#e7ece9 0);display:grid;place-items:center;flex:none}.scoreCircle:after{content:"";position:absolute;width:60px;height:60px;background:#fff;border-radius:50%}.scoreCircle b{z-index:1;font-size:19px}.water{display:flex;align-items:center;justify-content:space-between;background:#f2f8ff}.waterAmount{font-size:24px;font-weight:800}.water button{border:0;border-radius:12px;padding:10px 13px;background:#dff0ff;color:#1976a8;font-weight:bold}.fav{display:flex;gap:9px;overflow:auto;padding:0 16px}.fav button{white-space:nowrap;border:1px solid #e4e9e6;background:#fff;border-radius:16px;padding:11px 13px;font-size:13px}.weekrow{display:grid;grid-template-columns:42px 1fr 62px;gap:8px;align-items:center;margin:10px 0;font-size:12px}.weekbar{height:10px;border-radius:8px;background:#e8eeea;overflow:hidden}.weekbar i{display:block;height:100%;background:#2e9b68;border-radius:8px}.tabpage{display:none}.tabpage.show{display:block}.navbtn{cursor:pointer}.weightStats{display:flex;gap:10px}.weightStats>div{flex:1;background:#fafcfb;padding:12px;border-radius:12px;font-size:12px}.weightStats b{font-size:18px;display:block;margin-top:4px}
@@ -39,27 +39,43 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 
 .dayNav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 14px}.dayNav button{border:1px solid #dfe8e2;background:#fff;border-radius:11px;padding:8px 12px}.dayPicker{font-weight:700;text-align:center}.favorite{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #edf0ee}.portionRow{display:flex;gap:8px;align-items:center;margin:10px 0}.portionRow button{border:1px solid #dfe8e2;background:#fff;border-radius:9px;padding:7px 11px}.portionRow input{margin:0;text-align:center;width:75px}.apiStatus{font-size:11px;padding:6px 9px;border-radius:10px;background:#e9f7ef;color:#167a52;display:inline-block}.apiError{background:#fff0cc;color:#8a6512}.dark .dayNav button,.dark .portionRow button{background:#1d2a23!important;color:#fff;border-color:#405046}
 
-.mobileShell{max-width:520px;margin:auto}.heroPWA{background:linear-gradient(135deg,#126b47,#1c9a68);color:white}.cameraFrame{position:relative;border-radius:22px;padding:0;overflow:hidden;background:#050806;min-height:0;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}.cameraVideo{display:block;width:100%;height:100%;border-radius:0;background:#050806;object-fit:cover;object-position:center center}.cameraOverlay{position:absolute;inset:0;pointer-events:none}.cameraOverlay:before{content:"";position:absolute;left:9%;right:9%;top:50%;height:31%;transform:translateY(-50%);border:2px solid #fff;border-radius:18px;box-shadow:0 0 0 9999px #0005}.cameraOverlay:after{content:"";position:absolute;left:13%;right:13%;top:50%;height:2px;background:#35d487;box-shadow:0 0 10px #35d487;animation:scanmove 1.8s ease-in-out infinite alternate}.cameraHint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px #000;background:#0005;padding:6px}.cameraControls{display:flex;gap:8px;margin-top:10px}.cameraControls button{flex:1}.cameraStatus{min-height:36px;display:flex;align-items:center;justify-content:center;text-align:center}@keyframes scanmove{from{transform:translateY(-45px)}to{transform:translateY(45px)}}.bottomSheet{max-height:80vh;overflow:auto}.mealSave{background:#f6faf7;border-radius:15px;padding:12px;margin:8px 0}.groceryItem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9eeeb}.groceryItem input{width:auto}.progressRing{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2e9b68 var(--p),#e7eeea 0);margin:12px auto}.progressRing:before{content:'';width:78px;height:78px;background:white;border-radius:50%;position:absolute}.progressRing b{z-index:1;font-size:18px}.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat3 div{background:#f6faf7;padding:10px;border-radius:12px;text-align:center;font-size:11px}.stat3 b{display:block;font-size:17px;margin-top:4px}.installBanner{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:min(460px,92%);z-index:50;padding:14px;border-radius:18px;box-shadow:0 10px 30px #0003}.dark .cameraFrame,.dark .mealSave,.dark .stat3 div{background:#1d2a23!important}.dark .progressRing:before{background:#17221c}
+.mobileShell{max-width:520px;margin:auto}.heroPWA{background:linear-gradient(135deg,#126b47,#1c9a68);color:white}.cameraFrame{position:relative;border-radius:22px;padding:0;overflow:hidden;background:#050806;min-height:0;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}.cameraVideo{display:block;width:100%;height:100%;border-radius:0;background:#050806;object-fit:cover;object-position:center center}.cameraOverlay{position:absolute;inset:0;pointer-events:none}.cameraOverlay:before{content:"";position:absolute;left:9%;right:9%;top:50%;height:31%;transform:translateY(-50%);border:2px solid #fff;border-radius:18px;box-shadow:0 0 0 9999px #0005}.cameraOverlay:after{content:"";position:absolute;left:13%;right:13%;top:50%;height:2px;background:#35d487;box-shadow:0 0 10px #35d487;animation:scanmove 1.8s ease-in-out infinite alternate}.cameraHint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px #000;background:#0005;padding:6px}.cameraControls{display:flex;gap:8px;margin-top:10px}.cameraControls button{flex:1}.cameraStatus{min-height:36px;display:flex;align-items:center;justify-content:center;text-align:center}.cameraModalHead{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 16px 12px;flex:0 0 auto}.cameraModalHead h2{margin:0!important;font-size:19px}.cameraClose{width:40px!important;height:40px!important;padding:0!important;border:0!important;border-radius:50%!important;background:#ffffff18!important;color:#fff!important;font-size:22px!important}.cameraStage{position:relative;flex:1 1 auto;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;background:#050806}.cameraStage .cameraFrame{width:100%;height:100%;aspect-ratio:auto;border-radius:0;min-height:0}.cameraStage .cameraVideo{width:100%;height:100%;object-fit:cover;object-position:center center}.cameraStage .cameraOverlay:before{left:50%;right:auto;top:50%;width:min(84vw,380px);height:min(24vw,145px);transform:translate(-50%,-50%);box-shadow:0 0 0 9999px #0008}.cameraStage .cameraOverlay:after{left:50%;right:auto;top:50%;width:min(76vw,350px);transform:translate(-50%,-50%);box-shadow:0 0 10px #35d487}.cameraStage .cameraHint{bottom:calc(18px + env(safe-area-inset-bottom));background:#0008;left:50%;right:auto;transform:translateX(-50%);width:min(88vw,390px);border-radius:10px;padding:8px}.cameraBottom{flex:0 0 auto;padding:10px 14px calc(14px + env(safe-area-inset-bottom));background:#050806}.cameraBottom .cameraStatus{color:#fff!important;margin:0 0 6px}.cameraControls{margin-top:0;gap:8px}.cameraControls button{min-height:46px}.cameraSecondary{background:#ffffff18!important;color:#fff!important;border:1px solid #ffffff25!important}@media(max-width:360px){.cameraModalHead{padding-left:12px;padding-right:12px}.cameraBottom{padding-left:10px;padding-right:10px}.cameraControls button{font-size:13px;padding-left:8px;padding-right:8px}}@keyframes scanmove{from{transform:translateY(-45px)}to{transform:translateY(45px)}}.bottomSheet{max-height:80vh;overflow:auto}.mealSave{background:#f6faf7;border-radius:15px;padding:12px;margin:8px 0}.groceryItem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9eeeb}.groceryItem input{width:auto}.progressRing{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2e9b68 var(--p),#e7eeea 0);margin:12px auto}.progressRing:before{content:'';width:78px;height:78px;background:white;border-radius:50%;position:absolute}.progressRing b{z-index:1;font-size:18px}.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat3 div{background:#f6faf7;padding:10px;border-radius:12px;text-align:center;font-size:11px}.stat3 b{display:block;font-size:17px;margin-top:4px}.installBanner{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:min(460px,92%);z-index:50;padding:14px;border-radius:18px;box-shadow:0 10px 30px #0003}.dark .cameraFrame,.dark .mealSave,.dark .stat3 div{background:#1d2a23!important}.dark .progressRing:before{background:#17221c}
 
 .voiceBtn{border-radius:50%!important;width:44px;height:44px;padding:0!important;font-size:20px;background:#167a52!important;color:#fff!important;border:none!important;box-shadow:0 4px 12px #167a5244}.voiceRow{display:flex;gap:8px;align-items:center;margin:10px 0}.voiceStatus{font-size:12px;color:#718078;flex:1}.voiceStatus.listening{color:#167a52;font-weight:bold}.voicePanel{background:#f2faf5;border:1px solid #dcece2;border-radius:16px;padding:14px;margin:10px 0}.voiceTranscript{font-size:14px;font-style:italic;margin:8px 0;color:#35443b}.dark .voicePanel{background:#1d2a23!important;border-color:#385044!important}
 
 .pwaCard{background:linear-gradient(135deg,#0e5137,#1b9b69);color:#fff}.pwaSteps{display:flex;gap:8px;margin-top:12px}.pwaStep{flex:1;background:#ffffff18;border-radius:12px;padding:9px;font-size:11px}.syncDot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#55d990;margin-right:5px}.offlineDot{background:#f5c451}.installGuide{padding:12px;background:#f6faf7;border-radius:14px;margin-top:10px}.appPreview{border-radius:26px;overflow:hidden;border:5px solid #17221c;box-shadow:0 15px 35px #0003;margin:10px auto;max-width:250px}.dark .installGuide{background:#1d2a23!important}
+@media(max-width:520px){.card{margin:12px}.section{margin-left:14px;margin-right:14px}.top{gap:8px}.top>div:last-child{flex-shrink:0}.top button{padding:8px 10px}.ring{width:138px;height:138px}.ring:after{width:112px;height:112px}.fab{bottom:74px;max-width:calc(100vw - 32px);white-space:nowrap}.sheet{padding:18px 14px}}
+
+/* V22 dashboard + smart input polish */
+.v22-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 16px 12px}
+.v22-action{border:1px solid #e2e9e5;background:#fff;border-radius:16px;padding:11px 5px;text-align:center;font-size:11px;font-weight:700;color:#233129;cursor:pointer}
+.v22-action b{display:block;font-size:22px;margin-bottom:4px}.v22-action:active{transform:scale(.98)}
+.v22-highlight{background:linear-gradient(135deg,#f4fbf7,#e8f6ee);border:1px solid #dcece3}
+.v22-highlight .suggestion{display:flex;align-items:center;gap:12px}.suggestionIcon{width:44px;height:44px;border-radius:14px;background:#167a52;color:#fff;display:grid;place-items:center;font-size:23px;flex:none}
+.v22-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.v22-mini>div{background:#f7faf8;border-radius:14px;padding:10px;text-align:center;font-size:11px}.v22-mini b{display:block;font-size:16px;margin-bottom:2px}
+.smartAddGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.smartAddCard{border:1px solid #e1e8e4;border-radius:17px;padding:16px;background:#fff;text-align:left;cursor:pointer}.smartAddCard b{display:block;font-size:15px}.smartAddCard small{display:block;color:#718078;margin-top:4px;line-height:1.35}.smartAddIcon{font-size:27px;margin-bottom:8px}
+.portionPresets{display:flex;gap:7px;overflow:auto;margin:7px 0 10px}.portionPresets button{white-space:nowrap;border:1px solid #dce5df;background:#fff;border-radius:12px;padding:8px 12px}.portionPresets button.active{background:#e9f7ef;border-color:#8fc9aa;color:#167a52;font-weight:bold}
+.mealChooser{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:8px 0}.mealChooser button{border:1px solid #dce5df;background:#fff;border-radius:12px;padding:9px 4px;font-size:11px}.mealChooser button.active{background:#167a52;color:#fff;border-color:#167a52}
+.v22-divider{height:1px;background:#edf0ee;margin:14px 0}.dark .v22-action,.dark .smartAddCard,.dark .portionPresets button,.dark .mealChooser button{background:#1d2a23;color:#eaf2ed;border-color:#405046}.dark .v22-highlight{background:#1d2a23;border-color:#385044}.dark .v22-mini>div{background:#1d2a23}
+@media(max-width:390px){.v22-actions{grid-template-columns:repeat(2,1fr)}.v22-mini{grid-template-columns:1fr 1fr}.smartAddGrid{grid-template-columns:1fr}.mealChooser{grid-template-columns:1fr 1fr}}
+
 </style>
 </head>
 <body><div class="app">
-<header><div class="top"><div><h1>NutriTrack <span style="font-size:11px;opacity:.65">V21</span></h1><p class="date" id="date"></p></div><div style="display:flex;gap:7px"><button onclick="openScanner()" title="Barcode of foto scannen">⌁</button><button onclick="installApp()" title="Installeer app">⇩</button><button onclick="openGoals()">⚙</button></div></div>
+<header><div class="top"><div><h1>NutriTrack <span style="font-size:11px;opacity:.65">V22</span></h1><p class="date" id="date"></p></div><div style="display:flex;gap:7px"><button onclick="openScanner()" title="Barcode of foto scannen">⌁</button><button onclick="installApp()" title="Installeer app">⇩</button><button onclick="openGoals()">⚙</button></div></div>
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V21</h2><button onclick="showInstallGuide()">Installatie</button></div>
-<div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V21 mobiel</h2><button onclick="installApp()">Installeer</button></div>
-<div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
-<div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
-<div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
-<div class="section"><h2>⚡ Snel toevoegen</h2><button onclick="smartInput()">AI invoer</button></div>
+<div class="section"><h2>⚡ Snel toevoegen</h2><button onclick="openAdd()">Alles bekijken</button></div>
+<div class="v22-actions">
+ <button class="v22-action" onclick="realCameraBarcode()"><b>▥</b>Barcode</button>
+ <button class="v22-action" onclick="aiMealPhoto()"><b>📷</b>Foto</button>
+ <button class="v22-action" onclick="voiceButtonDirect()"><b>🎙️</b>Spraak</button>
+ <button class="v22-action" onclick="foodSearch()"><b>🔎</b>Zoeken</button>
+</div>
+<div class="card v22-highlight"><div class="suggestion"><div class="suggestionIcon">💡</div><div><b id="v22SuggestionTitle">Slimme suggestie</b><p class="date" id="v22SuggestionText" style="color:#526158;margin:4px 0 0">Ik kijk naar je doelen en wat je vandaag al hebt gegeten.</p></div></div><button class="primary" style="margin-top:12px" onclick="smartSuggestionAction()">Laat mij helpen</button></div>
+<div class="card"><div class="v22-mini"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>g eiwit</div><div>🎯<b id="coachStreak">0</b> dagen actief</div></div></div>
 <div class="quick"><button onclick="quickAdd('Skyr 200g')">🥛 Skyr</button><button onclick="quickAdd('Banaan')">🍌 Banaan</button><button onclick="quickAdd('Ei gekookt')">🥚 Ei</button><button onclick="quickAdd('2 volkoren boterhammen')">🍞 Brood</button><button onclick="quickAdd('Kipfilet 150g')">🍗 Kip</button></div>
-
 <div class="card"><div class="macrogrid">
 <div class="macro">💪 <strong>Eiwit</strong><span id="protein">0 / 140 g</span><div class="bar"><i id="proteinBar"></i></div></div>
 <div class="macro">🍞 <strong>Koolhydraten</strong><span id="carbs">0 / 250 g</span><div class="bar"><i id="carbsBar"></i></div></div>
@@ -395,8 +411,17 @@ t.fiber<goals.fiber*.7?`🌾 Je vezels kunnen nog omhoog. Kies vandaag extra gro
 document.getElementById('tip').textContent=msg;
 }
 function modal(html){document.getElementById('sheet').innerHTML=html;document.getElementById('modal').style.display='flex'}
-function close(){document.getElementById('modal').style.display='none'}
-function openAdd(){modal(`<h2>Eten toevoegen</h2><button class="choice" onclick="smartInput()">🧠 Slim invoeren<small>Typ bijvoorbeeld: "2 boterhammen met kip en een banaan"</small></button><button class="choice" onclick="foodSearch()">🔍 Product zoeken<small>Zoek in de ingebouwde voedingsdatabase</small></button><button class="choice" onclick="manual()">✍️ Handmatig invoeren<small>Voer zelf voedingswaarden in</small></button><button class="choice" onclick="realCameraBarcode()">📷 Barcode scannen<small>Open direct de camera en zoek het product online</small></button><button class="choice" onclick="aiMealPhoto()">📷 Foto van maaltijd<small>Herkenning van maaltijd op foto komt later</small></button>`)}
+function close(){stopBarcodeCamera();const m=document.getElementById('modal');m.classList.remove('cameraOpen');m.style.display='none'}
+function openAdd(){modal(`<h2>➕ Eten toevoegen</h2><p class="date" style="color:#718078">Kies de snelste manier. Alles wordt lokaal bewaard.</p><div class="smartAddGrid">
+ <button class="smartAddCard" onclick="realCameraBarcode()"><div class="smartAddIcon">▥</div><b>Barcode scannen</b><small>Camera opent direct en zoekt het product online.</small></button>
+ <button class="smartAddCard" onclick="aiMealPhoto()"><div class="smartAddIcon">📷</div><b>Foto maaltijd</b><small>Maak een foto en controleer de voorgestelde maaltijd.</small></button>
+ <button class="smartAddCard" onclick="voiceButtonDirect()"><div class="smartAddIcon">🎙️</div><b>Spraak</b><small>Zeg bijvoorbeeld: “2 boterhammen met kip en een banaan”.</small></button>
+ <button class="smartAddCard" onclick="foodSearch()"><div class="smartAddIcon">🔎</div><b>Zoeken</b><small>Lokale database + Open Food Facts.</small></button>
+ <button class="smartAddCard" onclick="showFavorites()"><div class="smartAddIcon">⭐</div><b>Favoriet</b><small>Voeg een vaste keuze opnieuw toe.</small></button>
+ <button class="smartAddCard" onclick="showSavedMeals()"><div class="smartAddIcon">🍽️</div><b>Vaste maaltijd</b><small>Voeg een complete opgeslagen maaltijd toe.</small></button>
+ <button class="smartAddCard" onclick="addOwnProduct()"><div class="smartAddIcon">✚</div><b>Eigen product</b><small>Bewaar je eigen product en barcode.</small></button>
+ <button class="smartAddCard" onclick="manual()"><div class="smartAddIcon">✍️</div><b>Handmatig</b><small>Vul voedingswaarden zelf in.</small></button>
+ </div>`)}
 function foodSearch(){modal(`<h2>Product zoeken</h2><input autofocus placeholder="Zoek bijvoorbeeld havermout..." oninput="searchFoods(this.value)" id="search"><div class="chips"><button class="chip" onclick="searchFoods('')">Populair</button><button class="chip" onclick="searchFoods('kip')">Eiwit</button><button class="chip" onclick="searchFoods('')">Alles</button></div><div id="foodList"></div><small style="display:block;margin:10px 16px;color:#718078">V20 bevat een uitgebreide database met veelgebruikte Nederlandse voedingsmiddelen.</small>`);searchFoods('')}
 function searchFoods(q){q=q.toLowerCase();document.getElementById('foodList').innerHTML=db.filter(x=>x[0].toLowerCase().includes(q)).map((x,i)=>`<div class="food"><div><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g eiwit · ${x[3]}g kh</small></div><button onclick="pick(${db.indexOf(x)})">+ Voeg toe</button></div>`).join('')}
 function pick(i){let x=db[i];chooseMeal({name:x[0],kcal:x[1],protein:x[2],carbs:x[3],fat:x[4],fiber:x[5]})}
@@ -746,77 +771,43 @@ function installApp(){
 
 async function realCameraBarcode(){
   stopBarcodeCamera();
-  modal(`<div class="bottomSheet scanModal">
-    <h2>📷 Barcode scannen</h2>
-    <p class="date">Houd de barcode rustig binnen het witte kader.</p>
-    <div class="cameraFrame">
-      <video id="barcodeVideo" class="cameraVideo" autoplay playsinline muted></video>
-      <div class="cameraOverlay"><div class="cameraHint">EAN-barcode in het kader plaatsen</div></div>
-    </div>
-    <p id="cameraScanStatus" class="date cameraStatus">Camera wordt gestart...</p>
-    <div class="cameraControls">
-      <button class="primary" id="cameraRetry" style="display:none" onclick="realCameraBarcode()">🔄 Opnieuw</button>
-      <button onclick="stopBarcodeCamera();barcodeScanner()">⌨️ Handmatig</button>
-    </div>
-  </div>`);
+  modal(`<div class="cameraModalHead"><h2>📷 Barcode scannen</h2><button class="cameraClose" onclick="stopBarcodeCamera();close()" aria-label="Sluiten">×</button></div>
+  <div class="cameraStage"><div class="cameraFrame"><video id="barcodeVideo" class="cameraVideo" autoplay playsinline muted></video><div class="cameraOverlay"><div class="cameraHint">Plaats de barcode rustig in het witte kader</div></div></div></div>
+  <div class="cameraBottom"><p id="cameraScanStatus" class="date cameraStatus">Camera wordt gestart...</p><div class="cameraControls"><button class="primary" id="cameraRetry" style="display:none" onclick="realCameraBarcode()">🔄 Opnieuw</button><button class="cameraSecondary" id="cameraTorch" style="display:none" onclick="toggleCameraTorch()">🔦 Lamp</button><button class="cameraSecondary" onclick="stopBarcodeCamera();barcodeScanner()">⌨️ Handmatig</button></div></div>`);
+  document.getElementById('modal').classList.add('cameraOpen');
   try{
     if(!window.isSecureContext) throw new Error('secure_context');
     if(!navigator.mediaDevices?.getUserMedia) throw new Error('media');
     const video=document.getElementById('barcodeVideo');
     let stream;
-    try{
-      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
-    }catch(first){
-      stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
-    }
-    video.srcObject=stream; window.ntCameraStream=stream;
-    await video.play();
-    const track=stream.getVideoTracks()[0];
-    const settings=track?.getSettings?.()||{};
-    const status=document.getElementById('cameraScanStatus');
-    if(status) status.textContent='✓ Camera actief — richt de barcode in het witte kader.';
+    try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{exact:'environment'},width:{ideal:1920},height:{ideal:1080}},audio:false});}
+    catch(first){try{stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});}catch(second){stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});}}
+    video.srcObject=stream; window.ntCameraStream=stream; await video.play();
+    const track=stream.getVideoTracks()[0]; window.ntCameraTrack=track;
+    const caps=track?.getCapabilities?.()||{}; const torch=document.getElementById('cameraTorch');
+    if(torch && caps.torch) torch.style.display='block';
+    const status=document.getElementById('cameraScanStatus'); if(status) status.textContent='✓ Camera actief — houd de barcode binnen het kader.';
     let detector=null;
-    if('BarcodeDetector' in window){
-      let formats=['ean_13','ean_8','upc_a','upc_e','code_128','code_39','itf'];
-      try{const supported=await BarcodeDetector.getSupportedFormats();formats=formats.filter(f=>supported.includes(f));}catch(e){}
-      if(formats.length) detector=new BarcodeDetector({formats});
-    }
-    if(!detector){
-      if(status) status.textContent='✓ Camera actief. Automatische barcodeherkenning wordt op deze telefoon niet ondersteund — gebruik handmatig.';
-      return;
-    }
+    if('BarcodeDetector' in window){let formats=['ean_13','ean_8','upc_a','upc_e','code_128','code_39','itf'];try{const supported=await BarcodeDetector.getSupportedFormats();formats=formats.filter(f=>supported.includes(f));}catch(e){}if(formats.length) detector=new BarcodeDetector({formats});}
+    if(!detector){if(status) status.textContent='✓ Camera actief. Automatische herkenning wordt niet ondersteund; gebruik handmatig.';return;}
     let scanning=true;
     const scan=async()=>{
       if(!window.ntCameraStream || !scanning || !document.getElementById('barcodeVideo')) return;
-      try{
-        const codes=await detector.detect(video);
-        if(codes.length && codes[0].rawValue){
-          scanning=false;
-          if(navigator.vibrate) navigator.vibrate([80,40,80]);
-          const code=codes[0].rawValue;
-          stopBarcodeCamera();
-          lookupOpenFoodFacts(code);
-          return;
-        }
-      }catch(e){}
+      try{const codes=await detector.detect(video);if(codes.length&&codes[0].rawValue){scanning=false;if(navigator.vibrate)navigator.vibrate([80,40,80]);const code=codes[0].rawValue;stopBarcodeCamera();close();lookupOpenFoodFacts(code);return;}}catch(e){}
       requestAnimationFrame(scan);
     };
     requestAnimationFrame(scan);
   }catch(e){
     const status=document.getElementById('cameraScanStatus');
-    if(status){
-      let msg='Camera kon niet worden gestart.';
-      if(e?.name==='NotAllowedError') msg='Cameratoegang is geweigerd. Geef NutriTrack cameratoegang in Chrome.';
-      else if(e?.name==='NotFoundError') msg='Geen camera gevonden op dit apparaat.';
-      else if(e?.message==='secure_context') msg='Camera werkt alleen via de beveiligde HTTPS-versie van NutriTrack.';
-      else if(e?.message==='media') msg='Deze browser ondersteunt geen cameratoegang.';
-      status.textContent=msg;
-    }
+    if(status){let msg='Camera kon niet worden gestart.';if(e?.name==='NotAllowedError')msg='Cameratoegang is geweigerd. Geef NutriTrack cameratoegang in Chrome.';else if(e?.name==='NotFoundError')msg='Geen camera gevonden op dit apparaat.';else if(e?.message==='secure_context')msg='Open de beveiligde HTTPS-versie van NutriTrack.';else if(e?.message==='media')msg='Deze browser ondersteunt geen cameratoegang.';status.textContent=msg;}
     const retry=document.getElementById('cameraRetry');if(retry)retry.style.display='block';
   }
 }
+async function toggleCameraTorch(){const t=window.ntCameraTrack;if(!t)return;const caps=t.getCapabilities?.()||{};if(!caps.torch)return;const current=t.getConstraints?.()?.advanced?.find?.(x=>x.torch!==undefined)?.torch||false;try{await t.applyConstraints({advanced:[{torch:!current}]});}catch(e){}}
+
 function stopBarcodeCamera(){
   if(window.ntCameraStream){window.ntCameraStream.getTracks().forEach(t=>t.stop());window.ntCameraStream=null;}
+  window.ntCameraTrack=null;
   const video=document.getElementById('barcodeVideo');if(video){video.pause?.();video.srcObject=null;}
 }
 
@@ -1066,6 +1057,28 @@ function analyzeSmartFood(){
  let p=hits[0];showProductResult(p,'Spraakherkenning');
 }
 
+
+function voiceButtonDirect(){
+ modal(`<h2>🎙️ Spraak toevoegen</h2><div class="voicePanel"><b>Vertel wat je hebt gegeten</b><p class="date" style="color:#718078">Bijvoorbeeld: “een bakje skyr met banaan” of “150 gram kipfilet”.</p>${voiceButton('smartMeal','Tik op de microfoon en spreek je maaltijd in.')}</div><div id="v22VoiceResult"></div>`);
+}
+function smartSuggestionAction(){
+ const t=totals();
+ if(t.protein<goals.protein){const p=allFoods().find(x=>/skyr|kipfilet|tonijn|zalm|kwark/i.test(x.name));if(p){showProductResult(p,'Slimme suggestie');return;}}
+ if(t.fiber<goals.fiber){const p=allFoods().find(x=>/broccoli|frambozen|appel|linzen/i.test(x.name));if(p){showProductResult(p,'Slimme suggestie');return;}}
+ showRecipes();
+}
+function renderV22Suggestion(){
+ const el=document.getElementById('v22SuggestionText'), title=document.getElementById('v22SuggestionTitle');if(!el||!title)return;
+ const t=totals(), kcalLeft=Math.max(0,goals.kcal-t.kcal), proteinLeft=Math.max(0,goals.protein-t.protein), fiberLeft=Math.max(0,goals.fiber-t.fiber);
+ if(t.kcal===0){title.textContent='Start slim';el.textContent='Voeg je eerste product toe via barcode, foto, spraak of zoeken.';return;}
+ if(proteinLeft>25){title.textContent='💪 Eiwit-tip';el.textContent=`Je hebt nog ongeveer ${Math.round(proteinLeft)} g eiwit nodig. Kies bijvoorbeeld skyr, kip, vis of peulvruchten.`;return;}
+ if(fiberLeft>8){title.textContent='🌾 Vezel-tip';el.textContent=`Je kunt nog ongeveer ${Math.round(fiberLeft)} g vezels gebruiken. Groente, fruit en volkoren producten zijn een makkelijke keuze.`;return;}
+ title.textContent='🎯 Je ligt mooi op schema';el.textContent=`Nog ongeveer ${Math.round(kcalLeft)} kcal beschikbaar. Kies een maaltijd die bij je doel past.`;
+}
+function quickAdd(name){
+ const p=allFoods().find(x=>x.name.toLowerCase()===name.toLowerCase()) || allFoods().find(x=>x.name.toLowerCase().includes(name.toLowerCase().replace(/\d+.*$/,'').trim()));
+ if(p)showProductResult(p,'Snel toevoegen'); else foodSearch();
+}
 function openScanner(){
  modal(`<h2>⌁ Slimme voedingsscanner</h2>
  <p class="date" style="color:#718078">Kies hoe je een product wilt toevoegen.</p>
@@ -1130,11 +1143,13 @@ function analyzeMealV10(input){
 function showProductResult(p,source){
  window.currentScannedProduct={...p};
  modal(`<h2>✓ ${source}</h2><div class="scanResult"><div style="display:flex;justify-content:space-between;gap:8px"><b>${p.name}</b><span class="dbTag">${source}</span></div><p class="date" style="color:#718078">Basis: ${p.portion||'100 g'}</p><div class="macrogrid"><div class="macro"><b id="scanKcal">${Math.round(p.kcal)}</b><span>kcal</span></div><div class="macro"><b id="scanProtein">${(+p.protein).toFixed(1)}g</b><span>eiwit</span></div><div class="macro"><b id="scanCarbs">${(+p.carbs).toFixed(1)}g</b><span>koolhydraten</span></div><div class="macro"><b id="scanFat">${(+p.fat).toFixed(1)}g</b><span>vet</span></div><div class="macro"><b id="scanFiber">${(+p.fiber).toFixed(1)}g</b><span>vezels</span></div></div></div>
- <div class="portionRow"><button onclick="changePortion(-25)">−</button><input id="portionGrams" type="number" value="100" oninput="updatePortion()"><span>gram</span><button onclick="changePortion(25)">+</button></div>
+ <div class="portionRow"><button onclick="changePortion(-25)">−</button><input id="portionGrams" type="number" value="100" oninput="updatePortion()"><span>gram</span><button onclick="changePortion(25)">+</button></div><div class="portionPresets"><button onclick="setPortion(50)">50 g</button><button onclick="setPortion(100)" class="active">100 g</button><button onclick="setPortion(150)">150 g</button><button onclick="setPortion(200)">200 g</button><button onclick="setPortion(250)">250 g</button></div>
  <button onclick="toggleFavorite('${p.name.replace(/'/g,"\\'")}')" style="width:100%;margin-bottom:8px">⭐ Toevoegen/verwijderen favoriet</button>
- <label>Eetmoment</label><select id="scanMeal"><option>Ontbijt</option><option>Lunch</option><option>Diner</option><option>Tussendoor</option></select>
+ <label>Eetmoment</label><div class="mealChooser"><button id="mealOntbijt" onclick="setScanMeal('Ontbijt')">🍳 Ontbijt</button><button id="mealLunch" onclick="setScanMeal('Lunch')">🥪 Lunch</button><button id="mealDiner" class="active" onclick="setScanMeal('Diner')">🍽️ Diner</button><button id="mealTussendoor" onclick="setScanMeal('Tussendoor')">🍎 Tussendoor</button></div><input type="hidden" id="scanMeal" value="Diner">
  <button class="primary" onclick="addScannedProduct(window.currentScannedProduct.name)">Toevoegen aan vandaag</button>`);
 }
+function setPortion(g){const e=document.getElementById('portionGrams');if(e){e.value=g;updatePortion()}document.querySelectorAll('.portionPresets button').forEach(b=>b.classList.toggle('active',b.textContent.startsWith(g+' ')))}
+function setScanMeal(meal){const e=document.getElementById('scanMeal');if(e)e.value=meal;document.querySelectorAll('.mealChooser button').forEach(b=>b.classList.toggle('active',b.id==='meal'+meal.replace('Tussendoor','Tussendoor')))}
 function changePortion(delta){let e=document.getElementById('portionGrams');e.value=Math.max(1,(+e.value||100)+delta);updatePortion()}
 function updatePortion(){
  let p=window.currentScannedProduct,e=document.getElementById('portionGrams');if(!p||!e)return;
@@ -1349,7 +1364,7 @@ function copyYesterday(){
  let last=history[history.length-1];alert('In de productversie worden de maaltijden van je vorige dag hier gekopieerd. De dagstructuur is al voorbereid.');
 }
 const baseRender=render;
-render=function(){loadSelectedDay();baseRender();renderV4();smartAnalysis();forecast();renderReminders();renderCalendar();renderRecipes();applyTheme();renderWeightGoal();weeklyProjection();renderWeightV8();renderWeightChart();renderWeighDays();adaptiveKcalAdvice();renderRecentFoods();renderFavorites();renderSelectedDay();renderSavedMeals();renderCoach();generateGroceries();}
+render=function(){loadSelectedDay();baseRender();renderV4();smartAnalysis();forecast();renderReminders();renderCalendar();renderRecipes();applyTheme();renderWeightGoal();weeklyProjection();renderWeightV8();renderWeightChart();renderWeighDays();adaptiveKcalAdvice();renderRecentFoods();renderFavorites();renderSelectedDay();renderSavedMeals();renderCoach();generateGroceries();renderV22Suggestion();}
 document.getElementById('modal').onclick=e=>{if(e.target.id==='modal')close()};
 render();checkOnboarding();updatePWAStatus();registerNutriServiceWorker();
 

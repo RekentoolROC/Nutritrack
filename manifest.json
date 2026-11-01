@@ -1,7 +1,7 @@
 {
-  "name": "NutriTrack V21",
-  "short_name": "NutriTrack V21",
-  "description": "NutriTrack V21 met verbeterde Android barcode scanner, scanvenster en productdatabase.",
+  "name": "NutriTrack V22",
+  "short_name": "NutriTrack V22",
+  "description": "NutriTrack V22 met verbeterde Android barcode scanner, scanvenster en productdatabase.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
