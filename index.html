@@ -4,7 +4,7 @@ const RETAILERS_V201=["Albert Heijn","AH","Jumbo","PLUS","Lidl","Aldi","Dirk","S
 <html lang="nl">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#167a52"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><link rel="manifest" href="./manifest.json">
-<title>NutriTrack V20.1</title>
+<title>NutriTrack V21</title>
 <style>
 :root{--green:#167a52;--light:#eef8f3;--ink:#17221d;--muted:#718078}
 *{box-sizing:border-box}body{margin:0;background:#f3f5f4;font-family:Inter,Arial,sans-serif;color:var(--ink)}
@@ -39,7 +39,7 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 
 .dayNav{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:8px 0 14px}.dayNav button{border:1px solid #dfe8e2;background:#fff;border-radius:11px;padding:8px 12px}.dayPicker{font-weight:700;text-align:center}.favorite{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid #edf0ee}.portionRow{display:flex;gap:8px;align-items:center;margin:10px 0}.portionRow button{border:1px solid #dfe8e2;background:#fff;border-radius:9px;padding:7px 11px}.portionRow input{margin:0;text-align:center;width:75px}.apiStatus{font-size:11px;padding:6px 9px;border-radius:10px;background:#e9f7ef;color:#167a52;display:inline-block}.apiError{background:#fff0cc;color:#8a6512}.dark .dayNav button,.dark .portionRow button{background:#1d2a23!important;color:#fff;border-color:#405046}
 
-.mobileShell{max-width:520px;margin:auto}.heroPWA{background:linear-gradient(135deg,#126b47,#1c9a68);color:white}.cameraFrame{border:2px dashed #8db9a3;border-radius:20px;padding:18px;text-align:center;background:#f5faf7}.cameraVideo{width:100%;border-radius:16px;background:#111;max-height:280px;object-fit:cover}.scanLine{height:3px;background:#35b979;width:70%;margin:12px auto;border-radius:4px;animation:scanmove 2s infinite alternate}@keyframes scanmove{to{transform:translateY(80px)}}.bottomSheet{max-height:80vh;overflow:auto}.mealSave{background:#f6faf7;border-radius:15px;padding:12px;margin:8px 0}.groceryItem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9eeeb}.groceryItem input{width:auto}.progressRing{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2e9b68 var(--p),#e7eeea 0);margin:12px auto}.progressRing:before{content:'';width:78px;height:78px;background:white;border-radius:50%;position:absolute}.progressRing b{z-index:1;font-size:18px}.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat3 div{background:#f6faf7;padding:10px;border-radius:12px;text-align:center;font-size:11px}.stat3 b{display:block;font-size:17px;margin-top:4px}.installBanner{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:min(460px,92%);z-index:50;padding:14px;border-radius:18px;box-shadow:0 10px 30px #0003}.dark .cameraFrame,.dark .mealSave,.dark .stat3 div{background:#1d2a23!important}.dark .progressRing:before{background:#17221c}
+.mobileShell{max-width:520px;margin:auto}.heroPWA{background:linear-gradient(135deg,#126b47,#1c9a68);color:white}.cameraFrame{position:relative;border-radius:22px;padding:0;overflow:hidden;background:#050806;min-height:0;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center}.cameraVideo{display:block;width:100%;height:100%;border-radius:0;background:#050806;object-fit:cover;object-position:center center}.cameraOverlay{position:absolute;inset:0;pointer-events:none}.cameraOverlay:before{content:"";position:absolute;left:9%;right:9%;top:50%;height:31%;transform:translateY(-50%);border:2px solid #fff;border-radius:18px;box-shadow:0 0 0 9999px #0005}.cameraOverlay:after{content:"";position:absolute;left:13%;right:13%;top:50%;height:2px;background:#35d487;box-shadow:0 0 10px #35d487;animation:scanmove 1.8s ease-in-out infinite alternate}.cameraHint{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#fff;font-size:12px;font-weight:700;text-shadow:0 1px 4px #000;background:#0005;padding:6px}.cameraControls{display:flex;gap:8px;margin-top:10px}.cameraControls button{flex:1}.cameraStatus{min-height:36px;display:flex;align-items:center;justify-content:center;text-align:center}@keyframes scanmove{from{transform:translateY(-45px)}to{transform:translateY(45px)}}.bottomSheet{max-height:80vh;overflow:auto}.mealSave{background:#f6faf7;border-radius:15px;padding:12px;margin:8px 0}.groceryItem{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #e9eeeb}.groceryItem input{width:auto}.progressRing{width:100px;height:100px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#2e9b68 var(--p),#e7eeea 0);margin:12px auto}.progressRing:before{content:'';width:78px;height:78px;background:white;border-radius:50%;position:absolute}.progressRing b{z-index:1;font-size:18px}.stat3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.stat3 div{background:#f6faf7;padding:10px;border-radius:12px;text-align:center;font-size:11px}.stat3 b{display:block;font-size:17px;margin-top:4px}.installBanner{display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);width:min(460px,92%);z-index:50;padding:14px;border-radius:18px;box-shadow:0 10px 30px #0003}.dark .cameraFrame,.dark .mealSave,.dark .stat3 div{background:#1d2a23!important}.dark .progressRing:before{background:#17221c}
 
 .voiceBtn{border-radius:50%!important;width:44px;height:44px;padding:0!important;font-size:20px;background:#167a52!important;color:#fff!important;border:none!important;box-shadow:0 4px 12px #167a5244}.voiceRow{display:flex;gap:8px;align-items:center;margin:10px 0}.voiceStatus{font-size:12px;color:#718078;flex:1}.voiceStatus.listening{color:#167a52;font-weight:bold}.voicePanel{background:#f2faf5;border:1px solid #dcece2;border-radius:16px;padding:14px;margin:10px 0}.voiceTranscript{font-size:14px;font-style:italic;margin:8px 0;color:#35443b}.dark .voicePanel{background:#1d2a23!important;border-color:#385044!important}
 
@@ -47,13 +47,13 @@ input,select{width:100%;padding:13px;border:1px solid #dde4df;border-radius:11px
 </style>
 </head>
 <body><div class="app">
-<header><div class="top"><div><h1>NutriTrack</h1><p class="date" id="date"></p></div><div style="display:flex;gap:7px"><button onclick="openScanner()" title="Barcode of foto scannen">⌁</button><button onclick="installApp()" title="Installeer app">⇩</button><button onclick="openGoals()">⚙</button></div></div>
+<header><div class="top"><div><h1>NutriTrack <span style="font-size:11px;opacity:.65">V21</span></h1><p class="date" id="date"></p></div><div style="display:flex;gap:7px"><button onclick="openScanner()" title="Barcode of foto scannen">⌁</button><button onclick="installApp()" title="Installeer app">⇩</button><button onclick="openGoals()">⚙</button></div></div>
 <div class="ringwrap"><div class="ring" id="ring" style="--p:0"><div class="ringtext"><b id="kcal">0</b><small>van <span id="goalKcal">2200</span> kcal</small></div></div><div class="remaining" id="remaining">Nog 2200 kcal beschikbaar vandaag</div></div></header>
 
 <div class="card targetHero" id="dashboardGoal"><b>🎯 Jouw doel</b><div class="targetGrid"><div>Nu<b id="dashCurrentWeight">—</b></div><div>Doel<b id="dashTargetWeight">—</b></div><div>Nog<b id="dashWeeksLeft">—</b></div></div><p class="date" id="dashGoalText" style="margin:12px 0 0">Stel je streefgewicht in.</p></div>
-<div class="section"><h2>📲 NutriTrack V20.1</h2><button onclick="showInstallGuide()">Installatie</button></div>
+<div class="section"><h2>📲 NutriTrack V21</h2><button onclick="showInstallGuide()">Installatie</button></div>
 <div class="card pwaCard"><div style="display:flex;justify-content:space-between"><b>NutriTrack als app</b><span><i class="syncDot"></i><span id="appConnection">Lokaal opgeslagen</span></span></div><p class="date" style="color:#fff;opacity:.85">Installeer NutriTrack op je telefoon en gebruik hem fullscreen.</p><div class="pwaSteps"><div class="pwaStep">1️⃣ Open<br>in browser</div><div class="pwaStep">2️⃣ Installeer<br>op beginscherm</div><div class="pwaStep">3️⃣ Gebruik<br>als app</div></div><button class="install" style="margin-top:14px" onclick="installApp()">📲 Installeer NutriTrack</button></div>
-<div class="section"><h2>📱 NutriTrack V20.1 mobiel</h2><button onclick="installApp()">Installeer</button></div>
+<div class="section"><h2>📱 NutriTrack V21 mobiel</h2><button onclick="installApp()">Installeer</button></div>
 <div class="card heroPWA"><b>Jouw persoonlijke voedingscoach</b><div class="stat3"><div>🔥<b id="coachKcal">—</b>kcal over</div><div>💪<b id="coachProtein">—</b>eiwit</div><div>🎯<b id="coachStreak">0</b>dagen actief</div></div><p class="date" id="coachTip" style="color:#fff;opacity:.9;margin-bottom:0"></p></div>
 <div class="section"><h2>📦 Scan & herken</h2><button onclick="openScanner()">Open scanner</button></div>
 <div class="card scanHero"><div class="scanCircle">⌁</div><b>Voeg eten slimmer toe</b><p class="date" style="color:#fff;opacity:.8">Scan een barcode, maak een foto of zoek in de voedingsdatabase.</p><button class="install" onclick="openScanner()">Start scan</button></div>
@@ -675,7 +675,7 @@ async function registerNutriServiceWorker(){
   if(!('serviceWorker' in navigator) || location.protocol==='file:') return;
   try{
     await navigator.serviceWorker.register('./service-worker.js');
-    console.log('NutriTrack V20.1: offline service worker actief.');
+    console.log('NutriTrack V21: offline service worker actief.');
   }catch(e){
     console.log('Service worker wordt actief zodra NutriTrack via HTTPS of localhost wordt geopend.');
   }
@@ -745,76 +745,81 @@ function installApp(){
 }
 
 async function realCameraBarcode(){
-  modal(`<div class="bottomSheet">
+  stopBarcodeCamera();
+  modal(`<div class="bottomSheet scanModal">
     <h2>📷 Barcode scannen</h2>
-    <div class="cameraFrame"><video id="barcodeVideo" class="cameraVideo" autoplay playsinline muted></video><div class="scanLine"></div></div>
-    <p id="cameraScanStatus" class="date">Camera wordt gestart...</p>
-    <button class="primary" id="cameraRetry" style="display:none" onclick="realCameraBarcode()">Opnieuw proberen</button>
-    <button onclick="stopBarcodeCamera();barcodeScanner()">Barcode handmatig invoeren</button>
+    <p class="date">Houd de barcode rustig binnen het witte kader.</p>
+    <div class="cameraFrame">
+      <video id="barcodeVideo" class="cameraVideo" autoplay playsinline muted></video>
+      <div class="cameraOverlay"><div class="cameraHint">EAN-barcode in het kader plaatsen</div></div>
+    </div>
+    <p id="cameraScanStatus" class="date cameraStatus">Camera wordt gestart...</p>
+    <div class="cameraControls">
+      <button class="primary" id="cameraRetry" style="display:none" onclick="realCameraBarcode()">🔄 Opnieuw</button>
+      <button onclick="stopBarcodeCamera();barcodeScanner()">⌨️ Handmatig</button>
+    </div>
   </div>`);
   try{
-    if(!window.isSecureContext){throw new Error('secure_context')}
-    if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){throw new Error('media')}
+    if(!window.isSecureContext) throw new Error('secure_context');
+    if(!navigator.mediaDevices?.getUserMedia) throw new Error('media');
     const video=document.getElementById('barcodeVideo');
-    const stream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:{exact:'environment'},width:{ideal:1280},height:{ideal:720}},
-      audio:false
-    });
+    let stream;
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+    }catch(first){
+      stream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});
+    }
     video.srcObject=stream; window.ntCameraStream=stream;
     await video.play();
-
+    const track=stream.getVideoTracks()[0];
+    const settings=track?.getSettings?.()||{};
+    const status=document.getElementById('cameraScanStatus');
+    if(status) status.textContent='✓ Camera actief — richt de barcode in het witte kader.';
     let detector=null;
     if('BarcodeDetector' in window){
       let formats=['ean_13','ean_8','upc_a','upc_e','code_128','code_39','itf'];
-      try{
-        const supported=await BarcodeDetector.getSupportedFormats();
-        formats=formats.filter(f=>supported.includes(f));
-      }catch(e){}
+      try{const supported=await BarcodeDetector.getSupportedFormats();formats=formats.filter(f=>supported.includes(f));}catch(e){}
       if(formats.length) detector=new BarcodeDetector({formats});
     }
-
-    if(detector){
-      document.getElementById('cameraScanStatus').textContent='✓ Camera actief — richt op de barcode.';
-      let scanning=true;
-      const scan=async()=>{
-        if(!window.ntCameraStream || !scanning)return;
-        try{
-          const codes=await detector.detect(video);
-          if(codes.length && codes[0].rawValue){
-            scanning=false;
-            if(navigator.vibrate) navigator.vibrate(120);
-            const code=codes[0].rawValue;
-            stopBarcodeCamera();
-            lookupOpenFoodFacts(code);
-            return;
-          }
-        }catch(e){}
-        requestAnimationFrame(scan);
-      };
-      scan();
-    }else{
-      document.getElementById('cameraScanStatus').textContent='✓ Camera actief, maar automatische barcodeherkenning wordt niet ondersteund. Gebruik handmatige invoer.';
+    if(!detector){
+      if(status) status.textContent='✓ Camera actief. Automatische barcodeherkenning wordt op deze telefoon niet ondersteund — gebruik handmatig.';
+      return;
     }
+    let scanning=true;
+    const scan=async()=>{
+      if(!window.ntCameraStream || !scanning || !document.getElementById('barcodeVideo')) return;
+      try{
+        const codes=await detector.detect(video);
+        if(codes.length && codes[0].rawValue){
+          scanning=false;
+          if(navigator.vibrate) navigator.vibrate([80,40,80]);
+          const code=codes[0].rawValue;
+          stopBarcodeCamera();
+          lookupOpenFoodFacts(code);
+          return;
+        }
+      }catch(e){}
+      requestAnimationFrame(scan);
+    };
+    requestAnimationFrame(scan);
   }catch(e){
     const status=document.getElementById('cameraScanStatus');
     if(status){
       let msg='Camera kon niet worden gestart.';
-      if(e && e.name==='NotAllowedError') msg='Cameratoegang is geweigerd. Geef NutriTrack toegang tot de camera in de browserinstellingen.';
-      else if(e && e.name==='NotFoundError') msg='Geen camera gevonden.';
-      else if(e && e.message==='secure_context') msg='Open NutriTrack via de beveiligde HTTPS-webpagina.';
+      if(e?.name==='NotAllowedError') msg='Cameratoegang is geweigerd. Geef NutriTrack cameratoegang in Chrome.';
+      else if(e?.name==='NotFoundError') msg='Geen camera gevonden op dit apparaat.';
+      else if(e?.message==='secure_context') msg='Camera werkt alleen via de beveiligde HTTPS-versie van NutriTrack.';
+      else if(e?.message==='media') msg='Deze browser ondersteunt geen cameratoegang.';
       status.textContent=msg;
     }
-    const retry=document.getElementById('cameraRetry'); if(retry) retry.style.display='block';
+    const retry=document.getElementById('cameraRetry');if(retry)retry.style.display='block';
   }
 }
 function stopBarcodeCamera(){
-  if(window.ntCameraStream){
-    window.ntCameraStream.getTracks().forEach(t=>t.stop());
-    window.ntCameraStream=null;
-  }
-  const video=document.getElementById('barcodeVideo');
-  if(video) video.srcObject=null;
+  if(window.ntCameraStream){window.ntCameraStream.getTracks().forEach(t=>t.stop());window.ntCameraStream=null;}
+  const video=document.getElementById('barcodeVideo');if(video){video.pause?.();video.srcObject=null;}
 }
+
 function barcodeScanner(){
  modal(`<h2>▥ Barcode</h2>
    <p class="date">Werkt de camera niet? Voer de EAN-barcode handmatig in.</p>
@@ -1124,7 +1129,7 @@ function analyzeMealV10(input){
 }
 function showProductResult(p,source){
  window.currentScannedProduct={...p};
- modal(`<h2>✓ ${source}</h2><div class="scanResult"><div style="display:flex;justify-content:space-between;gap:8px"><b>${p.name}</b><span class="dbTag">${source}</span></div><p class="date" style="color:#718078">Basis: ${p.portion||'100 g'}</p><div class="macrogrid"><div class="macro"><b id="scanKcal">${Math.round(p.kcal)}</b><span>kcal</span></div><div class="macro"><b id="scanProtein">${(+p.protein).toFixed(1)}g</b><span>eiwit</span></div><div class="macro"><b id="scanCarbs">${(+p.carbs).toFixed(1)}g</b><span>koolhydraten</span></div></div></div>
+ modal(`<h2>✓ ${source}</h2><div class="scanResult"><div style="display:flex;justify-content:space-between;gap:8px"><b>${p.name}</b><span class="dbTag">${source}</span></div><p class="date" style="color:#718078">Basis: ${p.portion||'100 g'}</p><div class="macrogrid"><div class="macro"><b id="scanKcal">${Math.round(p.kcal)}</b><span>kcal</span></div><div class="macro"><b id="scanProtein">${(+p.protein).toFixed(1)}g</b><span>eiwit</span></div><div class="macro"><b id="scanCarbs">${(+p.carbs).toFixed(1)}g</b><span>koolhydraten</span></div><div class="macro"><b id="scanFat">${(+p.fat).toFixed(1)}g</b><span>vet</span></div><div class="macro"><b id="scanFiber">${(+p.fiber).toFixed(1)}g</b><span>vezels</span></div></div></div>
  <div class="portionRow"><button onclick="changePortion(-25)">−</button><input id="portionGrams" type="number" value="100" oninput="updatePortion()"><span>gram</span><button onclick="changePortion(25)">+</button></div>
  <button onclick="toggleFavorite('${p.name.replace(/'/g,"\\'")}')" style="width:100%;margin-bottom:8px">⭐ Toevoegen/verwijderen favoriet</button>
  <label>Eetmoment</label><select id="scanMeal"><option>Ontbijt</option><option>Lunch</option><option>Diner</option><option>Tussendoor</option></select>
@@ -1137,6 +1142,8 @@ function updatePortion(){
  document.getElementById('scanKcal').textContent=Math.round(p.kcal*f);
  document.getElementById('scanProtein').textContent=(p.protein*f).toFixed(1)+'g';
  document.getElementById('scanCarbs').textContent=(p.carbs*f).toFixed(1)+'g';
+ document.getElementById('scanFat').textContent=(p.fat*f).toFixed(1)+'g';
+ document.getElementById('scanFiber').textContent=(p.fiber*f).toFixed(1)+'g';
 }
 function addScannedProduct(name){
  let p=window.currentScannedProduct||foodDB.find(x=>x.name===name);if(!p)return;

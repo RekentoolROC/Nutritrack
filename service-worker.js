@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nutritrack-v20-1';
+const CACHE_NAME = 'nutritrack-v21';
 const CORE = [
   './',
   './index.html',
