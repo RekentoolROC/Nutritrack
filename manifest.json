@@ -2,7 +2,7 @@
   "name": "NutriTrack V22",
   "short_name": "NutriTrack V22",
   "description": "NutriTrack V22 met verbeterde Android barcode scanner, scanvenster en productdatabase.",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -21,5 +21,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "id": "./"
 }
